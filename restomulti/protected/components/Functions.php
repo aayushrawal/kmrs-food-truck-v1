@@ -9237,7 +9237,7 @@ $menu_html.="</li>";
 	
 	public function AAmenuList()
 	{
-		$menu_list='';
+		$menu_list=null;
 		$menu=$this->adminMenu();		
 		foreach ($menu['items'] as $val) {
 			$menu_list[]=$val['tag'];
