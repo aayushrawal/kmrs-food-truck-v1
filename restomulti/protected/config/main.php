@@ -48,13 +48,18 @@ return array(
 		'driver'=>array(
 		  'require_login'=>true
 		),
-		'singlerestaurant'=>array()
+		'singlerestaurant'=>array(),
+		'inventory'=>array()
 	),
 	
 	'components'=>array(		   
 	    'request'=>array(
-	        //'class' => 'application.components.HttpRequest',
-            'enableCsrfValidation'=>false,
+	        'class' => 'HttpRequest',
+            'enableCsrfValidation'=>true,
+            'enableCookieValidation'=>true,
+            'noCsrfValidationRoutes'=>array(
+				'inventory/upload'
+             ),
         ),
         'session' => array(
 	        'timeout' => 86400,
