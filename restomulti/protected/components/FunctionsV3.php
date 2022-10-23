@@ -1863,7 +1863,7 @@ class FunctionsV3
 		      {{cuisine}}
 		      ORDER BY sequence ASC
 		";
-		$data='';
+		$data= null;
     	if ( $res=$DbExt->rst($stmt)){
 			foreach ($res as $val) {
 				$id='"'.$val['cuisine_id'].'"';
