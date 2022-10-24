@@ -74,10 +74,10 @@ return array(
         ),
         'db'=>array(
             'class'            => 'CDbConnection' ,
-            'connectionString' => 'mysql:host=localhost;dbname=production_amezmo',
+            'connectionString' => 'mysql:host=localhost;dbname=restomulti',
             'emulatePrepare'   => true,
-            'username'         => 'az_user',
-            'password'         => 'b92df3910aefafdd',
+            'username'         => 'root',
+            'password'         => '',
             'charset'          => 'utf8',
             'tablePrefix'      => 'mt_',
         ),
