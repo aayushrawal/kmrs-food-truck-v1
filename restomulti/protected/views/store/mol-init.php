@@ -27,7 +27,7 @@ if ($res=Yii::app()->functions->getMerchantByToken($my_token)){
 	
 	//dump($amount_to_pay); dump($payment_description);	
 	
-	$apikey=FunctionsV3::getMollieApiKey(true);
+	$apikey=FunctionsV4::getMollieApiKey(true);
 	$locale='en_US';
 	$_locale=getOptionA('admin_mol_locale');
 	if(!empty($_locale)){
@@ -63,7 +63,7 @@ if ($res=Yii::app()->functions->getMerchantByToken($my_token)){
 		       'price'=>$res['package_price'],
 		       'payment_type'=>"mol",
 		       'membership_expired'=>$res['membership_expired'],
-		       'date_created'=>FunctionsV3::dateNow(),
+		       'date_created'=>FunctionsV4::dateNow(),
 		       'ip_address'=>$_SERVER['REMOTE_ADDR'],		       
 		       'TRANSACTIONID'=>$payment->id,
 		       'TOKEN'=>$my_token		       

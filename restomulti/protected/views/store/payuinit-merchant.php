@@ -54,7 +54,7 @@ if ( $data=Yii::app()->functions->getOrder($_GET['id'])){
 		      'order_id'=>$_GET['id'],
 		      'payment_type'=>Yii::app()->functions->paymentCode('payumoney'),
 		      'raw_response'=>json_encode($data_post),
-		      'date_created'=>FunctionsV3::dateNow(),
+		      'date_created'=>FunctionsV4::dateNow(),
 		      'ip_address'=>$_SERVER['REMOTE_ADDR'],
 		      'payment_reference'=>$data_post['txnid']
 		    );
@@ -64,12 +64,12 @@ if ( $data=Yii::app()->functions->getOrder($_GET['id'])){
 		    $db_ext->updateData("{{order}}",$params_update,'order_id',$_GET['id']);
 		    
 		    /*POINTS PROGRAM*/ 
-		    if (FunctionsV3::hasModuleAddon("pointsprogram")){
+		    if (FunctionsV4::hasModuleAddon("pointsprogram")){
 			   PointsProgram::updatePoints($_GET['id']);
 		    }
 		    
 		    /*Driver app*/
-			if (FunctionsV3::hasModuleAddon("driver")){
+			if (FunctionsV4::hasModuleAddon("driver")){
 			   Yii::app()->setImport(array(			
 				  'application.modules.driver.components.*',
 			   ));

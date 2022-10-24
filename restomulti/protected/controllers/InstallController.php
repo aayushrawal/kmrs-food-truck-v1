@@ -79,7 +79,7 @@ class InstallController extends CController
 					$params=array(
 					  'username'=>$data['username'],
 					  'password'=>md5($data['password']),
-					  'date_created'=>FunctionsV3::dateNow(),
+					  'date_created'=>FunctionsV4::dateNow(),
 					  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 					  'user_access'=>InstallHelper::UserAccessString()
 					);					
@@ -94,7 +94,7 @@ class InstallController extends CController
 	                	$params_currency=array(
 	                	  'currency_code'=>$curr[0],
 	                	  'currency_symbol'=>$curr[1],
-	                	  'date_created'=>FunctionsV3::dateNow(),
+	                	  'date_created'=>FunctionsV4::dateNow(),
 	                	  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 	                	);	                	
 					    $DbExt->insertData("{{currency}}",$params_currency);
@@ -130,7 +130,7 @@ class InstallController extends CController
 	    	        $DbExt->qry("TRUNCATE TABLE {{order_status}}");	    	        
 	    	        $status=InstallHelper::OrderStatusList();
 	    	        foreach ($status as $val) {
-	    	        	$val['date_created']=FunctionsV3::dateNow();
+	    	        	$val['date_created']=FunctionsV4::dateNow();
 	    	        	$DbExt->insertData("{{order_status}}",$val);
 	    	        }
 	    	        
@@ -138,7 +138,7 @@ class InstallController extends CController
 	    	        $DbExt->qry("TRUNCATE TABLE {{rating_meaning}}");	    	        
 	    	        $list=InstallHelper::RatingList();
 	    	        foreach ($list as $val) {
-	    	        	$val['date_created']=FunctionsV3::dateNow();
+	    	        	$val['date_created']=FunctionsV4::dateNow();
 	    	        	$DbExt->insertData("{{rating_meaning}}",$val);
 	    	        }
 	    	        
@@ -146,7 +146,7 @@ class InstallController extends CController
 	    	        $DbExt->qry("TRUNCATE TABLE {{cuisine}}");	    	        
 	    	        $list=InstallHelper::CuisineList();
 	    	        foreach ($list as $val) {
-	    	        	$val['date_created']=FunctionsV3::dateNow();
+	    	        	$val['date_created']=FunctionsV4::dateNow();
 	    	        	$val['cuisine_name_trans']='';
 	    	        	$DbExt->insertData("{{cuisine}}",$val);
 	    	        }

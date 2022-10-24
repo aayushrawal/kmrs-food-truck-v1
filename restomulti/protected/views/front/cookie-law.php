@@ -12,7 +12,7 @@
         <a href="javascript:;" class="rounded orange-button medium accept-cookie">
         <?php echo $cookie_accept_text?>
         </a>
-         <a href="<?php echo FunctionsV3::prettyUrl($cookie_info_link)?>" target="_blank" class="rounded green-button medium">
+         <a href="<?php echo FunctionsV4::prettyUrl($cookie_info_link)?>" target="_blank" class="rounded green-button medium">
         <?php echo $cookie_info_text?>
         </a>
       </div> <!--col-->

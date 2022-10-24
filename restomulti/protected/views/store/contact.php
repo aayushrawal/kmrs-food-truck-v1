@@ -34,7 +34,7 @@ if (!empty($fields)){
              <form class="uk-form uk-form-horizontal forms" id="forms" onsubmit="return false;">   
              <?php echo CHtml::hiddenField('action','contacUsSubmit')?>
              <?php echo CHtml::hiddenField('currentController','store')?>
-             <?php FunctionsV3::addCsrfToken();?>
+             <?php FunctionsV4::addCsrfToken();?>
              <?php if (is_array($fields) && count($fields)>=1):?>
              <?php foreach ($fields as $val):?>
              <?php  

@@ -67,7 +67,7 @@ if ( $res=Yii::app()->functions->getMerchantByToken($my_token)){
 		          'price'=>$res['package_price'],
 		          'payment_type'=>'btr',
 		          'membership_expired'=>$membership_info['membership_expired'],
-		          'date_created'=>FunctionsV3::dateNow(),
+		          'date_created'=>FunctionsV4::dateNow(),
 		          'ip_address'=>$_SERVER['REMOTE_ADDR'],
 		          'PAYPALFULLRESPONSE'=>$transaction_id,
 		           'TRANSACTIONID'=>$transaction_id,
@@ -78,7 +78,7 @@ if ( $res=Yii::app()->functions->getMerchantByToken($my_token)){
 		        /*auto update the merchant expiration*/
 		        $params_1=array(
 		          'membership_expired'=>$membership_info['membership_expired'],
-		          'membership_purchase_date'=>FunctionsV3::dateNow()
+		          'membership_purchase_date'=>FunctionsV4::dateNow()
 		        );
 		        $db_ext->updateData("{{merchant}}",$params_1,'merchant_id',$res['merchant_id']);
 		        
@@ -89,7 +89,7 @@ if ( $res=Yii::app()->functions->getMerchantByToken($my_token)){
 		           'price'=>$res['package_price'],
 		           'payment_type'=>'btr',
 		           'membership_expired'=>$res['membership_expired'],
-		           'date_created'=>FunctionsV3::dateNow(),
+		           'date_created'=>FunctionsV4::dateNow(),
 		           'ip_address'=>$_SERVER['REMOTE_ADDR'],
 		           'PAYPALFULLRESPONSE'=>$transaction_id,
 		           'TRANSACTIONID'=>$transaction_id,
@@ -103,15 +103,15 @@ if ( $res=Yii::app()->functions->getMerchantByToken($my_token)){
    	       $db_ext->updateData("{{merchant}}",
 				  array(
 				    'payment_steps'=>3,
-				    'membership_purchase_date'=>FunctionsV3::dateNow()
+				    'membership_purchase_date'=>FunctionsV4::dateNow()
 				  ),'merchant_id',$res['merchant_id']);
 	   	   		   
 		   if (isset($_GET['renew'])){
                $redirect= Yii::app()->createUrl('store/renewSuccesful');
            } else {
            	   /*SEND EMAIL*/
-           	   FunctionsV3::sendWelcomeEmailMerchant($res);
-           	   FunctionsV3::sendMerchantActivation($res, isset($res['activation_key'])?$res['activation_key']:'' );
+           	   FunctionsV4::sendWelcomeEmailMerchant($res);
+           	   FunctionsV4::sendMerchantActivation($res, isset($res['activation_key'])?$res['activation_key']:'' );
            	   
 	           $redirect=Yii::app()->createUrl('store/merchantSignup',array(
 	                'Do'=>"step4",

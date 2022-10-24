@@ -34,7 +34,7 @@ if ( $data=Yii::app()->functions->getOrder($_GET['id'])){
     
     /*COMMISSION*/
 	//if ( Yii::app()->functions->isMerchantCommission($merchant_id)){
-	if (FunctionsV3::isMerchantPaymentToUseAdmin($merchant_id)){
+	if (FunctionsV4::isMerchantPaymentToUseAdmin($merchant_id)){
 		$country=Yii::app()->functions->getOptionAdmin('admin_paysera_country');
 	    $mode=Yii::app()->functions->getOptionAdmin('admin_paysera_mode');
 	    $lang=Yii::app()->functions->getOptionAdmin('admin_paysera_lang');
@@ -61,7 +61,7 @@ if ( $data=Yii::app()->functions->getOrder($_GET['id'])){
 		          'order_id'=>$_GET['id'],
 		          'payment_type'=>"pys",
 		          'raw_response'=>json_encode($response),
-		          'date_created'=>FunctionsV3::dateNow(),
+		          'date_created'=>FunctionsV4::dateNow(),
 		          'ip_address'=>$_SERVER['REMOTE_ADDR'],
 		          'payment_reference'=>$response['orderid']
 		        );		        

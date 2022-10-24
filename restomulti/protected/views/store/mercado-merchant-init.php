@@ -20,7 +20,7 @@ $admin_mercado_key=Yii::app()->functions->getOption('merchant_mercado_key',$merc
 
 /*COMMISSION*/
 //if ( Yii::app()->functions->isMerchantCommission($merchant_id)){	
-if (FunctionsV3::isMerchantPaymentToUseAdmin($merchant_id)){
+if (FunctionsV4::isMerchantPaymentToUseAdmin($merchant_id)){
 	$paymode=Yii::app()->functions->getOptionAdmin('admin_mercado_mode');
     $admin_mercado_id=Yii::app()->functions->getOptionAdmin('admin_mercado_id');
     $admin_mercado_key=Yii::app()->functions->getOptionAdmin('admin_mercado_key');
@@ -60,7 +60,7 @@ if (isset($_GET['status'])){
 				          'payment_reference'=>$_GET['external_reference'],
 				          'payment_type'=>$payment_code,
 				          'raw_response'=>json_encode($_GET),
-				          'date_created'=>FunctionsV3::dateNow(),
+				          'date_created'=>FunctionsV4::dateNow(),
 				          'ip_address'=>$_SERVER['REMOTE_ADDR']
 				        );				        
 				        $db_ext->insertData("{{payment_order}}",$params_logs);				        
@@ -69,12 +69,12 @@ if (isset($_GET['status'])){
 	                    $db_ext->updateData("{{order}}",$params_update,'order_id',$order_id);
 	                    
 	                    /*POINTS PROGRAM*/ 
-	                    if (FunctionsV3::hasModuleAddon("pointsprogram")){
+	                    if (FunctionsV4::hasModuleAddon("pointsprogram")){
 	                       PointsProgram::updatePoints($order_id);
 	                    }
 				        
 	                    /*Driver app*/
-						if (FunctionsV3::hasModuleAddon("driver")){
+						if (FunctionsV4::hasModuleAddon("driver")){
 						   Yii::app()->setImport(array(			
 							  'application.modules.driver.components.*',
 						   ));

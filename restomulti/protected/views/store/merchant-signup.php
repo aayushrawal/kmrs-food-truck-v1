@@ -26,10 +26,10 @@ $this->renderPartial('/front/progress-merchantsignup',array(
                 <h4><?php echo $val['title']?></h4>
                 <h3>                
                 <?php if ( $val['promo_price']>=1):?>
-                  <span class="strike-price"><?php echo FunctionsV3::prettyPrice($val['price'])?></span>
-                  <?php echo FunctionsV3::prettyPrice($val['promo_price'])?>
+                  <span class="strike-price"><?php echo FunctionsV4::prettyPrice($val['price'])?></span>
+                  <?php echo FunctionsV4::prettyPrice($val['promo_price'])?>
                 <?php else :?>
-                  <?php echo FunctionsV3::prettyPrice($val['price'])?>
+                  <?php echo FunctionsV4::prettyPrice($val['price'])?>
                 <?php endif;?>
                 </h3>
               </div><!-- pricing-head-->   
@@ -93,7 +93,7 @@ $this->renderPartial('/front/progress-merchantsignup',array(
     
     <?php if (is_array($list) && count($list)>=1):?>    
     <div class="top25">
-      <?php echo FunctionsV3::sectionHeader('Resume Sign Up?');?>
+      <?php echo FunctionsV4::sectionHeader('Resume Sign Up?');?>
       <a class="resume-app-link orange-text" href="javascript:;">
       [<?php echo Yii::t("default","Click here")?>]
       </a>

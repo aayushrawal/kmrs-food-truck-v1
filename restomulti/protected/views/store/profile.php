@@ -36,7 +36,7 @@ echo CHtml::hiddenField('mobile_country_code',Yii::app()->functions->getAdminCou
        </li>
        <?php endif;?>
        
-      <?php if (FunctionsV3::hasModuleAddon("pointsprogram")) :?>
+      <?php if (FunctionsV4::hasModuleAddon("pointsprogram")) :?>
       <?php PointsProgram::frontMenu(true);?>
       <?php endif;?>
        
@@ -64,7 +64,7 @@ echo CHtml::hiddenField('mobile_country_code',Yii::app()->functions->getAdminCou
        
        <li>
         <?php $this->renderPartial('/front/booking-history',array(           
-           'data'=>FunctionsV3::getBooking( Yii::app()->functions->getClientId() )
+           'data'=>FunctionsV4::getBooking( Yii::app()->functions->getClientId() )
          ));?>
        </li>
        

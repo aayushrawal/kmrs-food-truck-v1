@@ -15,7 +15,7 @@ class CronFunctions extends DbExt
 				  'client_name'=>$val['first_name']." ".$val['last_name'] ,
 				  'contact_phone'=>$val['contact_phone'],
 				  'sms_message'=>$info['sms_alert_message'],
-				  'date_created'=>FunctionsV3::dateNow(),
+				  'date_created'=>FunctionsV4::dateNow(),
 				  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 				  'client_id'=>$val['client_id'],
 				  'merchant_id'=>$info['merchant_id']
@@ -45,7 +45,7 @@ class CronFunctions extends DbExt
 				  'client_name'=>$val['first_name']." ".$val['last_name'] ,
 				  'contact_phone'=>$val['contact_phone'],
 				  'sms_message'=>$info['sms_alert_message'],
-				  'date_created'=>FunctionsV3::dateNow(),
+				  'date_created'=>FunctionsV4::dateNow(),
 				  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 				  'client_id'=>$val['client_id'],
 				  'merchant_id'=>$info['merchant_id']
@@ -70,7 +70,7 @@ class CronFunctions extends DbExt
 				  'client_name'=>$mobile,
 				  'contact_phone'=>$mobile,
 				  'sms_message'=>$info['sms_alert_message'],
-				  'date_created'=>FunctionsV3::dateNow(),
+				  'date_created'=>FunctionsV4::dateNow(),
 				  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 				  'client_id'=>$mobile,
 				  'merchant_id'=>$info['merchant_id']

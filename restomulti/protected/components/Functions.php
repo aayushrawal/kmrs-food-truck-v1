@@ -976,7 +976,7 @@ class Functions extends CApplicationComponent
                    'url'=>array('merchant/payondelivery')),        
               ));        
         }*/	
-        $merchant_type=FunctionsV3::getMerchantTypeBySession();        
+        $merchant_type=FunctionsV4::getMerchantTypeBySession();        
         if ($merchant_type==2){
         	$payment_list='';        	
         	$payment_list=array('visible'=>true,
@@ -1164,13 +1164,13 @@ class Functions extends CApplicationComponent
 		
 		/*HIDE MINIMUM TABLE RATES IF SEARCH TYPE IS BY LOCATION*/
 		if ( $tag=="mintable"){
-			if (FunctionsV3::isSearchByLocation()){
+			if (FunctionsV4::isSearchByLocation()){
 				return false;
 			}
 		}	
 				
 		if ($tag=="invoice"){
-			if ( $merchant_type=FunctionsV3::getMerchantMembershipType( self::getMerchantID() )){
+			if ( $merchant_type=FunctionsV4::getMerchantMembershipType( self::getMerchantID() )){
 				if($merchant_type==1){
 					return false;
 				}			
@@ -1206,7 +1206,7 @@ class Functions extends CApplicationComponent
 			$tag='obd';
 		}	
 		
-		$payment_list=FunctionsV3::PaymentOptionList();
+		$payment_list=FunctionsV4::PaymentOptionList();
 		if (array_key_exists($tag,(array)$payment_list)){
 			$list_payment_enabled=$this->getMerchantListOfPaymentGateway();		
 			if ( !in_array($tag,(array)$list_payment_enabled)){
@@ -3354,7 +3354,7 @@ class Functions extends CApplicationComponent
 			          			$htm.="<p class=\"small ingredients-label\">".t("Ingredients").":</p>";
 			          		    foreach ($val['ingredients'] as $val_ingred) {		
 			          		    				          		       
-			          		       if($details_ingredients=FunctionsV3::getIngredientsByName($val_ingred,$mid)){
+			          		       if($details_ingredients=FunctionsV4::getIngredientsByName($val_ingred,$mid)){
 			          		       	  $_ingredients['ingredients_name_trans']=json_decode($details_ingredients['ingredients_name_trans'],true);			          		       	  
 			          		       	  $htm.="<p class=\"small\">".
 			          		       	  qTranslate($val_ingred,'ingredients_name',$_ingredients)
@@ -3660,7 +3660,7 @@ $htm.='<div class="b uk-text-muted">'."$addon_raw_price ".qTranslate($val_subs[2
 		        }
 		        
 		        /*POINTS PROGRAM*/
-		        if (FunctionsV3::hasModuleAddon("pointsprogram")){
+		        if (FunctionsV4::hasModuleAddon("pointsprogram")){
 				    if (isset($_SESSION['pts_redeem_amt']) && $_SESSION['pts_redeem_amt']>0.01){
 				    	$pts_redeem_amt=unPrettyPrice($_SESSION['pts_redeem_amt']);
 				    	$subtotal=unPrettyPrice($subtotal)-$pts_redeem_amt;
@@ -3713,11 +3713,11 @@ $htm.='<div class="b uk-text-muted">'."$addon_raw_price ".qTranslate($val_subs[2
 		         if ( $has_voucher==TRUE){		 
 
 		         	 if ( $show_discount==true):		         	 			        
-			           $htm.=FunctionsV3::receiptRowTotal( t("Discount")." $merchant_discount_amount%" ,
+			           $htm.=FunctionsV4::receiptRowTotal( t("Discount")." $merchant_discount_amount%" ,
 			           displayPrice(baseCurrency(),prettyFormat($discounted_amount,$mid)));
 			         endif;
 			         
-			         $htm.=FunctionsV3::receiptRowTotal("Sub Total",
+			         $htm.=FunctionsV4::receiptRowTotal("Sub Total",
 			         displayPrice(baseCurrency(),prettyFormat($subtotal+$less_voucher,$mid)),'','cart_subtotal'
 			         );
 		          				         
@@ -3725,24 +3725,24 @@ $htm.='<div class="b uk-text-muted">'."$addon_raw_price ".qTranslate($val_subs[2
 			         	$voucher_code=" - ".$order_infos['voucher_code']."";
 			         } else $voucher_code='';
 			         			         
-			         $htm.=FunctionsV3::receiptRowTotal( Yii::t("default","Less Voucher")." ".$voucher_type ,
+			         $htm.=FunctionsV4::receiptRowTotal( Yii::t("default","Less Voucher")." ".$voucher_type ,
 			         "(".displayPrice(baseCurrency(),prettyFormat($less_voucher,$mid).")" )
 			         );	         
 			         			         
-			         $htm.=FunctionsV3::receiptRowTotal("Sub Total (Less Voucher)",
+			         $htm.=FunctionsV4::receiptRowTotal("Sub Total (Less Voucher)",
 			         displayPrice(baseCurrency(),prettyFormat($subtotal,$mid))
 			         );
 			         		        
 		         } else {			         
 		         	
 			         if ( $show_discount==true):			         
-			         $htm.=FunctionsV3::receiptRowTotal( t("Discount")." $merchant_discount_amount%",
+			         $htm.=FunctionsV4::receiptRowTotal( t("Discount")." $merchant_discount_amount%",
 			           "(".displayPrice(baseCurrency(),prettyFormat($discounted_amount,$mid)).")"
 			          );
 			         endif;
 		         			         
 			         /*POINTS PROGRAM*/			
-			         if (FunctionsV3::hasModuleAddon("pointsprogram")){      
+			         if (FunctionsV4::hasModuleAddon("pointsprogram")){      
 				         $pts_redeem_amt=0;
 				         if (isset($_SESSION['pts_redeem_amt']) && $_SESSION['pts_redeem_amt']>0.01){			         
 				         	$pts_redeem_amt=$_SESSION['pts_redeem_amt'];
@@ -3754,12 +3754,12 @@ $htm.='<div class="b uk-text-muted">'."$addon_raw_price ".qTranslate($val_subs[2
 				         	}
 				         }			         
 				         if($pts_redeem_amt>0){
-					         $htm.=FunctionsV3::receiptRowTotal('Points Discount',
+					         $htm.=FunctionsV4::receiptRowTotal('Points Discount',
 					         "(".PointsProgram::price($pts_redeem_amt).")" );	
 				         } 	
 			         }
 			         			         
-			        $htm.=FunctionsV3::receiptRowTotal('Sub Total',
+			        $htm.=FunctionsV4::receiptRowTotal('Sub Total',
 			        displayPrice(baseCurrency(),prettyFormat($subtotal,$mid)),'','cart_subtotal'
 			        );
 			        
@@ -3767,24 +3767,24 @@ $htm.='<div class="b uk-text-muted">'."$addon_raw_price ".qTranslate($val_subs[2
 		         
 		         		         
 		         if (!empty($delivery_charges)){
-		            $htm.=FunctionsV3::receiptRowTotal('Delivery Fee',
+		            $htm.=FunctionsV4::receiptRowTotal('Delivery Fee',
 		            displayPrice(baseCurrency(),prettyFormat($delivery_charges,$mid)));
 		         }		         
 		         
 		         if ( $free_delivery==true){			         
-		             $htm.=FunctionsV3::receiptRowTotal("Delivery Fee", t("Free") );
+		             $htm.=FunctionsV4::receiptRowTotal("Delivery Fee", t("Free") );
 		         }
 		         
 		         if (!empty($merchant_packaging_charge)){		
 		           if($merchant_packaging_charge>=0.001){         
-			           $htm.=FunctionsV3::receiptRowTotal("Packaging",
+			           $htm.=FunctionsV4::receiptRowTotal("Packaging",
 			             displayPrice(baseCurrency(),prettyFormat($merchant_packaging_charge,$mid))
 			           );
 		           }
 		         }
 		         			         			         
 		         if ( !empty($tax)){				     
-			         $htm.=FunctionsV3::receiptRowTotal( t("Tax")." $tax_amt%" ,
+			         $htm.=FunctionsV4::receiptRowTotal( t("Tax")." $tax_amt%" ,
 			         displayPrice(baseCurrency(),prettyFormat($taxable_subtotal,$mid))
 			         );
 		         }
@@ -3802,7 +3802,7 @@ $htm.='<div class="b uk-text-muted">'."$addon_raw_price ".qTranslate($val_subs[2
 		         		$data['cart_tip_value'] =  $subtotal * $data['tip_percent'];
 		         		$data['cart_tip_percentage']=$data['tip_percent']*100;
 		         		
-		         		$htm.=FunctionsV3::receiptRowTotal( t("Tips")." ".number_format($data['cart_tip_percentage'],0)."%" ,
+		         		$htm.=FunctionsV4::receiptRowTotal( t("Tips")." ".number_format($data['cart_tip_percentage'],0)."%" ,
 			            displayPrice(baseCurrency(),prettyFormat($data['cart_tip_value'],$mid))
 			            );			            
 			            $total+=$data['cart_tip_value'];		         		
@@ -3811,7 +3811,7 @@ $htm.='<div class="b uk-text-muted">'."$addon_raw_price ".qTranslate($val_subs[2
 		        		         
 		         if (isset($data['card_fee'])){
 		         	if ( $data['card_fee'] >=0.1) {		         					         	
-			            $htm.=FunctionsV3::receiptRowTotal("Card Fee",
+			            $htm.=FunctionsV4::receiptRowTotal("Card Fee",
 			            displayPrice(baseCurrency(),prettyFormat($data['card_fee'],$mid))
 			            );			            
 			            $total+=$data['card_fee'];
@@ -3825,7 +3825,7 @@ $htm.='<div class="b uk-text-muted">'."$addon_raw_price ".qTranslate($val_subs[2
 	    	   $htm.="</div>";
 
 		       /*POINTS PROGRAM*/
-		       if (FunctionsV3::hasModuleAddon("pointsprogram")){			       	 
+		       if (FunctionsV4::hasModuleAddon("pointsprogram")){			       	 
 		         $htm.=PointsProgram::cartTotalEarnPoints($cart_item,$receipt);
 		       }
 		       
@@ -3940,7 +3940,7 @@ $htm.='<div class="b uk-text-muted">'."$addon_raw_price ".qTranslate($val_subs[2
     		//dump($res);
     		unset($res[0]['password']);
     		$client_id=$res[0]['client_id'];
-    		$update=array('last_login'=>FunctionsV3::dateNow(),'ip_address'=>$_SERVER['REMOTE_ADDR']);
+    		$update=array('last_login'=>FunctionsV4::dateNow(),'ip_address'=>$_SERVER['REMOTE_ADDR']);
     		$DbExt->updateData("{{client}}",$update,'client_id',$client_id);
     		$_SESSION['kr_client']=$res[0];
     		return true;
@@ -4528,7 +4528,7 @@ $htm.='<div class="b uk-text-muted">'."$addon_raw_price ".qTranslate($val_subs[2
 	      'merchant_id'=>$merchant_id,
 	      'ratings'=>$ratings,
 	      'client_id'=>$client_id,
-	      'date_created'=>FunctionsV3::dateNow(),
+	      'date_created'=>FunctionsV4::dateNow(),
 	      'ip_address'=>$_SERVER['REMOTE_ADDR']
 	    );	    	    
 	    	    	    
@@ -4539,7 +4539,7 @@ $htm.='<div class="b uk-text-muted">'."$addon_raw_price ".qTranslate($val_subs[2
 	    	$rating_id=$res['id'];	    	    	
 	    	$update=array(
 	    	  'ratings'=>$ratings,
-	    	   'date_created'=>FunctionsV3::dateNow(),
+	    	   'date_created'=>FunctionsV4::dateNow(),
 	           'ip_address'=>$_SERVER['REMOTE_ADDR']
 	        );
 	    	if ( $DbExt->updateData("{{rating}}",$update,'id',$rating_id) ){	    		
@@ -4711,7 +4711,7 @@ $htm.='<div class="b uk-text-muted">'."$addon_raw_price ".qTranslate($val_subs[2
     public function orderStatusList($aslist=true)
     {
     	$mid=$this->getMerchantID();
-    	$list=null;
+    	$list='';
     	if ($aslist){
     	    $list[]=Yii::t("default","Please select");    	
     	}
@@ -5309,7 +5309,7 @@ EOF;
     	   'subject'=>$subject,
     	   'content'=>$body,
     	   'status'=>$send_msg,
-    	   'date_created'=>FunctionsV3::dateNow(),
+    	   'date_created'=>FunctionsV4::dateNow(),
     	   'ip_address'=>$_SERVER['REMOTE_ADDR'],
     	   'module_type'=>"core",
     	   'email_provider'=>$email_provider
@@ -5867,7 +5867,7 @@ $menu_html.="</li>";
     	$db_ext=new DbExt;
     	$params=array(
     	  'user_lang'=>$lang_id,
-    	  'date_modified'=>FunctionsV3::dateNow()
+    	  'date_modified'=>FunctionsV4::dateNow()
     	);
     	$db_ext->updateData("{{admin_user}}",$params,'admin_id',$user_id);
     }
@@ -5877,7 +5877,7 @@ $menu_html.="</li>";
     	$db_ext=new DbExt;
     	$params=array(
     	  'user_lang'=>$lang_id,
-    	  'date_modified'=>FunctionsV3::dateNow()
+    	  'date_modified'=>FunctionsV4::dateNow()
     	);
     	$db_ext->updateData("{{merchant}}",$params,'merchant_id',$user_id);
     }    
@@ -6380,8 +6380,8 @@ $menu_html.="</li>";
 	        	  'sms_message'=>$client_sms,
 	        	  'status'=>$resp2['msg'],
 	        	  'gateway_response'=>$resp2['raw'],
-	        	  'date_created'=>FunctionsV3::dateNow(),
-	        	  'date_executed'=>FunctionsV3::dateNow(),
+	        	  'date_created'=>FunctionsV4::dateNow(),
+	        	  'date_executed'=>FunctionsV4::dateNow(),
 	        	  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 	        	  'gateway'=>$sms_provider
 	        	);	  		        	  
@@ -6408,8 +6408,8 @@ $menu_html.="</li>";
 			        	  'sms_message'=>$sms_alert_message,
 			        	  'status'=>$resp['msg'],
 			        	  'gateway_response'=>$resp['raw'],
-			        	  'date_created'=>FunctionsV3::dateNow(),
-			        	  'date_executed'=>FunctionsV3::dateNow(),
+			        	  'date_created'=>FunctionsV4::dateNow(),
+			        	  'date_executed'=>FunctionsV4::dateNow(),
 			        	  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 			        	  'gateway'=>$sms_provider
 			        	);	    	        	
@@ -6427,8 +6427,8 @@ $menu_html.="</li>";
 				        	  'sms_message'=>$client_sms,
 				        	  'status'=>$resp['msg'],
 				        	  'gateway_response'=>$resp['raw'],
-				        	  'date_created'=>FunctionsV3::dateNow(),
-				        	  'date_executed'=>FunctionsV3::dateNow(),
+				        	  'date_created'=>FunctionsV4::dateNow(),
+				        	  'date_executed'=>FunctionsV4::dateNow(),
 				        	  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 				        	  'gateway'=>$sms_provider
 				        	);	  		        	  
@@ -6708,8 +6708,8 @@ $menu_html.="</li>";
     	  'status'=>$msg,
     	  'gateway_response'=>$raw,
     	  'gateway'=>$sms_provider,
-    	  'date_created'=>FunctionsV3::dateNow(),
-    	  'date_executed'=>FunctionsV3::dateNow(),
+    	  'date_created'=>FunctionsV4::dateNow(),
+    	  'date_executed'=>FunctionsV4::dateNow(),
     	  'ip_address'=>$_SERVER['REMOTE_ADDR']
     	);
     	$db=new DbExt;
@@ -6717,7 +6717,7 @@ $menu_html.="</li>";
     		$params_logs=array(
     		  'status'=>$msg,
     	      'gateway_response'=>$raw,
-    	      'date_executed'=>FunctionsV3::dateNow(),
+    	      'date_executed'=>FunctionsV4::dateNow(),
     	      'gateway'=>$sms_provider,
     	      'ip_address'=>$_SERVER['REMOTE_ADDR']
     		);
@@ -6863,7 +6863,7 @@ $menu_html.="</li>";
     	  'voucher_code'=>$voucher_code,
     	  'status'=>"used",
     	  'client_id'=>$client_id,
-    	  'date_used'=>FunctionsV3::dateNow(),
+    	  'date_used'=>FunctionsV4::dateNow(),
     	  'order_id'=>$order_id
     	);
     	$db_ext=new DbExt;    	
@@ -6884,7 +6884,7 @@ $menu_html.="</li>";
     {
     	$page = isset($_GET['page']) ? ((int) $_GET['page']) : 1;    	 
     	$page=$page-1;
-    	$limit=FunctionsV3::getPerPage();
+    	$limit=FunctionsV4::getPerPage();
     	$start=$page*$limit;
     	
     	$db_ext=new DbExt;    	
@@ -6921,7 +6921,7 @@ $menu_html.="</li>";
     	$page=$page-1;
     	if ($is_all){
     		$limit=1500;
-    	} else $limit=FunctionsV3::getPerPage();
+    	} else $limit=FunctionsV4::getPerPage();
     	
     	$start=$page*$limit;
     	
@@ -6985,7 +6985,7 @@ $menu_html.="</li>";
     	
     	$page = isset($_GET['page']) ? ((int) $_GET['page']) : 1;    	 
     	$page=$page-1;
-    	$limit=FunctionsV3::getPerPage();
+    	$limit=FunctionsV4::getPerPage();
     	$start=$page*$limit;
     		    	
     	$stmt="SELECT SQL_CALC_FOUND_ROWS a.*,
@@ -7175,7 +7175,7 @@ $menu_html.="</li>";
 	   	   	  
 	   	   }
 	   	   /*dump(Yii::app()->timeZone);
-	   	   echo FunctionsV3::dateNow();*/
+	   	   echo FunctionsV4::dateNow();*/
 	   	   //dump($times);
 							   	   
 			$now = strtotime(date("h:ia"));
@@ -7446,7 +7446,7 @@ $menu_html.="</li>";
     	    	
     	$to=$merchant_email; 
     	    	
-    	$link= FunctionsV3::getHostURL().Yii::app()->createUrl('store/bankdepositverify',array(
+    	$link= FunctionsV4::getHostURL().Yii::app()->createUrl('store/bankdepositverify',array(
     	  'ref'=>$merchant['activation_token']
     	));
     	$links="<a href=\"$link\" target=\"_blank\" >".Yii::t("default","Click on this link")."</a>";
@@ -7466,7 +7466,7 @@ $menu_html.="</li>";
     	   	     'price'=>$package_price,
     	   	     'payment_type'=>'obd',
     	   	     'membership_expired'=>$membership_expired,
-    	   	     'date_created'=>FunctionsV3::dateNow(),
+    	   	     'date_created'=>FunctionsV4::dateNow(),
     	   	     'ip_address'=>$_SERVER['REMOTE_ADDR']
     	   	   );
     	   	   $db_ext->insertData("{{package_trans}}",$params2);
@@ -7911,7 +7911,7 @@ $menu_html.="</li>";
     		  'orderid'=>$orderid,
     		  'token'=>$token,
     		  'transaction_type'=>$trans,
-    		  'date_created'=>FunctionsV3::dateNow(),
+    		  'date_created'=>FunctionsV4::dateNow(),
     		  'ip_address'=>$_SERVER['REMOTE_ADDR'],
     		  'param1'=>isset($param1)?$param1:'',
     		  'param2'=>isset($param2)?$param2:'',
@@ -7968,7 +7968,7 @@ $menu_html.="</li>";
 				          'price'=>$res['package_price'],
 				          'payment_type'=>Yii::app()->functions->paymentCode('paysera'),
 				          'membership_expired'=>$membership_info['membership_expired'],
-				          'date_created'=>FunctionsV3::dateNow(),
+				          'date_created'=>FunctionsV4::dateNow(),
 				          'ip_address'=>$_SERVER['REMOTE_ADDR'],
 				          'PAYPALFULLRESPONSE'=>json_encode($_POST),
 				          'TRANSACTIONID'=>$orderid,
@@ -7981,7 +7981,7 @@ $menu_html.="</li>";
 				           'price'=>$res['package_price'],
 				           'payment_type'=>Yii::app()->functions->paymentCode('epaybg'),
 				           'membership_expired'=>$res['membership_expired'],
-				           'date_created'=>FunctionsV3::dateNow(),
+				           'date_created'=>FunctionsV4::dateNow(),
 				           'ip_address'=>$_SERVER['REMOTE_ADDR'],
 				           'PAYPALFULLRESPONSE'=>json_encode($_POST),
 				           'TRANSACTIONID'=>$orderid,
@@ -8001,7 +8001,7 @@ $menu_html.="</li>";
 			          'payment_reference'=>$orderid,
 			          'payment_type'=>Yii::app()->functions->paymentCode('epaybg'),
 			          'raw_response'=>json_encode($_POST),
-			          'date_created'=>FunctionsV3::dateNow(),
+			          'date_created'=>FunctionsV4::dateNow(),
 			          'ip_address'=>$_SERVER['REMOTE_ADDR']
 			        );				        			       
 			        if(!$this->epayBgValidatePaymentOrder($info['token'],$orderid)){			           
@@ -8540,7 +8540,7 @@ $menu_html.="</li>";
     			  'payment_method'=>$data['payment_method'],
     			  'amount'=>$data['amount'],
     			  'currency_code'=>adminCurrencyCode(),
-    			  'date_created'=>FunctionsV3::dateNow(),
+    			  'date_created'=>FunctionsV4::dateNow(),
     			  'ip_address'=>$_SERVER['REMOTE_ADDR'],
     			  'account'=>$data['account'],
     			  'date_to_process'=>$process_date,
@@ -8567,7 +8567,7 @@ $menu_html.="</li>";
     			  'payment_method'=>$data['payment_method'],
     			  'amount'=>$data['amount'],
     			  'currency_code'=>adminCurrencyCode(),
-    			  'date_created'=>FunctionsV3::dateNow(),
+    			  'date_created'=>FunctionsV4::dateNow(),
     			  'ip_address'=>$_SERVER['REMOTE_ADDR'],
     			  'account_name'=>$data['account_name'],
     			  'bank_account_number'=>$data['bank_account_number'],
@@ -8866,7 +8866,7 @@ $menu_html.="</li>";
     		  'faxno'=>$this->getOption('fax_merchant_number',$merchant_id),
     		  'recipname'=>$this->getOption('fax_merchant_recipient',$merchant_id),
     		  'faxurl'=>websiteUrl()."/store/fax/?id=$order_id",  
-    		  'date_created'=>FunctionsV3::dateNow(),
+    		  'date_created'=>FunctionsV4::dateNow(),
     		  'ip_address'=>$_SERVER['REMOTE_ADDR']
     		);
     		$this->db_ext->insertData("{{fax_broadcast}}",$params);
@@ -9139,7 +9139,7 @@ $menu_html.="</li>";
 			  'status'=>isset($res['msg'])?$res['msg']:'',
 			  'gateway_response'=>isset($res['raw'])?$res['raw']:'',
 			  'gateway'=>$res['sms_provider'],
-			  'date_created'=>FunctionsV3::dateNow(),
+			  'date_created'=>FunctionsV4::dateNow(),
 			  'ip_address'=>$_SERVER['REMOTE_ADDR']
 			);
 			$DbExt=new DbExt;
@@ -9159,7 +9159,7 @@ $menu_html.="</li>";
 			{{item}}
 			WHERE
 			item_name LIKE '%$food_name%'
-			AND merchant_id=".FunctionsV3::q($merchant_id)."
+			AND merchant_id=".FunctionsV4::q($merchant_id)."
 			";
 			$DbExt=new DbExt;
 			if($res=$DbExt->rst($stmt_sub)){
@@ -9237,7 +9237,7 @@ $menu_html.="</li>";
 	
 	public function AAmenuList()
 	{
-		$menu_list= null;
+		$menu_list=null;
 		$menu=$this->adminMenu();		
 		foreach ($menu['items'] as $val) {
 			$menu_list[]=$val['tag'];

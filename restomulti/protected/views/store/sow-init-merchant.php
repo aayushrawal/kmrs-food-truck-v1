@@ -29,7 +29,7 @@ if ( $data=Yii::app()->functions->getOrder($_GET['id'])){
     
     /*COMMISSION*/
 	//if ( Yii::app()->functions->isMerchantCommission($merchant_id)){	
-	if (FunctionsV3::isMerchantPaymentToUseAdmin($merchant_id)){
+	if (FunctionsV4::isMerchantPaymentToUseAdmin($merchant_id)){
 		$mtid=Yii::app()->functions->getOptionAdmin('admin_sanbox_sisow_secret_key');
         $mtkey=Yii::app()->functions->getOptionAdmin('admin_sandbox_sisow_pub_key');
         $mtshopid=Yii::app()->functions->getOptionAdmin('admin_sandbox_sisow_shopid');
@@ -70,7 +70,7 @@ if ( $data=Yii::app()->functions->getOrder($_GET['id'])){
 		          'order_id'=>$data_get['id'],
 		          'payment_type'=>Yii::app()->functions->paymentCode('sisow'),
 		          'raw_response'=>json_encode($data_get),
-		          'date_created'=>FunctionsV3::dateNow(),
+		          'date_created'=>FunctionsV4::dateNow(),
 		          'ip_address'=>$_SERVER['REMOTE_ADDR'],
 		          'payment_reference'=>$data_get['trxid']
 		        );

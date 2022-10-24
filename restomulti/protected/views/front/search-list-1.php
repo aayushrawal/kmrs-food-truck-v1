@@ -1,5 +1,5 @@
 <?php
-$min_fees=FunctionsV3::getMinOrderByTableRates($merchant_id,
+$min_fees=FunctionsV4::getMinOrderByTableRates($merchant_id,
    $distance,
    $distance_type_orig,
    $val['minimum_order']
@@ -17,13 +17,13 @@ if($val['service']==1 || $val['service']==2  || $val['service']==4  || $val['ser
         <div class="ribbon"><span><?php echo t("Sponsored")?></span></div>
         <?php endif;?>
         
-        <?php if ($offer=FunctionsV3::getOffersByMerchant($merchant_id)):?>
+        <?php if ($offer=FunctionsV4::getOffersByMerchant($merchant_id)):?>
         <div class="ribbon-offer"><span><?php echo $offer;?></span></div>
         <?php endif;?>
 
         <!--<a href="<?php echo Yii::app()->createUrl('store/menu/merchant/'.$val['restaurant_slug'])?>" >-->
         <a href="<?php echo Yii::app()->createUrl("/menu-". trim($val['restaurant_slug']))?>">
-        <img class="logo-medium"src="<?php echo FunctionsV3::getMerchantLogo($merchant_id);?>">
+        <img class="logo-medium"src="<?php echo FunctionsV4::getMerchantLogo($merchant_id);?>">
         </a>
         
         <h2 class="concat-text"><?php echo clearString($val['restaurant_name'])?></h2>
@@ -35,19 +35,19 @@ if($val['service']==1 || $val['service']==2  || $val['service']==4  || $val['ser
              <p><?php echo $ratings['votes']." ".t("Reviews")?></p>
           </div>
           <div class="mycol b">
-             <?php //echo FunctionsV3::prettyPrice($val['minimum_order'])?>
-             <?php echo FunctionsV3::prettyPrice($min_fees)?>
+             <?php //echo FunctionsV4::prettyPrice($val['minimum_order'])?>
+             <?php echo FunctionsV4::prettyPrice($min_fees)?>
              <p><?php echo t("Minimum Order")?></p>
           </div>
         </div> <!--mytable-->
 
         <div class="top25"></div>
         
-        <?php echo FunctionsV3::merchantOpenTag($merchant_id)?>
-        <?php echo FunctionsV3::getFreeDeliveryTag($merchant_id)?>                        
+        <?php echo FunctionsV4::merchantOpenTag($merchant_id)?>
+        <?php echo FunctionsV4::getFreeDeliveryTag($merchant_id)?>                        
         
         <p class="top15 cuisine concat-text">
-        <?php echo FunctionsV3::displayCuisine($val['cuisine']);?>
+        <?php echo FunctionsV4::displayCuisine($val['cuisine']);?>
         </p>                
                                  
         <p>
@@ -61,7 +61,7 @@ if($val['service']==1 || $val['service']==2  || $val['service']==4  || $val['ser
         </p>
         
         <?php  if($show_delivery_info):// if($val['service']!=3):?>
-        <p><?php echo t("Delivery Est")?>: <?php echo FunctionsV3::getDeliveryEstimation($merchant_id)?></p>
+        <p><?php echo t("Delivery Est")?>: <?php echo FunctionsV4::getDeliveryEstimation($merchant_id)?></p>
         <?php endif;?>
         
         <p>
@@ -80,13 +80,13 @@ if($val['service']==1 || $val['service']==2  || $val['service']==4  || $val['ser
         //if($val['service']!=3){
         if($show_delivery_info){
 	        if ($delivery_fee){
-	             echo t("Delivery Fee").": ".FunctionsV3::prettyPrice($delivery_fee);
+	             echo t("Delivery Fee").": ".FunctionsV4::prettyPrice($delivery_fee);
 	        } else echo  t("Delivery Fee").": ".t("Free Delivery");
         }
         ?>
         </p>
         
-        <?php echo FunctionsV3::displayServicesList($val['service'])?>          
+        <?php echo FunctionsV4::displayServicesList($val['service'])?>          
         
         <a href="<?php echo Yii::app()->createUrl("/menu-". trim($val['restaurant_slug']))?>" 
         class="orange-button rounded3 medium">

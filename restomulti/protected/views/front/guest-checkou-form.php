@@ -143,7 +143,7 @@ isset($client_info['contact_phone'])?$client_info['contact_phone']:''
 <?php endif;?>
 
 
-<?php FunctionsV3::sectionHeader('Create Account')?>		  
+<?php FunctionsV4::sectionHeader('Create Account')?>		  
 <p class="text-muted text-small">***<?php echo t("Optional")?></p>
 
 <div class="row top10">

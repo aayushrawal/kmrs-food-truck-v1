@@ -24,7 +24,7 @@ $this->renderPartial('/front/order-progress-bar',array(
   	<div class="row top10">
 	  <div class="col-md-3"><?php echo t("Amount")?></div>
 	  <div class="col-md-8">
-	    <?php echo FunctionsV3::prettyPrice($amount_to_pay)?>
+	    <?php echo FunctionsV4::prettyPrice($amount_to_pay)?>
 	  </div>
 	</div>
 	

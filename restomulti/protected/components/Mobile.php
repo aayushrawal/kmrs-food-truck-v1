@@ -32,7 +32,7 @@ class Mobile
 	
 	public function updateToken($token='',$user_id='')
 	{
-		$params=array('token'=>$token,'last_login'=>FunctionsV3::dateNow(),'ip_address'=>$_SERVER['REMOTE_ADDR']);		
+		$params=array('token'=>$token,'last_login'=>FunctionsV4::dateNow(),'ip_address'=>$_SERVER['REMOTE_ADDR']);		
 		$db_ext=new DbExt;
 		if ($db_ext->updateData("{{client}}",$params,'client_id',$user_id)){
 			return true;

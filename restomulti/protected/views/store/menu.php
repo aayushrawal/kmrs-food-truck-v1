@@ -1,12 +1,12 @@
 <?php
 /*POINTS PROGRAM*/
-if (FunctionsV3::hasModuleAddon("pointsprogram")){
+if (FunctionsV4::hasModuleAddon("pointsprogram")){
 	unset($_SESSION['pts_redeem_amt']);
 	unset($_SESSION['pts_redeem_points']);
 }
 
 $merchant_photo_bg=getOption($merchant_id,'merchant_photo_bg');
-if ( !file_exists(FunctionsV3::uploadPath()."/$merchant_photo_bg")){
+if ( !file_exists(FunctionsV4::uploadPath()."/$merchant_photo_bg")){
 	$merchant_photo_bg='';
 } 
 
@@ -14,7 +14,7 @@ if ( !file_exists(FunctionsV3::uploadPath()."/$merchant_photo_bg")){
 
 /*GET MINIMUM ORDER*/
 
-$min_fees=FunctionsV3::getMinOrderByTableRates($merchant_id,
+$min_fees=FunctionsV4::getMinOrderByTableRates($merchant_id,
    $distance,
    $distance_type,
    $data['minimum_order']
@@ -31,7 +31,7 @@ $merchant_info=array(
   'restaurant_name'=>$data['restaurant_name'],
   'background'=>$merchant_photo_bg,
   'merchant_website'=>$merchant_website,
-  'merchant_logo'=>FunctionsV3::getMerchantLogo($merchant_id),
+  'merchant_logo'=>FunctionsV4::getMerchantLogo($merchant_id),
   'contact_phone'=>$data['contact_phone'],
   'restaurant_phone'=>$data['restaurant_phone'],
   'social_facebook_page'=>$social_facebook_page,
@@ -57,7 +57,7 @@ $this->renderPartial('/front/order-progress-bar',array(
 $now=date('Y-m-d');
 $now_time='';
 
-$checkout=FunctionsV3::isMerchantcanCheckout($merchant_id); 
+$checkout=FunctionsV4::isMerchantcanCheckout($merchant_id); 
 $menu=Yii::app()->functions->getMerchantMenu($merchant_id , isset($_GET['sname'])?$_GET['sname']:'' ); 
 //dump($menu);die();
 
@@ -130,7 +130,7 @@ if (is_numeric($merchant_delivery_distance)){
 echo CHtml::hiddenField('is_ok_delivered',$is_ok_delivered);
 echo CHtml::hiddenField('merchant_delivery_miles',$merchant_delivery_distance);
 echo CHtml::hiddenField('unit_distance',$distance_type);
-echo CHtml::hiddenField('from_address', FunctionsV3::getSessionAddress() );
+echo CHtml::hiddenField('from_address', FunctionsV4::getSessionAddress() );
 
 echo CHtml::hiddenField('merchant_close_store',getOption($merchant_id,'merchant_close_store'));
 /*$close_msg=getOption($merchant_id,'merchant_close_msg');
@@ -154,12 +154,12 @@ if ($search_by_location){
 	echo CHtml::hiddenField('search_by_location',$search_by_location);
 }
 
-echo CHtml::hiddenField('minimum_order_dinein',FunctionsV3::prettyPrice($minimum_order_dinein));
-echo CHtml::hiddenField('maximum_order_dinein',FunctionsV3::prettyPrice($maximum_order_dinein));
+echo CHtml::hiddenField('minimum_order_dinein',FunctionsV4::prettyPrice($minimum_order_dinein));
+echo CHtml::hiddenField('maximum_order_dinein',FunctionsV4::prettyPrice($maximum_order_dinein));
 
 /*add meta tag for image*/
 Yii::app()->clientScript->registerMetaTag(
-Yii::app()->getBaseUrl(true).FunctionsV3::getMerchantLogo($merchant_id)
+Yii::app()->getBaseUrl(true).FunctionsV4::getMerchantLogo($merchant_id)
 ,'og:image');
 
 $remove_delivery_info=false;
@@ -461,7 +461,7 @@ if ($food_viewing_private==2){
 	        </p>
 	        
 	        <p class="delivery-fee-wrap">
-	        <?php echo t("Delivery Est")?>: <?php echo FunctionsV3::getDeliveryEstimation($merchant_id)?></p>
+	        <?php echo t("Delivery Est")?>: <?php echo FunctionsV4::getDeliveryEstimation($merchant_id)?></p>
 	        
 	        <p class="delivery-fee-wrap">
 	        <?php 
@@ -476,7 +476,7 @@ if ($food_viewing_private==2){
 	        <p class="delivery-fee-wrap">
 	        <?php 
 	        if ($delivery_fee){
-	             echo t("Delivery Fee").": ".FunctionsV3::prettyPrice($delivery_fee);
+	             echo t("Delivery Fee").": ".FunctionsV4::prettyPrice($delivery_fee);
 	        } else echo  t("Delivery Fee").": ".t("Free Delivery");
 	        ?>
 	        </p>
@@ -528,7 +528,7 @@ if ($food_viewing_private==2){
            <?php if($minimum_order_dinein>0):?>
            <div class="dinein-min">
               <p class="small center"><?php echo Yii::t("default","Subtotal must exceed")?> 
-              <?php echo FunctionsV3::prettyPrice($minimum_order_dinein)?>
+              <?php echo FunctionsV4::prettyPrice($minimum_order_dinein)?>
            </div>
            <?php endif;?>
               
@@ -561,7 +561,7 @@ if ($food_viewing_private==2){
             <?php if ( $detect->isMobile() ) :?>
              <?php                           
              echo CHtml::dropDownList('delivery_time',$now_time,
-             (array)FunctionsV3::timeList()
+             (array)FunctionsV4::timeList()
              ,array(
               'class'=>"grey-fields"
              ))

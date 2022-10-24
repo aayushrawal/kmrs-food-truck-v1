@@ -4,7 +4,7 @@
 <form id="newforms" class="email-template-table uk-form" method="POST" onsubmit="return false;">
 <?php 
 echo CHtml::hiddenField('action','saveTemplateSettings');
-FunctionsV3::addCsrfToken(false);
+FunctionsV4::addCsrfToken(false);
 ?>
 <table class="uk-table uk-table-hover">
   <thead>

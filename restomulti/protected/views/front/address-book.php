@@ -13,7 +13,7 @@ $do=isset($_GET['do'])?$_GET['do']:'';
 <?php if (isset($_GET['id'])):?>
 <?php echo CHtml::hiddenField('id',$_GET['id'])?>
 <?php else :?>
-<?php /*echo CHtml::hiddenField('redirect', FunctionsV3::getHostURL().Yii::app()->createUrl('store/profile',array(
+<?php /*echo CHtml::hiddenField('redirect', FunctionsV4::getHostURL().Yii::app()->createUrl('store/profile',array(
   'tab'=>2,
   'do'=>'add'
 )) )*/?>

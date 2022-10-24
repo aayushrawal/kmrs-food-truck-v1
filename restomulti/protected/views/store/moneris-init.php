@@ -64,7 +64,7 @@ if (isset($_POST)){
 			          'payment_type'=>Moneris::getPaymentCode(),
 			          'payment_reference'=>$resp->getReferenceNum(),
 			          'raw_response'=>$full_response,
-			          'date_created'=>FunctionsV3::dateNow(),
+			          'date_created'=>FunctionsV4::dateNow(),
 			          'ip_address'=>$_SERVER['REMOTE_ADDR']
 			        );		        
 			        $DbExt->insertData("{{payment_order}}",$params_logs);
@@ -75,12 +75,12 @@ if (isset($_POST)){
 		            $DbExt->updateData("{{order}}",$params_update,'order_id',$_GET['id']);
 		        
 		            /*POINTS PROGRAM*/ 
-			        if (FunctionsV3::hasModuleAddon("pointsprogram")){
+			        if (FunctionsV4::hasModuleAddon("pointsprogram")){
 			           PointsProgram::updatePoints($_GET['id']);
 			        }
 			        
 			        /*Driver app*/
-					if (FunctionsV3::hasModuleAddon("driver")){
+					if (FunctionsV4::hasModuleAddon("driver")){
 					   Yii::app()->setImport(array(			
 						  'application.modules.driver.components.*',
 					   ));

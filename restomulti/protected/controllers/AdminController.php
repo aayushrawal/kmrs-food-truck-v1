@@ -68,7 +68,7 @@ class AdminController extends CController
 		  CClientScript::POS_HEAD
 		);
 		
-		FunctionsV3::handleLanguage();
+		FunctionsV4::handleLanguage();
 		$lang=Yii::app()->language;		
 		$cs->registerScript(
 		  'lang',
@@ -351,7 +351,7 @@ class AdminController extends CController
 		
 		$this->crumbsTitle=t("Manage Language Settings");
 		$this->render('manage-language-new',array(
-		  'langauge_list'=>FunctionsV3::getLanguageList(false),
+		  'langauge_list'=>FunctionsV4::getLanguageList(false),
 		  'set_lang_id'=>$set_lang_id
 		));
 	}
@@ -515,7 +515,7 @@ class AdminController extends CController
 	{
 		$this->crumbsTitle=Yii::t("default","Email Template");		
 		
-		$order_stats = FunctionsV3::orderStatusTPL();
+		$order_stats = FunctionsV4::orderStatusTPL();
 		
 		$data=array(
 		  'general_template'=>array(
@@ -908,7 +908,7 @@ class AdminController extends CController
 		$size=getOptionA('admin_printing_receipt_size');
 		$width=getOptionA('admin_printing_receipt_width');
 		
-		FunctionsV3::setPrintSize($size, $width);
+		FunctionsV4::setPrintSize($size, $width);
 						
 		$baseUrl = Yii::app()->baseUrl; 
 		$cs = Yii::app()->getClientScript();				
@@ -926,7 +926,7 @@ class AdminController extends CController
 	{
 		if (isset($_GET['id'])){
 			$id=$_GET['id'];			
-			if($res=FunctionsV3::getEmailogsByID($id)){
+			if($res=FunctionsV4::getEmailogsByID($id)){
 				echo nl2br($res['content']);
 			} else $this->render('error',array(
 		      'message'=>t("Sorry but we cannot find what you are looking for.")
@@ -952,7 +952,7 @@ class AdminController extends CController
 	{
 		$this->crumbsTitle=t("Define location");
 		$id=isset($_GET['countryid'])?$_GET['countryid']:'';
-		if ( $res=FunctionsV3::locationCountry($id)){
+		if ( $res=FunctionsV4::locationCountry($id)){
 			$this->render('manage-define-location',array(
 			  'data'=>$res,
 			  'id'=>$id

@@ -9,7 +9,7 @@
     </a>     
 </div>  
 
-<?php if ( $res=FunctionsV3::getMerchantOpeningHours($merchant_id)):?>
+<?php if ( $res=FunctionsV4::getMerchantOpeningHours($merchant_id)):?>
 <?php foreach ($res as $val):?>
    <div class="row">
       <div class="col-md-3 col-xs-3 "><i class="green-color ion-ios-plus-empty"></i> 

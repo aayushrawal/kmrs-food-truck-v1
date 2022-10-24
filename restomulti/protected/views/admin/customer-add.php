@@ -25,7 +25,7 @@ if (isset($_GET['id'])){
 <?php endif;?>
 <?php 
 $p = new CHtmlPurifier();
-FunctionsV3::addCsrfToken();
+FunctionsV4::addCsrfToken();
 ?>
 
 <div class="uk-form-row">

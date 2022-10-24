@@ -29,7 +29,7 @@ data-category_id="<?php echo $val['category_id']?>"
 >
 <div class="row">
   <div class="col-md-2">
-    <img src="<?php echo FunctionsV3::getFoodDefaultImage($val_item['photo'],false)?>">
+    <img src="<?php echo FunctionsV4::getFoodDefaultImage($val_item['photo'],false)?>">
   </div> <!--col-->
   <div class="col-md-7">
     <p class="bold"><?php echo qTranslate($val_item['item_name'],'item_name',$val_item)?></p>  
@@ -39,7 +39,7 @@ data-category_id="<?php echo $val['category_id']?>"
   </div> <!--col-->
   
   <div class="col-md-3 center">
-  <p class="bold"><?php echo FunctionsV3::getItemFirstPrice($val_item['prices'],$val_item['discount'])?></p>
+  <p class="bold"><?php echo FunctionsV4::getItemFirstPrice($val_item['prices'],$val_item['discount'])?></p>
   </div> <!--col-->
   
 </div> <!--row-->
@@ -53,7 +53,7 @@ data-category_id="<?php echo $val['category_id']?>"
 >
 <div class="row">
   <div class="col-md-2">
-    <img src="<?php echo FunctionsV3::getFoodDefaultImage($val_item['photo'],false)?>">
+    <img src="<?php echo FunctionsV4::getFoodDefaultImage($val_item['photo'],false)?>">
   </div> <!--col-->
   <div class="col-md-7">
     <p class="bold"><?php echo qTranslate($val_item['item_name'],'item_name',$val_item)?></p>  
@@ -63,7 +63,7 @@ data-category_id="<?php echo $val['category_id']?>"
   </div> <!--col-->
   
   <div class="col-md-3 center">
-  <p class="bold"><?php echo FunctionsV3::getItemFirstPrice($val_item['prices'],$val_item['discount'])?></p>
+  <p class="bold"><?php echo FunctionsV4::getItemFirstPrice($val_item['prices'],$val_item['discount'])?></p>
   </div> <!--col-->
   
 </div> <!--row-->

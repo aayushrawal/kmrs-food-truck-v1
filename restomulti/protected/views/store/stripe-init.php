@@ -25,7 +25,7 @@ if ( $data=Yii::app()->functions->getOrder($_GET['id'])){
 	
 	/*COMMISSION*/
 	//if ( Yii::app()->functions->isMerchantCommission($merchant_id)){
-	if (FunctionsV3::isMerchantPaymentToUseAdmin($merchant_id)){
+	if (FunctionsV4::isMerchantPaymentToUseAdmin($merchant_id)){
 		$mode=Yii::app()->functions->getOptionAdmin('admin_stripe_mode');   				
 		if ( $mode=="Sandbox"){
 			$secret_key=Yii::app()->functions->getOptionAdmin('admin_sanbox_stripe_secret_key');   
@@ -84,7 +84,7 @@ if (isset($_POST)){
 	          'order_id'=>$_GET['id'],
 	          'payment_type'=>"stp",
 	          'raw_response'=>json_encode($chargeArray),
-	          'date_created'=>FunctionsV3::dateNow(),
+	          'date_created'=>FunctionsV4::dateNow(),
 	          'ip_address'=>$_SERVER['REMOTE_ADDR']
 	        );
 	        $db_ext->insertData("{{payment_order}}",$params_logs);
@@ -96,12 +96,12 @@ if (isset($_POST)){
 	        
 	        
 	        /*POINTS PROGRAM*/ 
-	        if (FunctionsV3::hasModuleAddon("pointsprogram")){
+	        if (FunctionsV4::hasModuleAddon("pointsprogram")){
 	           PointsProgram::updatePoints($_GET['id']);
 	        }
 	        
 	        /*Driver app*/
-			if (FunctionsV3::hasModuleAddon("driver")){
+			if (FunctionsV4::hasModuleAddon("driver")){
 			   Yii::app()->setImport(array(			
 				  'application.modules.driver.components.*',
 			   ));

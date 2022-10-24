@@ -1,5 +1,5 @@
 <?php
-$kr_search_adrress = FunctionsV3::getSessionAddress();
+$kr_search_adrress = FunctionsV4::getSessionAddress();
 
 $home_search_text=Yii::app()->functions->getOptionAdmin('home_search_text');
 if (empty($home_search_text)){
@@ -112,7 +112,7 @@ data-image-src="<?php echo assetsURL()."/images/b6.jpg"?>">
 <!--FEATURED RESTAURANT SECIONS-->
 <?php if ($disabled_featured_merchant==""):?>
 <?php if ( getOptionA('disabled_featured_merchant')!="yes"):?>
-<?php if ($res=FunctionsV3::getFeatureMerchant()):?>
+<?php if ($res=FunctionsV4::getFeatureMerchant()):?>
 <div class="sections section-feature-resto">
 <div class="container">
 
@@ -132,7 +132,7 @@ data-image-src="<?php echo assetsURL()."/images/b6.jpg"?>">
     <div class="col-md-5 border-light ">
     
         <div class="col-md-3 col-sm-3">
-           <img class="logo-small" src="<?php echo FunctionsV3::getMerchantLogo($val['merchant_id'],$val['logo']);?>">
+           <img class="logo-small" src="<?php echo FunctionsV4::getMerchantLogo($val['merchant_id'],$val['logo']);?>">
         </div> <!--col-->
         
         <div class="col-md-9 col-sm-9">
@@ -142,18 +142,18 @@ data-image-src="<?php echo assetsURL()."/images/b6.jpg"?>">
 		          <div class="rating-stars" data-score="<?php echo $ratings['ratings']?>"></div>   
 	          </div>
 	          <div class="col-sm-2 merchantopentag">
-	          <?php echo FunctionsV3::merchantOpenTag($val['merchant_id'])?>   
+	          <?php echo FunctionsV4::merchantOpenTag($val['merchant_id'])?>   
 	          </div>
           </div>
           
           <h4 class="concat-text"><?php echo clearString($val['restaurant_name'])?></h4>
           
           <p class="concat-text">
-          <?php //echo wordwrap(FunctionsV3::displayCuisine($val['cuisine']),50,"<br />\n");?>
-          <?php echo FunctionsV3::displayCuisine($val['cuisine']);?>
+          <?php //echo wordwrap(FunctionsV4::displayCuisine($val['cuisine']),50,"<br />\n");?>
+          <?php echo FunctionsV4::displayCuisine($val['cuisine']);?>
           </p>
           <p class="concat-text"><?php echo $address?></p>                             
-          <?php echo FunctionsV3::displayServicesList($val['service'])?>          
+          <?php echo FunctionsV4::displayServicesList($val['service'])?>          
         </div> <!--col-->
         
     </div> <!--col-6-->
@@ -174,7 +174,7 @@ data-image-src="<?php echo assetsURL()."/images/b6.jpg"?>">
 
 <?php if ($theme_hide_cuisine<>2):?>
 <!--CUISINE SECTIONS-->
-<?php if ( $list=FunctionsV3::getCuisine() ): ?>
+<?php if ( $list=FunctionsV4::getCuisine() ): ?>
 <div class="sections section-cuisine">
 <div class="container  nopad">
 

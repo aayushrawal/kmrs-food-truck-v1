@@ -272,7 +272,7 @@ class Widgets extends CApplicationComponent
 		}
 		
 		//$list=Yii::app()->functions->getLanguageList();	
-		$list=FunctionsV3::getEnabledLanguage();				
+		$list=FunctionsV4::getEnabledLanguage();				
 		if ($show_language==""):
 		if (is_array($list) && count($list)>=1):
 		?>
@@ -1660,7 +1660,7 @@ class Widgets extends CApplicationComponent
 		<ul data-uk-tab="{connect:'#tab-content'}" class="uk-tab uk-active">
 		    <li class="uk-active" ><a href="#"><?php echo t("default")?></a></li>
 		    <?php //if ( $fields=Yii::app()->functions->getLanguageField()):?>  
-		    <?php if ( $fields=FunctionsV3::getLanguageList(false)):?>  
+		    <?php if ( $fields=FunctionsV4::getLanguageList(false)):?>  
 		    <?php foreach ($fields as $f_val): ?>
 		    <li class="" ><a href="#"><?php echo $f_val;?></a></li>
 		    <?php endforeach;?>

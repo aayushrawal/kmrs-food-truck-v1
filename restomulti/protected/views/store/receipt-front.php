@@ -63,57 +63,57 @@
 	   <table class="table table-striped">
 	   <tbody>	
 	       <?php 
-	       FunctionsV3::receiptTableRow('Customer Name',$data['full_name']);
-	       FunctionsV3::receiptTableRow('Merchant Name',clearString($data['merchant_name']));
+	       FunctionsV4::receiptTableRow('Customer Name',$data['full_name']);
+	       FunctionsV4::receiptTableRow('Merchant Name',clearString($data['merchant_name']));
 	       if (isset($data['abn']) && !empty($data['abn'])){
-	       	   FunctionsV3::receiptTableRow('ABN',$data['abn']);
+	       	   FunctionsV4::receiptTableRow('ABN',$data['abn']);
 	       }
-	       FunctionsV3::receiptTableRow('Telephone',$data['merchant_contact_phone']);
-	       FunctionsV3::receiptTableRow('Address',$full_merchant_address);
-	       FunctionsV3::receiptTableRow('TRN Type', t($data['trans_type']) );
-	       //FunctionsV3::receiptTableRow('Payment Type',$data['payment_type']);
+	       FunctionsV4::receiptTableRow('Telephone',$data['merchant_contact_phone']);
+	       FunctionsV4::receiptTableRow('Address',$full_merchant_address);
+	       FunctionsV4::receiptTableRow('TRN Type', t($data['trans_type']) );
+	       //FunctionsV4::receiptTableRow('Payment Type',$data['payment_type']);
 	       
-	       FunctionsV3::receiptTableRow('Payment Type',
-	         FunctionsV3::prettyPaymentType('payment_order',$data['payment_type'],$data['order_id'],$data['trans_type'])
+	       FunctionsV4::receiptTableRow('Payment Type',
+	         FunctionsV4::prettyPaymentType('payment_order',$data['payment_type'],$data['order_id'],$data['trans_type'])
 	       );	       
 	       
 	       if ( $data['payment_provider_name']){
-	       	  FunctionsV3::receiptTableRow('Card#',$data['payment_provider_name']);
+	       	  FunctionsV4::receiptTableRow('Card#',$data['payment_provider_name']);
 	       }
 	       if ( $data['payment_type'] =="pyp"){
 	       	  $paypal_info=Yii::app()->functions->getPaypalOrderPayment($data['order_id']);	
-	          FunctionsV3::receiptTableRow('Paypal Transaction ID', 
+	          FunctionsV4::receiptTableRow('Paypal Transaction ID', 
 	            isset($paypal_info['TRANSACTIONID'])?$paypal_info['TRANSACTIONID']:''
 	          );
 	       }
-	       FunctionsV3::receiptTableRow('Reference #', Yii::app()->functions->formatOrderNumber($data['order_id']) );
+	       FunctionsV4::receiptTableRow('Reference #', Yii::app()->functions->formatOrderNumber($data['order_id']) );
 	       if ( !empty($data['payment_reference'])){
-	       	  FunctionsV3::receiptTableRow('Payment Ref',$data['payment_reference']);
+	       	  FunctionsV4::receiptTableRow('Payment Ref',$data['payment_reference']);
 	       }
 	       if ( $data['payment_type']=="ccr" || $data['payment_type']=="ocr"){
-	           FunctionsV3::receiptTableRow('Card #',
+	           FunctionsV4::receiptTableRow('Card #',
 	           $card=Yii::app()->functions->maskCardnumber($data['credit_card_number'])
 	           );
 	       }
 	       $trn_date=date('M d,Y G:i:s',strtotime($data['date_created']));
-	       FunctionsV3::receiptTableRow('TRN Date',  Yii::app()->functions->translateDate($trn_date) );
+	       FunctionsV4::receiptTableRow('TRN Date',  Yii::app()->functions->translateDate($trn_date) );
 	       
 	       if ($data['trans_type']=="delivery"){
 	           /*DELIVERY*/
 	           if (isset($data['delivery_date'])){
 	           	  $date = prettyDate($data['delivery_date']);
 		          $date=Yii::app()->functions->translateDate($date);
-	              FunctionsV3::receiptTableRow('Delivery Date', $date );
+	              FunctionsV4::receiptTableRow('Delivery Date', $date );
 	           }
 	           if (isset($data['delivery_time'])){
 	       	  	  if ( !empty($data['delivery_time'])){
-	       	  	  	  FunctionsV3::receiptTableRow('Delivery Time',
+	       	  	  	  FunctionsV4::receiptTableRow('Delivery Time',
 	       	  	  	  Yii::app()->functions->timeFormat($data['delivery_time'],true) );
 	       	  	  }
 	       	   }
 	       	   if (isset($data['delivery_asap'])){
 	       	   	   if ( !empty($data['delivery_asap'])){
-	       	   	   	   FunctionsV3::receiptTableRow('Deliver ASAP',
+	       	   	   	   FunctionsV4::receiptTableRow('Deliver ASAP',
 	       	   	   	    $data['delivery_asap']==1?t("Yes"):''
 	       	   	   	   );
 	       	   	   }
@@ -121,24 +121,24 @@
 	       	   if (!empty($data['client_full_address'])){
 		         	$delivery_address=$data['client_full_address'];
 		       } else $delivery_address=$data['full_address'];
-	       	   FunctionsV3::receiptTableRow('Deliver to', $delivery_address );
+	       	   FunctionsV4::receiptTableRow('Deliver to', $delivery_address );
 	       	   
 	       	   if (!empty($data['delivery_instruction'])){
-	       	      FunctionsV3::receiptTableRow('Delivery Instruction',$data['delivery_instruction']);
+	       	      FunctionsV4::receiptTableRow('Delivery Instruction',$data['delivery_instruction']);
 	       	   }
 	       	   
        	       if (!empty($data['location_name1'])){
 	         	  $data['location_name']=$data['location_name1'];
 	           }
-	       	   FunctionsV3::receiptTableRow('Location Name',$data['location_name']);
+	       	   FunctionsV4::receiptTableRow('Location Name',$data['location_name']);
 	       	   
 	       	   if ( !empty($data['contact_phone1'])){
 		          $data['contact_phone']=$data['contact_phone1'];
 		       }
-	       	   FunctionsV3::receiptTableRow('Contact Number',$data['contact_phone']);
+	       	   FunctionsV4::receiptTableRow('Contact Number',$data['contact_phone']);
 	       	   
 	       	   if ($data['order_change']>=0.1){
-	       	   	  FunctionsV3::receiptTableRow('Change', FunctionsV3::prettyPrice($data['order_change']) );
+	       	   	  FunctionsV4::receiptTableRow('Change', FunctionsV4::prettyPrice($data['order_change']) );
 	       	   }
 	       	   
 	       } else {
@@ -153,25 +153,25 @@
 		          $label_time="Dine in Time";
 		      }
 	       	  
-	       	  FunctionsV3::receiptTableRow('Contact Number',$data['contact_phone']);
+	       	  FunctionsV4::receiptTableRow('Contact Number',$data['contact_phone']);
 	       	  if (isset($data['delivery_date'])){
-	       	  	  FunctionsV3::receiptTableRow($label_date,$data['delivery_date']);
+	       	  	  FunctionsV4::receiptTableRow($label_date,$data['delivery_date']);
 	       	  }
 	       	  if (isset($data['delivery_time'])){
 	       	  	  if ( !empty($data['delivery_time'])){
-	       	  	  	  FunctionsV3::receiptTableRow($label_time,$data['delivery_time']);
+	       	  	  	  FunctionsV4::receiptTableRow($label_time,$data['delivery_time']);
 	       	  	  }
 	       	  }
 	       	  
 	       	  if ($data['order_change']>=0.1){
-	       	  	  FunctionsV3::receiptTableRow('Change',
-	       	  	  FunctionsV3::prettyPrice($data['order_change'])
+	       	  	  FunctionsV4::receiptTableRow('Change',
+	       	  	  FunctionsV4::prettyPrice($data['order_change'])
 	       	  	  );
 	       	  }
 	       	  
 	       	  if ($transaction_type=="dinein"){
-	       	  	 FunctionsV3::receiptTableRow("Number of guest",$data['dinein_number_of_guest']);
-	       	  	 FunctionsV3::receiptTableRow("Special instructions",$data['dinein_special_instruction']);
+	       	  	 FunctionsV4::receiptTableRow("Number of guest",$data['dinein_number_of_guest']);
+	       	  	 FunctionsV4::receiptTableRow("Special instructions",$data['dinein_special_instruction']);
 	       	  }
 	       	  
 	       }

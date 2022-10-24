@@ -113,7 +113,7 @@ class MerchantController extends CController
     		Yii::app()->timeZone=$mt_timezone;
     	 }		     	 
     	 
-    	 FunctionsV3::handleLanguage();
+    	 FunctionsV4::handleLanguage();
     	 $cs = Yii::app()->getClientScript();
     	 $lang=Yii::app()->language;
 		 $cs->registerScript(
@@ -694,7 +694,7 @@ class MerchantController extends CController
 						  'payment_type'=>$payment_code,
 						  'package_price'=>$amount_to_pay,
 						  'sms_limit'=>isset($res['sms_limit'])?$res['sms_limit']:'',
-						  'date_created'=>FunctionsV3::dateNow(),
+						  'date_created'=>FunctionsV4::dateNow(),
 						  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 						  'payment_gateway_response'=>json_encode($_GET),						  
 						  //'payment_reference'=>$response['orderid']
@@ -827,7 +827,7 @@ class MerchantController extends CController
 							  'payment_type'=>$payment_code,
 							  'package_price'=>$amount_to_pay,
 							  'sms_limit'=>isset($res['sms_limit'])?$res['sms_limit']:'',
-							  'date_created'=>FunctionsV3::dateNow(),
+							  'date_created'=>FunctionsV4::dateNow(),
 							  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 							  'payment_gateway_response'=>json_encode($_GET),						  
 							  'payment_reference'=>$payment_ref
@@ -871,7 +871,7 @@ class MerchantController extends CController
 			$session_token=Yii::app()->functions->generateRandomKey().md5($_SERVER['REMOTE_ADDR']);				
 			 $params=array(
 			  'session_token'=>$session_token,
-			  //'last_login'=>FunctionsV3::dateNow()
+			  //'last_login'=>FunctionsV4::dateNow()
 			 );
 			 $DbExt->updateData("{{merchant}}",$params,'merchant_id',$res[0]['merchant_id']);
 			 
@@ -932,7 +932,7 @@ class MerchantController extends CController
 	
 	public function actionEarnings()
 	{
-		$merchant_type = FunctionsV3::getMerchantTypeBySession();
+		$merchant_type = FunctionsV4::getMerchantTypeBySession();
 		if($merchant_type==3 || $merchant_type==1){
 			$this->crumbsTitle=Yii::t("default","Earnings");		
 			$this->render('error',array(
@@ -943,7 +943,7 @@ class MerchantController extends CController
 		
 		$this->crumbsTitle=Yii::t("default","Earnings");		
 		$this->render('earnings',array(
-		 'merchant_type'=>FunctionsV3::getMerchantTypeBySession()
+		 'merchant_type'=>FunctionsV4::getMerchantTypeBySession()
 		));
 	}
 	
@@ -963,7 +963,7 @@ class MerchantController extends CController
 	
 	public function actionWithdrawals()
 	{
-		$merchant_type = FunctionsV3::getMerchantTypeBySession();
+		$merchant_type = FunctionsV4::getMerchantTypeBySession();
 		if($merchant_type==3 || $merchant_type==1){
 			$this->crumbsTitle=Yii::t("default","Withdrawals");		
 			$this->render('error',array(
@@ -1160,7 +1160,7 @@ $params['RETURNURL']="http://".$_SERVER['HTTP_HOST'].Yii::app()->request->baseUr
 	public function actionShippingRate()
 	{
 		$this->crumbsTitle=Yii::t("default","Delivery Charges Rates");		
-		if (FunctionsV3::isSearchByLocation()){
+		if (FunctionsV4::isSearchByLocation()){
 			$this->render('location-delivery-rates');
 		} else $this->render('shippingrate');		
 	}
@@ -1224,7 +1224,7 @@ $params['RETURNURL']="http://".$_SERVER['HTTP_HOST'].Yii::app()->request->baseUr
 						  'payment_type'=>$payment_code,
 						  'package_price'=>$amount_to_pay,
 						  'sms_limit'=>isset($package_info['sms_limit'])?$package_info['sms_limit']:'',
-						  'date_created'=>FunctionsV3::dateNow(),
+						  'date_created'=>FunctionsV4::dateNow(),
 						  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 						  'payment_reference'=>$res['orderid']
 						  /*'payment_gateway_response'=>json_encode($chargeArray),
@@ -1300,7 +1300,7 @@ header('Location: '.Yii::app()->request->baseUrl."/merchant/smsReceipt/id/".Yii:
 			$payment_description.=isset($res['title'])?$res['title']:'';	
 						
 			$locale='en_US';
-			$apikey=FunctionsV3::getMollieApiKey(true);
+			$apikey=FunctionsV4::getMollieApiKey(true);
 			$_locale=getOptionA('admin_mol_locale');
 			if(!empty($_locale)){
 				$locale=$_locale;
@@ -1337,7 +1337,7 @@ header('Location: '.Yii::app()->request->baseUrl."/merchant/smsReceipt/id/".Yii:
 					  'payment_type'=>'mol',
 					  'package_price'=>$amount_to_pay,
 					  'sms_limit'=>isset($res['sms_limit'])?$res['sms_limit']:'',
-					  'date_created'=>FunctionsV3::dateNow(),
+					  'date_created'=>FunctionsV4::dateNow(),
 					  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 					  'payment_gateway_response'=>json_encode($payment),	
 					  'payment_reference'=>$payment->id
@@ -1369,7 +1369,7 @@ header('Location: '.Yii::app()->request->baseUrl."/merchant/smsReceipt/id/".Yii:
 		$mtid=Yii::app()->functions->getMerchantID();
 		$this->render('min-table-rates',array(
 		  'mtid'=>$mtid,
-		  'data'=>FunctionsV3::getMinOrderTable($mtid)
+		  'data'=>FunctionsV4::getMinOrderTable($mtid)
 		));
 	}
 	
@@ -1404,7 +1404,7 @@ header('Location: '.Yii::app()->request->baseUrl."/merchant/smsReceipt/id/".Yii:
 		$merchant_id=Yii::app()->functions->getMerchantID();
 		$receipt_size=getOption($merchant_id,'printing_receipt_size');
 		$receipt_width=getOption($merchant_id,'printing_receipt_width');		
-		FunctionsV3::setPrintSize($receipt_size, $receipt_width);
+		FunctionsV4::setPrintSize($receipt_size, $receipt_width);
 				
 		$baseUrl = Yii::app()->baseUrl; 
 		$cs = Yii::app()->getClientScript();		
@@ -1423,7 +1423,7 @@ header('Location: '.Yii::app()->request->baseUrl."/merchant/smsReceipt/id/".Yii:
 	
 	public function actionViewInvoice()
 	{		
-		if ( $res=FunctionsV3::getInvoiceByToken($_GET['token'])){					
+		if ( $res=FunctionsV4::getInvoiceByToken($_GET['token'])){					
 			$db=new DbExt;
 			$params=array('viewed'=>1);
 			$db->updateData("{{invoice}}",$params,'invoice_number',$res['invoice_number']);
@@ -1482,7 +1482,7 @@ header('Location: '.Yii::app()->request->baseUrl."/merchant/smsReceipt/id/".Yii:
 			   'package_id'=>$package_id,
 			  'data'=>$data,
 			  'merchant_id'=>Yii::app()->functions->getMerchantID(),
-			  'credentials'=>FunctionsV3::GetVogueAdminCredentials()
+			  'credentials'=>FunctionsV4::GetVogueAdminCredentials()
 			));
 		} else $this->render('error',array(
 		  'message'=>t("Sorry but we cannot find what your are looking for.")
@@ -1497,7 +1497,7 @@ header('Location: '.Yii::app()->request->baseUrl."/merchant/smsReceipt/id/".Yii:
 		if (isset($data_post['transaction_id'])){
 			$transaction_id=$data_post['transaction_id'];
 					
-			$credentials=FunctionsV3::GetVogueAdminCredentials();
+			$credentials=FunctionsV4::GetVogueAdminCredentials();
 			$is_demo=false;				    
 		    if($credentials['merchant_id']=="demo"){
 		    	$is_demo=true;
@@ -1517,7 +1517,7 @@ header('Location: '.Yii::app()->request->baseUrl."/merchant/smsReceipt/id/".Yii:
 	    		   'sms_limit'=>isset($pakage_info['sms_limit'])?$pakage_info['sms_limit']:'', 
 	    		   'payment_reference'=>$transaction_id,
 	    		   'payment_gateway_response'=>json_encode($vog_res),
-	    		   'date_created'=>FunctionsV3::dateNow(),
+	    		   'date_created'=>FunctionsV4::dateNow(),
 	    		   'ip_address'=>$_SERVER['REMOTE_ADDR'],
 	    		);	
 	    		if ($vog_res['status']=="Approved"){
@@ -1542,7 +1542,7 @@ header('Location: '.Yii::app()->request->baseUrl."/merchant/smsReceipt/id/".Yii:
 	{
 		$DbExt=new DbExt;
 		$data_post=$_POST; $data_get=$_GET; $error='';
-		$credentials=FunctionsV3::GetVogueAdminCredentials();		
+		$credentials=FunctionsV4::GetVogueAdminCredentials();		
 		
 	    if(isset($data_post['transaction_id'])){
 		    $transaction_id=isset($data_post['transaction_id'])?$data_post['transaction_id']:'';
@@ -1593,7 +1593,7 @@ header('Location: '.Yii::app()->request->baseUrl."/merchant/smsReceipt/id/".Yii:
 		    		   'sms_limit'=>isset($pakage_info['sms_limit'])?$pakage_info['sms_limit']:'', 
 		    		   'payment_reference'=>$transaction_id,
 		    		   'payment_gateway_response'=>json_encode($vog_res),
-		    		   'date_created'=>FunctionsV3::dateNow(),
+		    		   'date_created'=>FunctionsV4::dateNow(),
 		    		   'ip_address'=>$_SERVER['REMOTE_ADDR'],
 		    		);	
 		    		if ($vog_res['status']=="Approved"){

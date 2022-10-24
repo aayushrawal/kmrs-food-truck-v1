@@ -10,7 +10,7 @@ $order_stats=Yii::app()->functions->orderStatusList2(false);
   <label class="uk-form-label"><?php echo Yii::t("default","Merchant Name")?></label>
   <?php 
   echo CHtml::dropDownList('merchant_id','',
-  (array)FunctionsV3::merchantList(true,true)
+  (array)FunctionsV4::merchantList(true,true)
   ,array(
     'class'=>'uk-form-width-large',    
   ))

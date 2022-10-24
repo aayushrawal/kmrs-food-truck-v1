@@ -1,4 +1,4 @@
-<?php if ( $lang_list=FunctionsV3::getLanguageList(false) ): //dump($lang_list)?>
+<?php if ( $lang_list=FunctionsV4::getLanguageList(false) ): //dump($lang_list)?>
 <div class="language-selection-wrap">
   <a href="javascript:;" class="language-selection-close"><i class="ion-ios-close-empty"></i></a>
   <div class="container-medium">
@@ -23,7 +23,7 @@
               <a href="<?php echo Yii::app()->createUrl('/store/setlanguage',array(
                 'lang'=>$val
               ))?>">
-              <img src="<?php echo FunctionsV3::getLanguageFlag($val)?>">
+              <img src="<?php echo FunctionsV4::getLanguageFlag($val)?>">
               <span style="padding-left:5px;text-transform:none;"><?php echo t($val)?></span>
               </a>
               </li>

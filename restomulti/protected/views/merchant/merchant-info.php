@@ -25,7 +25,7 @@ if (!$data=Yii::app()->functions->getMerchant(Yii::app()->functions->getMerchant
 
 <form class="uk-form uk-form-horizontal forms" id="forms">
 <?php echo CHtml::hiddenField('action','UpdateMerchant')?>
-<?php FunctionsV3::addCsrfToken(false);?>
+<?php FunctionsV4::addCsrfToken(false);?>
 <?php echo CHtml::hiddenField('country_code',isset($data['country_code'])?$data['country_code']:"")?>
 
 <ul class="uk-switcher uk-margin " id="tab-content">

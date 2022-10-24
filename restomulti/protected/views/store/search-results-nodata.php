@@ -6,8 +6,8 @@ if (isset($_GET['st'])){
 
 /*SEARCH BY LOCATION*/
 $search_by_location=false; $location_data='';
-if (FunctionsV3::isSearchByLocation()){
-	if($location_data=FunctionsV3::getSearchByLocationData()){		
+if (FunctionsV4::isSearchByLocation()){
+	if($location_data=FunctionsV4::getSearchByLocationData()){		
 		$search_by_location=TRUE;		
 		switch ($location_data['location_type']) {
 			case 1:

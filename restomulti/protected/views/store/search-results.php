@@ -6,8 +6,8 @@ if (isset($_GET['st'])){
 
 /*SEARCH BY LOCATION*/
 $search_by_location=false; $location_data='';
-if (FunctionsV3::isSearchByLocation()){
-	if($location_data=FunctionsV3::getSearchByLocationData()){		
+if (FunctionsV4::isSearchByLocation()){
+	if($location_data=FunctionsV4::getSearchByLocationData()){		
 		$search_by_location=TRUE;		
 		switch ($location_data['location_type']) {
 			case 1:
@@ -71,7 +71,7 @@ echo CHtml::hiddenField('clien_long',$data['client']['long']);
            
            <!--FILTER MERCHANT NAME-->       
            <?php if (!empty($restaurant_name)):?>                      
-           <a href="<?php echo FunctionsV3::clearSearchParams('restaurant_name')?>">[<?php echo t("Clear")?>]</a>
+           <a href="<?php echo FunctionsV4::clearSearchParams('restaurant_name')?>">[<?php echo t("Clear")?>]</a>
            <?php endif;?>    
            <div class="filter-box">
 	           <a href="javascript:;">	             
@@ -130,7 +130,7 @@ echo CHtml::hiddenField('clien_long',$data['client']['long']);
            
            <!--FILTER DELIVERY -->
            <?php if (!empty($filter_delivery_type)):?>                      
-           <a href="<?php echo FunctionsV3::clearSearchParams('filter_delivery_type')?>">[<?php echo t("Clear")?>]</a>
+           <a href="<?php echo FunctionsV4::clearSearchParams('filter_delivery_type')?>">[<?php echo t("Clear")?>]</a>
            <?php endif;?>
            <?php if ( $services=Yii::app()->functions->Services() ):?>
            <div class="filter-box">
@@ -162,7 +162,7 @@ echo CHtml::hiddenField('clien_long',$data['client']['long']);
            
            <!--FILTER CUISINE-->
            <?php if (!empty($filter_cuisine)):?>                      
-           <a href="<?php echo FunctionsV3::clearSearchParams('filter_cuisine')?>">[<?php echo t("Clear")?>]</a>
+           <a href="<?php echo FunctionsV4::clearSearchParams('filter_cuisine')?>">[<?php echo t("Clear")?>]</a>
            <?php endif;?>
            <?php if ( $cuisine=Yii::app()->functions->Cuisine(false)):?>
            <div class="filter-box">
@@ -198,9 +198,9 @@ echo CHtml::hiddenField('clien_long',$data['client']['long']);
            
            <!--MINIUM DELIVERY FEE-->           
            <?php if (!empty($filter_minimum)):?>                      
-           <a href="<?php echo FunctionsV3::clearSearchParams('filter_minimum')?>">[<?php echo t("Clear")?>]</a>
+           <a href="<?php echo FunctionsV4::clearSearchParams('filter_minimum')?>">[<?php echo t("Clear")?>]</a>
            <?php endif;?>
-           <?php if ( $minimum_list=FunctionsV3::minimumDeliveryFee()):?>
+           <?php if ( $minimum_list=FunctionsV4::minimumDeliveryFee()):?>
            <div class="filter-box">
 	           <a href="javascript:;">	             
 	             <span>
@@ -259,14 +259,14 @@ echo CHtml::hiddenField('clien_long',$data['client']['long']);
               <div class="col-md-6 col-xs-6 border">                
                
                           
-                <a href="<?php echo FunctionsV3::clearSearchParams('','display_type=listview')?>" 
+                <a href="<?php echo FunctionsV4::clearSearchParams('','display_type=listview')?>" 
 	           class="display-type orange-button block center rounded 
 	           <?php echo $display_type=="gridview"?'inactive':''?>" 
 		          data-type="listview">
                 <i class="fa fa-th-list"></i>
                 </a>
                 
-                <a href="<?php echo FunctionsV3::clearSearchParams('','display_type=gridview')?>" 
+                <a href="<?php echo FunctionsV4::clearSearchParams('','display_type=gridview')?>" 
 		          class="display-type orange-button block center rounded mr10px 
 	             <?php echo $display_type=="listview"?'inactive':''?>" 
 		          data-type="gridview">
@@ -302,7 +302,7 @@ echo CHtml::hiddenField('clien_long',$data['client']['long']);
 	             $ratings=Yii::app()->functions->getRatings($merchant_id);   
 	             
 	             /*get the distance from client address to merchant Address*/             
-	             $distance_type=FunctionsV3::getMerchantDistanceType($merchant_id); 
+	             $distance_type=FunctionsV4::getMerchantDistanceType($merchant_id); 
 	             $distance_type_orig=$distance_type;
 	             
 	             /*dump("c lat=>".$data['client']['lat']);         
@@ -311,7 +311,7 @@ echo CHtml::hiddenField('clien_long',$data['client']['long']);
 	             dump("c lng=>".$val['lontitude']);*/
 	             
 	               
-	             $distance=FunctionsV3::getDistanceBetweenPlot(
+	             $distance=FunctionsV4::getDistanceBetweenPlot(
 	                $data['client']['lat'],$data['client']['long'],
 	                $val['latitude'],$val['lontitude'],$distance_type
 	             );      
@@ -320,21 +320,21 @@ echo CHtml::hiddenField('clien_long',$data['client']['long']);
 	             $distance_type = $distance_type=="M"?t("miles"):t("kilometers");
 	             $distance_type_orig = $distance_type_orig=="M"?t("miles"):t("kilometers");
 	             
-	             if(!empty(FunctionsV3::$distance_type_result)){
-	             	$distance_type_raw=FunctionsV3::$distance_type_result;
-	             	$distance_type=t(FunctionsV3::$distance_type_result);
+	             if(!empty(FunctionsV4::$distance_type_result)){
+	             	$distance_type_raw=FunctionsV4::$distance_type_result;
+	             	$distance_type=t(FunctionsV4::$distance_type_result);
 	             }
 	             
 	             $merchant_delivery_distance=getOption($merchant_id,'merchant_delivery_miles');             
 	             
 	             if ($search_by_location){
-	             	$delivery_fee = FunctionsV3::getLocationDeliveryFee(
+	             	$delivery_fee = FunctionsV4::getLocationDeliveryFee(
 	             	   $merchant_id,
 	             	   $val['delivery_charges'],
 	             	   $location_data
 	             	);
 	             } else {
-	                $delivery_fee=FunctionsV3::getMerchantDeliveryFee(
+	                $delivery_fee=FunctionsV4::getMerchantDeliveryFee(
 	                          $merchant_id,
 	                          $val['delivery_charges'],
 	                          $distance,
@@ -397,7 +397,7 @@ echo CHtml::hiddenField('clien_long',$data['client']['long']);
 			 $attributes['wrapper']      =   array('id'=>'pagination','class'=>'pagination');			 
 			 $options                    =   array();
 			 $options['attributes']      =   $attributes;
-			 $options['items_per_page']  =   FunctionsV3::getPerPage();
+			 $options['items_per_page']  =   FunctionsV4::getPerPage();
 			 $options['maxpages']        =   1;
 			 $options['jumpers']=false;
 			 $options['link_url']=$current_page_link.'&page=##ID##';			

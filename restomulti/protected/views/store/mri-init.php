@@ -106,7 +106,7 @@ if (isset($_POST)){
 			          'price'=>$data['package_price'],
 			          'payment_type'=>Moneris::getPaymentCode(),
 			          'membership_expired'=>$membership_info['membership_expired'],
-			          'date_created'=>FunctionsV3::dateNow(),
+			          'date_created'=>FunctionsV4::dateNow(),
 			          'ip_address'=>$_SERVER['REMOTE_ADDR'],
 			          'PAYPALFULLRESPONSE'=>json_encode($full_response),
 			          'TRANSACTIONID'=>$resp->getReferenceNum(),	
@@ -137,7 +137,7 @@ if (isset($_POST)){
 			           'price'=>$amount_to_pay,
 			           'payment_type'=>Moneris::getPaymentCode(),
 			           'membership_expired'=>$data['membership_expired'],
-			           'date_created'=>FunctionsV3::dateNow(),
+			           'date_created'=>FunctionsV4::dateNow(),
 			           'ip_address'=>$_SERVER['REMOTE_ADDR'],
 			           'PAYPALFULLRESPONSE'=>json_encode($full_response),
 			           'TRANSACTIONID'=>$resp->getReferenceNum(),
@@ -155,7 +155,7 @@ if (isset($_POST)){
 	                $DbExt->updateData("{{merchant}}",
 							  array(
 							    'payment_steps'=>3,
-							    'membership_purchase_date'=>FunctionsV3::dateNow()
+							    'membership_purchase_date'=>FunctionsV4::dateNow()
 							  ),'merchant_id',$data['merchant_id']);
 	                    
 	               header("Location: $redirect_url");

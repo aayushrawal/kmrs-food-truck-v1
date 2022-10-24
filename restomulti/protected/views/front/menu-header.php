@@ -24,10 +24,10 @@ data-image-src="<?php echo empty($background)?assetsURL()."/images/b-2.jpg":uplo
 	        </p>
 	     </div>	        
 	     <div class="mycol">
-	        <?php echo FunctionsV3::merchantOpenTag($merchant_id)?>             
+	        <?php echo FunctionsV4::merchantOpenTag($merchant_id)?>             
 	     </div>
 	     <div class="mycol">
-	        <p class="small"><?php echo t("Minimum Order").": ".FunctionsV3::prettyPrice($minimum_order)?></p>
+	        <p class="small"><?php echo t("Minimum Order").": ".FunctionsV4::prettyPrice($minimum_order)?></p>
 	     </div>
 	   </div> <!--mytable-->
 
@@ -37,7 +37,7 @@ data-image-src="<?php echo empty($background)?assetsURL()."/images/b-2.jpg":uplo
 	<ul class="merchant-social-list">
 	 <?php if(!empty($social_google_page)):?>
 	 <li>
-	   <a href="<?php echo FunctionsV3::prettyUrl($social_google_page)?>" target="_blank">
+	   <a href="<?php echo FunctionsV4::prettyUrl($social_google_page)?>" target="_blank">
 	    <i class="ion-social-googleplus"></i>
 	   </a>
 	 </li>
@@ -45,7 +45,7 @@ data-image-src="<?php echo empty($background)?assetsURL()."/images/b-2.jpg":uplo
 	 
 	 <?php if(!empty($social_twitter_page)):?>
 	 <li>
-	   <a href="<?php echo FunctionsV3::prettyUrl($social_twitter_page)?>" target="_blank">
+	   <a href="<?php echo FunctionsV4::prettyUrl($social_twitter_page)?>" target="_blank">
 	   <i class="ion-social-twitter"></i>
 	   </a>
 	 </li>
@@ -53,7 +53,7 @@ data-image-src="<?php echo empty($background)?assetsURL()."/images/b-2.jpg":uplo
 	 
 	 <?php if(!empty($social_facebook_page)):?>
 	 <li>
-	   <a href="<?php echo FunctionsV3::prettyUrl($social_facebook_page)?>" target="_blank">
+	   <a href="<?php echo FunctionsV4::prettyUrl($social_facebook_page)?>" target="_blank">
 	   <i class="ion-social-facebook"></i>
 	   </a>
 	 </li>
@@ -63,8 +63,8 @@ data-image-src="<?php echo empty($background)?assetsURL()."/images/b-2.jpg":uplo
 	<?php endif;?>
 	
 	<p><i class="fa fa-map-marker"></i> <?php echo $merchant_address?></p>
-	<p class="small"><?php echo FunctionsV3::displayCuisine($cuisine);?></p>
-	<p><?php echo FunctionsV3::getFreeDeliveryTag($merchant_id)?></p>
+	<p class="small"><?php echo FunctionsV4::displayCuisine($cuisine);?></p>
+	<p><?php echo FunctionsV4::getFreeDeliveryTag($merchant_id)?></p>
 	
 	<?php if ( getOption($merchant_id,'merchant_show_time')=="yes"):?>
 	<p class="small">
@@ -76,7 +76,7 @@ data-image-src="<?php echo empty($background)?assetsURL()."/images/b-2.jpg":uplo
 	<?php if (!empty($merchant_website)):?>
 	<p class="small">
 	<?php echo t("Website").": "?>
-	<a target="_blank" href="<?php echo FunctionsV3::fixedLink($merchant_website)?>">
+	<a target="_blank" href="<?php echo FunctionsV4::fixedLink($merchant_website)?>">
 	  <?php echo $merchant_website;?>
 	</a>
 	</p>

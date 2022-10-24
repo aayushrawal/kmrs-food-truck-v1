@@ -131,7 +131,7 @@ HTML;
 							$ingredients.="<p>".t("Ingredients")."</p>";
 							$ingredients.="<p>";
 							foreach ($item['ingredients'] as $ingredients_val) {
-								if($details_ingredients=FunctionsV3::getIngredientsByName($ingredients_val,$mid)){
+								if($details_ingredients=FunctionsV4::getIngredientsByName($ingredients_val,$mid)){
 									$_ingredients['ingredients_name_trans']=json_decode($details_ingredients['ingredients_name_trans'],true);			          		    
 									$ingredients.="- ".qTranslate($ingredients_val,'ingredients_name',$_ingredients)."<br/>";
 									
@@ -152,24 +152,24 @@ HTML;
 					
 					$tr.="<tr>";
 				    $tr.="<td>".$item['qty']." ".$item_name.$size.$notes.$cookref.$ingredients."</td>";
-				    $tr.="<td>".FunctionsV3::prettyPrice($item_total)."</td>";
+				    $tr.="<td>".FunctionsV4::prettyPrice($item_total)."</td>";
 				    $tr.="</tr>";
 				    
 				    $sms_details.=$item['qty']." x ".$item_name." ".standardPrettyFormat($item_total);
-				    $sms_details.=FunctionsV3::smsSeparator();
+				    $sms_details.=FunctionsV4::smsSeparator();
 				    				    				 				   
 				    /*if (isset($item['sub_item'])){
 				    	if (is_array($item['sub_item']) && count($item['sub_item'])>=1){
 					    	foreach ($item['sub_item'] as $itemsub) {						    		
 					    		$subitem_total=$itemsub['addon_qty']*$itemsub['addon_price'];				    		
 					    		$tr.="<tr>";					            
-					            $tr.="<td style=\"text-indent:10px;\">".$itemsub['addon_qty']."x".FunctionsV3::prettyPrice($itemsub['addon_price'])." ".$itemsub['addon_name']."</td>";
-					            $tr.="<td>".FunctionsV3::prettyPrice($subitem_total)."</td>";
+					            $tr.="<td style=\"text-indent:10px;\">".$itemsub['addon_qty']."x".FunctionsV4::prettyPrice($itemsub['addon_price'])." ".$itemsub['addon_name']."</td>";
+					            $tr.="<td>".FunctionsV4::prettyPrice($subitem_total)."</td>";
 					            $tr.="</tr>";
 					            
 					            $sms_details.=$itemsub['addon_qty']." x ".standardPrettyFormat($itemsub['addon_price']);
 					            $sms_details.=" ".$itemsub['addon_name'];
-					            $sms_details.=FunctionsV3::smsSeparator();
+					            $sms_details.=FunctionsV4::smsSeparator();
 					    	}
 				    	}
 				    }*/
@@ -191,7 +191,7 @@ HTML;
 				    			
 				    			$tr.="</tr>";
 				    			$sms_details.=$subcategory_name_trans;
-				    			$sms_details.=FunctionsV3::smsSeparator();
+				    			$sms_details.=FunctionsV4::smsSeparator();
 				    			foreach ($subcategory_item as $itemsub) {
 				    				
 				    				$addon_name=qTranslate($itemsub['addon_name'],'sub_item_name',
@@ -199,13 +199,13 @@ HTML;
 				    				
 				    				$subitem_total=$itemsub['addon_qty']*$itemsub['addon_price'];				    		
 						    		$tr.="<tr>";
-						            $tr.="<td style=\"text-indent:10px;\">".$itemsub['addon_qty']."x".FunctionsV3::prettyPrice($itemsub['addon_price'])." ".$addon_name."</td>";
-						            $tr.="<td>".FunctionsV3::prettyPrice($subitem_total)."</td>";
+						            $tr.="<td style=\"text-indent:10px;\">".$itemsub['addon_qty']."x".FunctionsV4::prettyPrice($itemsub['addon_price'])." ".$addon_name."</td>";
+						            $tr.="<td>".FunctionsV4::prettyPrice($subitem_total)."</td>";
 						            $tr.="</tr>";
 						            
 						            $sms_details.=$itemsub['addon_qty']." x ".standardPrettyFormat($itemsub['addon_price']);
 					                $sms_details.=" ".$addon_name;
-					                $sms_details.=FunctionsV3::smsSeparator();
+					                $sms_details.=FunctionsV4::smsSeparator();
 				    			}
 				    		}
 				    	}
@@ -235,14 +235,14 @@ HTML;
 			if ($item_details['total']['less_voucher']>0.001){
 				$tr.="<tr>";
 				$tr.="<td>".Yii::t("default","Less Voucher")." " .$item_details['total']['voucher_type'] . ":</td>";
-				$tr.="<td>(".FunctionsV3::prettyPrice($item_details['total']['less_voucher']).")</td>";
+				$tr.="<td>(".FunctionsV4::prettyPrice($item_details['total']['less_voucher']).")</td>";
 				$tr.="</tr>";
 			}
 			
 			if ($item_details['total']['pts_redeem_amt']>0.001){
 				$tr.="<tr>";
 				$tr.="<td>".Yii::t("default","Points discount").":</td>";
-				$tr.="<td>(".FunctionsV3::prettyPrice($item_details['total']['pts_redeem_amt']).")</td>";
+				$tr.="<td>(".FunctionsV4::prettyPrice($item_details['total']['pts_redeem_amt']).")</td>";
 				$tr.="</tr>";
 			}
 						
@@ -252,19 +252,19 @@ HTML;
 			if($item_details['total']['discounted_amount']>0.001){
 				$tr.="<tr>";
 			    $tr.="<td>".Yii::t("default","Discount")." " . $item_details['total']['merchant_discount_amount']  ."% :</td>";
-			    $tr.="<td>".FunctionsV3::prettyPrice($item_details['total']['discounted_amount'])."</td>";
+			    $tr.="<td>".FunctionsV4::prettyPrice($item_details['total']['discounted_amount'])."</td>";
 			    $tr.="</tr>";
 			}
 						
 			$tr.="<tr>";
 			$tr.="<td>".Yii::t("default","Subtotal").":</td>";
-			$tr.="<td>".FunctionsV3::prettyPrice($item_details['total']['subtotal'])."</td>";
+			$tr.="<td>".FunctionsV4::prettyPrice($item_details['total']['subtotal'])."</td>";
 			$tr.="</tr>";
 			
 			if (!empty($item_details['total']['delivery_charges'])):
 			$tr.="<tr>";
 			$tr.="<td>".Yii::t("default","Delivery Fee").":</td>";
-			$tr.="<td>".FunctionsV3::prettyPrice($item_details['total']['delivery_charges'])."</td>";
+			$tr.="<td>".FunctionsV4::prettyPrice($item_details['total']['delivery_charges'])."</td>";
 			$tr.="</tr>";
 			endif;
 			
@@ -273,7 +273,7 @@ HTML;
 			if ($item_details['total']['merchant_packaging_charge']>0.0001){
 			$tr.="<tr>";
 			$tr.="<td>".Yii::t("default","Packaging").":</td>";
-			$tr.="<td>".FunctionsV3::prettyPrice($item_details['total']['merchant_packaging_charge'])."</td>";
+			$tr.="<td>".FunctionsV4::prettyPrice($item_details['total']['merchant_packaging_charge'])."</td>";
 			$tr.="</tr>";
 			}
 			endif;
@@ -281,7 +281,7 @@ HTML;
 			if(isset($item_details['total']['tax_amt'])){
 				$tr.="<tr>";
 				$tr.="<td>".Yii::t("default","Tax")." ".$item_details['total']['tax_amt']."%</td>";
-				$tr.="<td>".FunctionsV3::prettyPrice($item_details['total']['taxable_total'])."</td>";
+				$tr.="<td>".FunctionsV4::prettyPrice($item_details['total']['taxable_total'])."</td>";
 				$tr.="</tr>";
 			}
 			
@@ -292,20 +292,20 @@ HTML;
 			if ($item_details['total']['card_fee']>0):
 			$tr.="<tr>";
 			$tr.="<td>".Yii::t("default","Card Fee").":</td>";
-			$tr.="<td>".FunctionsV3::prettyPrice($item_details['total']['card_fee'])."</td>";
+			$tr.="<td>".FunctionsV4::prettyPrice($item_details['total']['card_fee'])."</td>";
 			$tr.="</tr>";
 			endif;
 			
 			if ($item_details['total']['tips']>0.001){
 				$tr.="<tr>";
 				$tr.="<td>".Yii::t("default","Tips")." " .$item_details['total']['tips_percent'] . ":</td>";
-				$tr.="<td>".FunctionsV3::prettyPrice($item_details['total']['tips'])."</td>";
+				$tr.="<td>".FunctionsV4::prettyPrice($item_details['total']['tips'])."</td>";
 				$tr.="</tr>";
 			}
 			
 			$tr.="<tr>";
 			$tr.="<td>".Yii::t("default","Total").":</td>";
-			$tr.="<td>".FunctionsV3::prettyPrice($item_details['total']['total'])."</td>";
+			$tr.="<td>".FunctionsV4::prettyPrice($item_details['total']['total'])."</td>";
 			$tr.="</tr>";
 		}
 		ob_start();
@@ -589,7 +589,7 @@ HTML;
 					
 					$tr.="<tr>";
 				    $tr.="<td>".$item['qty']." ".$item_name.$size.$notes.$cookref.$ingredients."</td>";
-				    $tr.="<td>".FunctionsV3::prettyPrice($item_total)."</td>";
+				    $tr.="<td>".FunctionsV4::prettyPrice($item_total)."</td>";
 				    $tr.="</tr>";
 				    
 				    
@@ -598,8 +598,8 @@ HTML;
 					    	foreach ($item['sub_item'] as $itemsub) {				    							    		
 					    		$subitem_total=$itemsub['addon_qty']*$itemsub['addon_price'];				    		
 					    		$tr.="<tr>";					            
-					            $tr.="<td style=\"text-indent:10px;\">".$itemsub['addon_qty']."x".FunctionsV3::prettyPrice($itemsub['addon_price'])." ".$itemsub['addon_name']."</td>";
-					            $tr.="<td>".FunctionsV3::prettyPrice($subitem_total)."</td>";
+					            $tr.="<td style=\"text-indent:10px;\">".$itemsub['addon_qty']."x".FunctionsV4::prettyPrice($itemsub['addon_price'])." ".$itemsub['addon_name']."</td>";
+					            $tr.="<td>".FunctionsV4::prettyPrice($subitem_total)."</td>";
 					            $tr.="</tr>";
 					    	}
 				    	}
@@ -626,8 +626,8 @@ HTML;
 				    				
 				    				$subitem_total=$itemsub['addon_qty']*$itemsub['addon_price'];				    		
 						    		$tr.="<tr>";
-						            $tr.="<td style=\"text-indent:10px;\">".$itemsub['addon_qty']."x".FunctionsV3::prettyPrice($itemsub['addon_price'])." ".$addon_name."</td>";
-						            $tr.="<td>".FunctionsV3::prettyPrice($subitem_total)."</td>";
+						            $tr.="<td style=\"text-indent:10px;\">".$itemsub['addon_qty']."x".FunctionsV4::prettyPrice($itemsub['addon_price'])." ".$addon_name."</td>";
+						            $tr.="<td>".FunctionsV4::prettyPrice($subitem_total)."</td>";
 						            $tr.="</tr>";
 						            						            
 				    			}
@@ -646,7 +646,7 @@ HTML;
 		if ($data_total['delivery_charges']>0){
 			$tr.="<tr>";
 			$tr.="<td>".Yii::t("default","Delivery Fee").":</td>";
-			$tr.="<td>".FunctionsV3::prettyPrice($data_total['delivery_charges'])."</td>";
+			$tr.="<td>".FunctionsV4::prettyPrice($data_total['delivery_charges'])."</td>";
 			$tr.="</tr>";
 		}
 
@@ -654,7 +654,7 @@ HTML;
 		if ($data_total['card_fee']>0){
 			$tr.="<tr>";
 			$tr.="<td>".Yii::t("default","Card Fee").":</td>";
-			$tr.="<td>".FunctionsV3::prettyPrice($data_total['card_fee'])."</td>";
+			$tr.="<td>".FunctionsV4::prettyPrice($data_total['card_fee'])."</td>";
 			$tr.="</tr>";
 		}
 		}
@@ -663,7 +663,7 @@ HTML;
 		if ($data_total['merchant_packaging_charge']>0){
 			$tr.="<tr>";
 			$tr.="<td>".Yii::t("default","Packaging").":</td>";
-			$tr.="<td>".FunctionsV3::prettyPrice($data_total['merchant_packaging_charge'])."</td>";
+			$tr.="<td>".FunctionsV4::prettyPrice($data_total['merchant_packaging_charge'])."</td>";
 			$tr.="</tr>";
 		}
 		}
@@ -672,7 +672,7 @@ HTML;
 		if ($data_total['cart_tip_percentage']>0){
 			$tr.="<tr>";
 			$tr.="<td>". t("Tip")." ".$data_total['cart_tip_percentage']."%:</td>";
-			$tr.="<td>".FunctionsV3::prettyPrice($data_total['tips'])."</td>";
+			$tr.="<td>".FunctionsV4::prettyPrice($data_total['tips'])."</td>";
 			$tr.="</tr>";
 		}
 		}
@@ -681,7 +681,7 @@ HTML;
 		if ($data_total['discounted_amount']>0){
 		 	$tr.="<tr>";
 			$tr.="<td>".t("Discount")." ".$data_total['merchant_discount_amount']."%:</td>";
-			$tr.="<td>".FunctionsV3::prettyPrice($data_total['discounted_amount'])."</td>";
+			$tr.="<td>".FunctionsV4::prettyPrice($data_total['discounted_amount'])."</td>";
 			$tr.="</tr>";
 		}
 		}
@@ -690,7 +690,7 @@ HTML;
 		if ($data_total['pts_redeem_amt']>0){
 			$tr.="<tr>";
 			$tr.="<td>".t("Points Discount").":</td>";
-			$tr.="<td>".FunctionsV3::prettyPrice($data_total['pts_redeem_amt'])."</td>";
+			$tr.="<td>".FunctionsV4::prettyPrice($data_total['pts_redeem_amt'])."</td>";
 			$tr.="</tr>";
 		}
 		}
@@ -699,7 +699,7 @@ HTML;
 		if ($data_total['less_voucher']>0){
 			$tr.="<tr>";
 			$tr.="<td>".t("Less Voucher")." ".":</td>";
-			$tr.="<td>".FunctionsV3::prettyPrice($data_total['less_voucher'])."</td>";
+			$tr.="<td>".FunctionsV4::prettyPrice($data_total['less_voucher'])."</td>";
 			$tr.="</tr>";
 		}
 		}
@@ -708,7 +708,7 @@ HTML;
 		if ($data_total['subtotal']>0){
 			$tr.="<tr>";
 			$tr.="<td>".t("Sub Total").":</td>";
-			$tr.="<td>".FunctionsV3::prettyPrice($data_total['subtotal'])."</td>";
+			$tr.="<td>".FunctionsV4::prettyPrice($data_total['subtotal'])."</td>";
 			$tr.="</tr>";
 		}
 		}
@@ -717,7 +717,7 @@ HTML;
 		if ($data_total['taxable_total']>0){
 			$tr.="<tr>";
 			$tr.="<td>".t("Tax")." ".$data_total['tax_amt']."%:</td>";
-			$tr.="<td>".FunctionsV3::prettyPrice($data_total['taxable_total'])."</td>";
+			$tr.="<td>".FunctionsV4::prettyPrice($data_total['taxable_total'])."</td>";
 			$tr.="</tr>";
 		}
 		}
@@ -726,7 +726,7 @@ HTML;
 		if ($data_total['total']>0){
 			$tr.="<tr>";
 			$tr.="<td>".t("Total").":</td>";
-			$tr.="<td>".FunctionsV3::prettyPrice($data_total['total'])."</td>";
+			$tr.="<td>".FunctionsV4::prettyPrice($data_total['total'])."</td>";
 			$tr.="</tr>";
 		}
 		}

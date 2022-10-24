@@ -8,7 +8,7 @@
    <form id="forms" class="uk-form forms" onsubmit="return false;" method="POST">   
    <?php echo CHtml::hiddenField("action",'login')?>
    <?php echo CHtml::hiddenField("redirect",Yii::app()->request->baseUrl."/admin")?>
-   <?php FunctionsV3::addCsrfToken();?>
+   <?php FunctionsV4::addCsrfToken();?>
    
    <?php if (isset($_GET['message'])):?>
    <p class="uk-text-danger"><?php echo $_GET['message']?></p>

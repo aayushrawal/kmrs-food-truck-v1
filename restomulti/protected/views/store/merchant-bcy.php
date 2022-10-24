@@ -55,7 +55,7 @@ if ( $data=Yii::app()->functions->getOrder($order_id)){
 	
 	/*COMMISSION*/
 	//if ( Yii::app()->functions->isMerchantCommission($merchant_id)){	
-	if (FunctionsV3::isMerchantPaymentToUseAdmin($merchant_id)){
+	if (FunctionsV4::isMerchantPaymentToUseAdmin($merchant_id)){
 		$admin_barclay_mode=Yii::app()->functions->getOptionAdmin('admin_mode_barclay');	
 		if ($admin_barclay_mode=="sandbox"){
 			$pspid=Yii::app()->functions->getOptionAdmin('admin_sandbox_barclay_pspid');

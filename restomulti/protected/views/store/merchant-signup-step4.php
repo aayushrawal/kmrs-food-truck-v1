@@ -27,7 +27,7 @@ $this->renderPartial('/front/progress-merchantsignup',array(
 				 <?php echo CHtml::hiddenField('currentController','store')?>
 				 <?php echo CHtml::hiddenField('token',$_GET['token'])?> 
 				 
-				 <?php FunctionsV3::sectionHeader('Enter Activation Code');?>
+				 <?php FunctionsV4::sectionHeader('Enter Activation Code');?>
 				 <div class="top10">				   
 				  <?php echo CHtml::textField('activation_code',
 					  ''

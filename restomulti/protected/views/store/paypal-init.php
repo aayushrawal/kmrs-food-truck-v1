@@ -41,7 +41,7 @@ if ( $ok==TRUE){
    
    /*get admin paypal connection if merchant is commission*/
    //if ( Yii::app()->functions->isMerchantCommission($merchant_id)){
-   if (FunctionsV3::isMerchantPaymentToUseAdmin($merchant_id)){
+   if (FunctionsV4::isMerchantPaymentToUseAdmin($merchant_id)){
    	   unset($paypal_con);   	   
    	   $paypal_con=Yii::app()->functions->getPaypalConnectionAdmin();   	   
    }      
@@ -79,7 +79,7 @@ if ( $ok==TRUE){
 	  	   if ($resp=$paypal->setExpressCheckout()){  	   	  
 	  	  	  $insert['token']=$resp['token'];
 	  	  	  $insert['order_id']=isIsset($_GET['id']);
-	  	  	  $insert['date_created']=FunctionsV3::dateNow();
+	  	  	  $insert['date_created']=FunctionsV4::dateNow();
 	  	  	  $insert['ip_address']=$_SERVER['REMOTE_PORT'];	  	  	  
 	  	  	  $insert['paypal_request']=json_encode($paypal->params);
 	  	  	  $insert['paypal_response']=json_encode($resp['resp']);	

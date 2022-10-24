@@ -28,7 +28,7 @@ echo CHtml::hiddenField('mobile_country_code',Yii::app()->functions->getAdminCou
 	  <?php echo CHtml::hiddenField('action','merchantSignUp')?>
 	  <?php echo CHtml::hiddenField('currentController','store')?>
 	  <?php echo CHtml::hiddenField('package_id',$data['package_id'])?>
-	  <?php FunctionsV3::addCsrfToken();?>
+	  <?php FunctionsV4::addCsrfToken();?>
  
       <div class="row top10">
         <div class="col-md-3 "><?php echo t("Selected Package")?></div>
@@ -39,10 +39,10 @@ echo CHtml::hiddenField('mobile_country_code',Yii::app()->functions->getAdminCou
         <div class="col-md-3 "><?php echo t("Price")?></div>
         <div class="col-md-8  bold">
         <?php if ( $data['promo_price']>=1):?>
-           <span class="strike-price"><?php echo FunctionsV3::prettyPrice($data['price'])?></span>
-           <?php echo FunctionsV3::prettyPrice($data['promo_price'])?> 
+           <span class="strike-price"><?php echo FunctionsV4::prettyPrice($data['price'])?></span>
+           <?php echo FunctionsV4::prettyPrice($data['promo_price'])?> 
         <?php else :?>
-           <?php echo FunctionsV3::prettyPrice($data['price'])?> 
+           <?php echo FunctionsV4::prettyPrice($data['price'])?> 
         <?php endif;?>
         </div>
       </div>
@@ -252,7 +252,7 @@ echo CHtml::hiddenField('mobile_country_code',Yii::app()->functions->getAdminCou
       
             
       <div class="top15">
-      <?php FunctionsV3::sectionHeader('Login Information');?>
+      <?php FunctionsV4::sectionHeader('Login Information');?>
       </div>
       
       <div class="row top10">
@@ -345,7 +345,7 @@ echo CHtml::hiddenField('mobile_country_code',Yii::app()->functions->getAdminCou
              Yii::app()->createUrl('/store/merchantsignup?do=step2&package_id=')
           ) ;
           ?>
-          <?php FunctionsV3::sectionHeader('Change Package');?>
+          <?php FunctionsV4::sectionHeader('Change Package');?>
           
           <div class="top10">
             <?php 

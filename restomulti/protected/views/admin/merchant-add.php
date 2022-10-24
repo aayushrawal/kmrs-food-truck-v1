@@ -27,7 +27,7 @@ if (isset($_GET['id'])){
 
 <div class="right" style="margin-top:-30px">
 <h3 style="margin:0 0 8px;"><?php echo t("Charges Type")?>: <span class="uk-text-danger">
-<?php echo FunctionsV3::DisplayMembershipType($data['merchant_type']);?></span>
+<?php echo FunctionsV4::DisplayMembershipType($data['merchant_type']);?></span>
 </h3>
 
 </div>
@@ -47,7 +47,7 @@ if (isset($_GET['id'])){
 <form class="uk-form uk-form-horizontal forms" id="forms">
 <?php 
 echo CHtml::hiddenField('action','addMerchant');
-FunctionsV3::addCsrfToken(false);
+FunctionsV4::addCsrfToken(false);
 ?>
 <?php echo CHtml::hiddenField('id',isset($_GET['id'])?$_GET['id']:"");?>
 <?php echo CHtml::hiddenField('old_status',isset($data['status'])?$data['status']:"")?>
@@ -255,7 +255,7 @@ Yii::app()->functions->data="list";
   <label class="uk-form-label"><?php echo t("Membership Type")?></label>
   <?php echo CHtml::dropDownList('merchant_type',
   isset($data['merchant_type'])?$data['merchant_type']:''
-  ,FunctionsV3::MembershipType())?>
+  ,FunctionsV4::MembershipType())?>
 </div>
 
 <DIV class="membership_type_1">
@@ -320,7 +320,7 @@ Yii::app()->functions->data="list";
 <div class="uk-form-row invoice_terms_wrap">
   <label class="uk-form-label"><?php echo t("Invoice Terms")?></label>
   <?php echo CHtml::dropDownList('invoice_terms',
-  isset($data['invoice_terms'])?$data['invoice_terms']:'',FunctionsV3::InvoiceTerms())?>
+  isset($data['invoice_terms'])?$data['invoice_terms']:'',FunctionsV4::InvoiceTerms())?>
 </DIV>
   
 </li>
@@ -387,7 +387,7 @@ Yii::app()->functions->data="list";
 <?php $merchant_id=isset($_GET['id'])?$_GET['id']:''; ?>
 <h3><?php echo t("Disabled Payment Gateway")?></h3>
 
-<?php $payment_list=FunctionsV3::PaymentOptionList();?>
+<?php $payment_list=FunctionsV4::PaymentOptionList();?>
 
 <?php foreach ($payment_list as $key_payment=>$val_payment): $master_key="merchant_switch_master_".$key_payment?>
 <div class="uk-form-row">

@@ -35,11 +35,11 @@
   <div class="container">
       <div class="row">
          <div class="col-md-4 ">
-         <?php FunctionsV3::getFooterAddress();?>
+         <?php FunctionsV4::getFooterAddress();?>
          
         <?php         
         $lang_list_dropdown='';
-        $lang_list=FunctionsV3::getLanguageList(false);
+        $lang_list=FunctionsV4::getLanguageList(false);
         if(is_array($lang_list) && count($lang_list)>=1){
         	foreach ($lang_list as $lang_list_val) {
         		$key=Yii::app()->createUrl('/store/setlanguage',array(
@@ -73,7 +73,7 @@
            <?php foreach ($menu as $val):?>
            <li>
              <a 
-               href="<?php echo FunctionsV3::customPageUrl($val)?>" <?php FunctionsV3::openAsNewTab($val)?> >
+               href="<?php echo FunctionsV4::customPageUrl($val)?>" <?php FunctionsV4::openAsNewTab($val)?> >
               <?php echo $val['page_name']?></a>
            </li>
            <?php endforeach;?>
@@ -90,7 +90,7 @@
            <?php foreach ($others_menu as $val):?>
            <li>
              <a 
-               href="<?php echo FunctionsV3::customPageUrl($val)?>" <?php FunctionsV3::openAsNewTab($val)?> >
+               href="<?php echo FunctionsV4::customPageUrl($val)?>" <?php FunctionsV4::openAsNewTab($val)?> >
               <?php echo $val['page_name']?></a>
            </li>
            <?php endforeach;?>
@@ -106,32 +106,32 @@
          <div class="mytable social-wrap">
            <?php if (!empty($google_page)):?>
            <div class="mycol border">
-             <a target="_blank" href="<?php echo FunctionsV3::prettyUrl($google_page)?>"><i class="ion-social-googleplus"></i></a>
+             <a target="_blank" href="<?php echo FunctionsV4::prettyUrl($google_page)?>"><i class="ion-social-googleplus"></i></a>
            </div> <!--col-->
            <?php endif;?>
            
            <?php if (!empty($twitter_page)):?>
            <div class="mycol border">
-             <a target="_blank" href="<?php echo FunctionsV3::prettyUrl($twitter_page)?>"><i class="ion-social-twitter"></i></a>
+             <a target="_blank" href="<?php echo FunctionsV4::prettyUrl($twitter_page)?>"><i class="ion-social-twitter"></i></a>
            </div> <!--col-->
            <?php endif;?>
            
            <?php if (!empty($fb_page)):?>
            <div class="mycol border">
-            <a target="_blank" href="<?php echo FunctionsV3::prettyUrl($fb_page)?>"><i class="ion-social-facebook"></i></a>
+            <a target="_blank" href="<?php echo FunctionsV4::prettyUrl($fb_page)?>"><i class="ion-social-facebook"></i></a>
            </div> <!--col-->
            <?php endif;?>
            
            
            <?php if (!empty($intagram_page)):?>
            <div class="mycol border">
-            <a target="_blank" href="<?php echo FunctionsV3::prettyUrl($intagram_page)?>"><i class="ion-social-instagram"></i></a>
+            <a target="_blank" href="<?php echo FunctionsV4::prettyUrl($intagram_page)?>"><i class="ion-social-instagram"></i></a>
            </div> <!--col-->
            <?php endif;?>
            
            <?php if (!empty($youtube_url)):?>
            <div class="mycol border">
-            <a target="_blank" href="<?php echo FunctionsV3::prettyUrl($youtube_url)?>"><i class="ion-social-youtube-outline"></i></a>
+            <a target="_blank" href="<?php echo FunctionsV4::prettyUrl($youtube_url)?>"><i class="ion-social-youtube-outline"></i></a>
            </div> <!--col-->
            <?php endif;?>
            

@@ -60,7 +60,7 @@ class PayseraController extends CController
 						  'payment_type'=>$payment_code,
 						  'package_price'=>$amount_to_pay,
 						  'sms_limit'=>isset($res['sms_limit'])?$res['sms_limit']:'',
-						  'date_created'=>FunctionsV3::dateNow(),
+						  'date_created'=>FunctionsV4::dateNow(),
 						  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 						  'payment_gateway_response'=>json_encode($_GET),						  
 						  //'payment_reference'=>$response['orderid']

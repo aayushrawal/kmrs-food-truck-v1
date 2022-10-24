@@ -2,12 +2,12 @@
 <div class="credit_card_wrap">    
 <form id="frm-creditcard" class="frm-creditcard" method="POST" onsubmit="return false;">
 
-<?php FunctionsV3::sectionHeader('Credit Card information')?>
+<?php FunctionsV4::sectionHeader('Credit Card information')?>
  <a href="javascript:;" class="cc-add orange-text">
  [ <i class="ion-ios-compose-outline"></i> <?php echo t("Add new card")?>]
  </a>
  
-<?php FunctionsV3::sectionHeader('select credit card below')?> 
+<?php FunctionsV4::sectionHeader('select credit card below')?> 
 <!--<ul class="uk-list uk-list-striped uk-list-cc">    
           
 </ul>-->

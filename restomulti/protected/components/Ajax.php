@@ -400,7 +400,7 @@ $action="<a href=\"$link\" >".Yii::t("default","Details")."</a>";
 	      'username'=>$this->data['username'],
 	      'password'=>md5($this->data['password']),
 	      'status'=>$status,
-	      'date_created'=>FunctionsV3::dateNow(),
+	      'date_created'=>FunctionsV4::dateNow(),
 	      'ip_address'=>$_SERVER['REMOTE_ADDR'],
 	      'activation_token'=>$token,
 	      'activation_key'=>Yii::app()->functions->generateRandomKey(5),
@@ -438,17 +438,17 @@ $action="<a href=\"$link\" >".Yii::t("default","Details")."</a>";
 		    	$mtid=Yii::app()->db->getLastInsertID();
 		    	
 		    	//AUTO ADD SIZE
-			    FunctionsV3::autoAddSize($mtid);
+			    FunctionsV4::autoAddSize($mtid);
 			    	
 		    	$this->code=1;
 		    	$this->msg=Yii::t("default","Successful");
 		    	$this->details=$token;
 		    	
 		    	/*SEND WELCOME EMAIL*/
-		    	FunctionsV3::sendWelcomeEmailMerchant($params,true);
+		    	FunctionsV4::sendWelcomeEmailMerchant($params,true);
 		    	
 		    	/*SEND NOTIFICATION TO ADMIN*/
-		    	FunctionsV3::NotiNewMerchantSignup($params,'commission');
+		    	FunctionsV4::NotiNewMerchantSignup($params,'commission');
 	            			    				    				    	
 		    } else $this->msg=Yii::t("default","Sorry but we cannot add your information. Please try again later");
 	    } else $this->msg=Yii::t("default","Sorry but your username is alread been taken.");
@@ -630,7 +630,7 @@ $action="<a href=\"$link\" >".Yii::t("default","Details")."</a>";
 	  $params=array(
 		  'ingredients_name'=>$this->data['ingredients_name'],
 		  'status'=>addslashes($this->data['status']),
-		  'date_created'=>FunctionsV3::dateNow(),
+		  'date_created'=>FunctionsV4::dateNow(),
 		  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 		  'merchant_id'=>Yii::app()->functions->getMerchantID()
 		);								
@@ -645,7 +645,7 @@ $action="<a href=\"$link\" >".Yii::t("default","Details")."</a>";
 		$command = Yii::app()->db->createCommand();
 		if (isset($this->data['id']) && is_numeric($this->data['id'])){				
 			unset($params['date_created']);
-			$params['date_modified']=FunctionsV3::dateNow();				
+			$params['date_modified']=FunctionsV4::dateNow();				
 			$res = $command->update('{{ingredients}}' , $params , 
 			'ingredients_id=:ingredients_id' , array(':ingredients_id'=>addslashes($this->data['id'])));
 			if ($res){
@@ -1066,7 +1066,7 @@ $action="<a href=\"$link\" >".Yii::t("default","Details")."</a>";
 		if (isset($this->data['id'])){
 			$params=array(
 			  'status'=>'cancel',
-			  'date_process'=>FunctionsV3::dateNow(),
+			  'date_process'=>FunctionsV4::dateNow(),
 			  'ip_address'=>$_SERVER['REMOTE_ADDR']
 			);
 			if ($DbExt->updateData("{{withdrawal}}",$params,'withdrawal_token',$this->data['id'])){
@@ -1278,7 +1278,7 @@ $action="<a href=\"$link\" >".Yii::t("default","Details")."</a>";
          'promo_price'=>$this->data['promo_price'],
          'fax_limit'=>$this->data['fax_limit'],
          'status'=>$this->data['status'],
-         'date_created'=>FunctionsV3::dateNow(),
+         'date_created'=>FunctionsV4::dateNow(),
          'ip_address'=>$_SERVER['REMOTE_ADDR']
        );	       
        if (empty($this->data['id'])){	
@@ -1289,7 +1289,7 @@ $action="<a href=\"$link\" >".Yii::t("default","Details")."</a>";
 	    	}
 	    } else {		    	
 	    	unset($params['date_created']);
-			$params['date_modified']=FunctionsV3::dateNow();			
+			$params['date_modified']=FunctionsV4::dateNow();			
 			$res = $this->updateData('{{fax_package}}' , $params ,'fax_package_id',$this->data['id']);
 			if ($res){
 				$this->code=1;
@@ -1374,7 +1374,7 @@ $action="<a href=\"$link\" >".Yii::t("default","Details")."</a>";
 			    		 'package_price'=>$package_price,
 			    		 'fax_limit'=>$credit,
 			    		 'payment_reference'=>$ref,
-			    		 'date_created'=>FunctionsV3::dateNow(),
+			    		 'date_created'=>FunctionsV4::dateNow(),
 			    		 'ip_address'=>$_SERVER['REMOTE_ADDR']
 			    		);		
 			    		$bank_info=Yii::app()->functions->getBankDepositInstruction();			    		
@@ -1409,7 +1409,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 			    		 'package_price'=>$package_price,
 			    		 'fax_limit'=>$credit,
 			    		 'payment_reference'=>'',
-			    		 'date_created'=>FunctionsV3::dateNow(),
+			    		 'date_created'=>FunctionsV4::dateNow(),
 			    		 'ip_address'=>$_SERVER['REMOTE_ADDR'],
 			    		 'status'=>"paid"
 			    		);					    		
@@ -1475,7 +1475,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 	    			  'payment_type'=>$payment_code,
 	    			  'package_price'=>$price,
 	    			  'fax_limit'=>$info['fax_limit'],
-	    			  'date_created'=>FunctionsV3::dateNow(),
+	    			  'date_created'=>FunctionsV4::dateNow(),
 	    			  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 	    			  'payment_gateway_response'=>json_encode($res),
 	    			  'status'=>"paid"
@@ -1571,7 +1571,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 			  'package_price'=>$package_price,
 			  'fax_limit'=>$this->data['fax_limit'],
 			  'status'=>$this->data['status'],
-			  'date_created'=>FunctionsV3::dateNow(),
+			  'date_created'=>FunctionsV4::dateNow(),
 			  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 			  'payment_type'=>"manual"
 			);				
@@ -1621,7 +1621,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 					  'time_of_deposit'=>$this->data['time_of_deposit'],
 					  'amount'=>$this->data['amount'],
 					  'scanphoto'=>isset($this->data['photo'])?$this->data['photo']:'',
-					  'date_created'=>FunctionsV3::dateNow(),
+					  'date_created'=>FunctionsV4::dateNow(),
 					  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 					  'transaction_type'=>"fax_purchase"
 					);									
@@ -1680,7 +1680,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 		  'last_name'=>$this->data['last_name'],
 		  'contact_email'=>$this->data['contact_email'],
 		  'username'=>$this->data['username'],
-		  'date_modified'=>FunctionsV3::dateNow()
+		  'date_modified'=>FunctionsV4::dateNow()
 		);
 		if (!empty($this->data['password'])){
 			$params['password']=md5($this->data['password']);
@@ -1758,7 +1758,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 		   	   $feed_data['aaData'][]=array(
 		   	      $val['id'],
 		   	      //strtoupper($val['payment_type']),
-		   	      FunctionsV3::prettyPaymentType('sms_package_trans',$val['payment_type'],$val['id']),
+		   	      FunctionsV4::prettyPaymentType('sms_package_trans',$val['payment_type'],$val['id']),
 		   	      ucfirst($val['package_name']),
 		   	      displayPrice(adminCurrencySymbol(),normalPrettyPrice($val['package_price'])),
 		   	      $val['sms_limit'],
@@ -2094,7 +2094,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 						  $val['package_name']."<br/>".$membershipdate,
 						  $val['activation_key'],
 						  //membershipType($val['is_commission']),
-						  FunctionsV3::DisplayMembershipType($val['merchant_type'], $val['invoice_terms']),
+						  FunctionsV4::DisplayMembershipType($val['merchant_type'], $val['invoice_terms']),
 						  //$date."<br/><div class=\"uk-badge $class\">".strtoupper(Yii::t("default",$val['status']))."</div>".$link_login
 						  "$date<br/><span class=\"tag ".$val['status']."\">".t($val['status'])."</span>$link_login"
 						  
@@ -2108,7 +2108,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 						  $val['package_name']."<br/>".$membershipdate,
 						  $val['activation_key'],
 						  //membershipType($val['is_commission']),
-						  FunctionsV3::DisplayMembershipType($val['merchant_type'] , $val['invoice_terms']),
+						  FunctionsV4::DisplayMembershipType($val['merchant_type'] , $val['invoice_terms']),
 						  //$date."<br/><div class=\"uk-badge $class\">".strtoupper(Yii::t("default",$val['status']))."</div>".$link_login
 						  "$date<br/><span class=\"tag ".$val['status']."\">".t($val['status'])."</span>$link_login"
 					);
@@ -2153,8 +2153,8 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 						      'sms_message'=>$sms_msg,
 						      'status'=>'process',
 						      'gateway_response'=>$resp['raw'],
-						      'date_created'=>FunctionsV3::dateNow(),
-						      'date_executed'=>FunctionsV3::dateNow(),
+						      'date_created'=>FunctionsV4::dateNow(),
+						      'date_executed'=>FunctionsV4::dateNow(),
 						      'ip_address'=>$_SERVER['REMOTE_ADDR'],
 						      'gateway'=>$resp['sms_provider']
 						    );						    
@@ -2235,7 +2235,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 			  'time_of_deposit'=>$this->data['time_of_deposit'],
 			  'amount'=>$this->data['amount'],
 			  'scanphoto'=>isset($this->data['photo'])?$this->data['photo']:'',
-			  'date_created'=>FunctionsV3::dateNow(),
+			  'date_created'=>FunctionsV4::dateNow(),
 			  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 			  'transaction_type'=>"item_purchase",
 			  'client_id'=>$res['client_id'],
@@ -2349,8 +2349,8 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 				      'sms_message'=>$text,
 				      'status'=>'process',
 				      'gateway_response'=>$res['raw'],
-				      'date_created'=>FunctionsV3::dateNow(),
-				      'date_executed'=>FunctionsV3::dateNow(),
+				      'date_created'=>FunctionsV4::dateNow(),
+				      'date_executed'=>FunctionsV4::dateNow(),
 				      'ip_address'=>$_SERVER['REMOTE_ADDR'],
 				      'gateway'=>$res['sms_provider']
 				    );		
@@ -2373,7 +2373,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 				
 				$params=array( 
 				  'status'=>"active",
-				  'mobile_verification_date'=>FunctionsV3::dateNow()
+				  'mobile_verification_date'=>FunctionsV4::dateNow()
 				);
 				$this->updateData("{{client}}",$params,'client_id',$res['client_id']);
 				
@@ -2402,7 +2402,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 			if( $res=Yii::app()->functions->getClientInfo($this->data['id'])){				
 				$code=$res['mobile_verification_code'];
 				$_SESSION['resend_code']=$date_now;				
-				FunctionsV3::sendCustomerSMSVerification($res['contact_phone'],$code);
+				FunctionsV4::sendCustomerSMSVerification($res['contact_phone'],$code);
 				$this->code=1;
 				$this->msg=t("Your verification code has been sent to")." ".$res['contact_phone'];
 			} else $this->msg=t("Sorry but we cannot find your records");
@@ -2600,7 +2600,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 			  'dish_name'=>$this->data['dish_name'],
 			  'photo'=>$this->data['spicydish'],
 			  'status'=>$this->data['status'],
-			  'date_created'=>FunctionsV3::dateNow(),
+			  'date_created'=>FunctionsV4::dateNow(),
 			  'ip_address'=>$_SERVER['REMOTE_ADDR']
 			);			
 		   if (empty($this->data['id'])){	
@@ -2611,7 +2611,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 			    	}
 			    } else {		    	
 			    	unset($params['date_created']);
-					$params['date_modified']=FunctionsV3::dateNow();
+					$params['date_modified']=FunctionsV4::dateNow();
 					
 					$filename_to_delete='';
 					if($old_data=Yii::app()->functions->GetDish($this->data['id'])){
@@ -2627,7 +2627,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 		                
 		                /*DELETE IMAGE*/
 		                if(!empty($filename_to_delete)){
-		                  FunctionsV3::deleteUploadedFile($filename_to_delete);
+		                  FunctionsV4::deleteUploadedFile($filename_to_delete);
 		                }
 					    
 				} else $this->msg=Yii::t("default","ERROR: cannot update");
@@ -2646,7 +2646,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 		  'amount'=>$this->data['amount'],
 		  'expiration'=>$this->data['expiration'],
 		  'status'=>$this->data['status'],
-		  'date_created'=>FunctionsV3::dateNow(),
+		  'date_created'=>FunctionsV4::dateNow(),
 		  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 		  'merchant_id'=>$merchant_id
 		);
@@ -2675,7 +2675,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 				return;
 			}		
 			
-			$params['date_modified']=FunctionsV3::dateNow();
+			$params['date_modified']=FunctionsV4::dateNow();
 			unset($params['date_created']);
 			if ( $this->updateData("{{voucher_new}}",$params,'voucher_id',$this->data['id'])){
 				$this->code=1;
@@ -2821,7 +2821,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
      	  'zipcode'=>$this->data['zipcode'],
      	  'location_name'=>isset($this->data['location_name'])?$this->data['location_name']:'',
      	  'as_default'=>isset($this->data['as_default'])?$this->data['as_default']:1,
-     	  'date_created'=>FunctionsV3::dateNow(),
+     	  'date_created'=>FunctionsV4::dateNow(),
      	  'ip_address'=>$_SERVER['REMOTE_ADDR'],
      	  'country_code'=>$this->data['country_code']
      	);     	
@@ -2841,7 +2841,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
      	
      	if ( isset($this->data['id'])){
      		unset($params['date_created']);
-     		$params['date_modified']=FunctionsV3::dateNow();
+     		$params['date_modified']=FunctionsV4::dateNow();
      		if ( $this->updateData("{{address_book}}",$params,'id',$this->data['id'])){
      			$this->code=1;
      			$this->msg=Yii::t("default","Successful");		 
@@ -3113,7 +3113,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 				    	  'mobile'=>trim($this->data['mobile']),
 				    	  'code'=>$code,
 				    	  'session'=>$this->data['session'],
-				    	  'date_created'=>FunctionsV3::dateNow(),
+				    	  'date_created'=>FunctionsV4::dateNow(),
 				    	  'ip_address'=>$_SERVER['REMOTE_ADDR']
 				    	);
 				    	$this->insertData("{{order_sms}}",$params);
@@ -3126,8 +3126,8 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 			        	  'sms_message'=>$sms_msg,
 			        	  'status'=>$resp['msg'],
 			        	  'gateway_response'=>$resp['raw'],
-			        	  'date_created'=>FunctionsV3::dateNow(),
-			        	  'date_executed'=>FunctionsV3::dateNow(),
+			        	  'date_created'=>FunctionsV4::dateNow(),
+			        	  'date_executed'=>FunctionsV4::dateNow(),
 			        	  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 			        	  'gateway'=>$resp['sms_provider']
 			        	);	  		        	  
@@ -3186,7 +3186,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 			  'city'=>$this->data['city'],
 			  'area'=>$this->data['area'],
 			  'status'=>$this->data['status'],			  
-			  'date_created'=>FunctionsV3::dateNow(),
+			  'date_created'=>FunctionsV4::dateNow(),
 			  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 			  'stree_name'=>isset($this->data['stree_name'])?$this->data['stree_name']:''
 			);
@@ -3198,7 +3198,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 			    	}
 			    } else {		    	
 			    	unset($params['date_created']);
-					$params['date_modified']=FunctionsV3::dateNow();		
+					$params['date_modified']=FunctionsV4::dateNow();		
 					$res = $this->updateData('{{zipcode}}' , $params ,'zipcode_id',$this->data['id']);
 					if ($res){
 						$this->code=1;
@@ -3238,7 +3238,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 		    	
 		    	$params=array( 
 				  'status'=>"active",
-				  'last_login'=>FunctionsV3::dateNow()
+				  'last_login'=>FunctionsV4::dateNow()
 				);
 				$this->updateData("{{client}}",$params,'client_id',$res['client_id']);
 				
@@ -3246,7 +3246,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 				$email_verification=getOptionA('theme_enabled_email_verification');								
 				if ($verification=="yes" || $email_verification==2){
 					/*sent welcome email*/	    			
-	    			FunctionsV3::sendCustomerWelcomeEmail($res);
+	    			FunctionsV4::sendCustomerWelcomeEmail($res);
 				}
 				
 				Yii::app()->functions->clientAutoLogin($res['email_address'],$res['password'],$res['password']);
@@ -3418,7 +3418,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 			  'category_description'=>addslashes($this->data['category_description']),
 			  'photo'=>isset($this->data['photo'])?addslashes($this->data['photo']):'',
 			  'status'=>addslashes($this->data['status']),
-			  'date_created'=>FunctionsV3::dateNow(),
+			  'date_created'=>FunctionsV4::dateNow(),
 			  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 			  'merchant_id'=>'999999',			  
 			  'spicydish_notes'=>isset($this->data['spicydish_notes'])?$this->data['spicydish_notes']:'',
@@ -3441,7 +3441,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 			$command = Yii::app()->db->createCommand();
 			if (isset($this->data['id']) && is_numeric($this->data['id'])){				
 				unset($params['date_created']);
-				$params['date_modified']=FunctionsV3::dateNow();
+				$params['date_modified']=FunctionsV4::dateNow();
 								
 				ClassCategory::updateCategoryMerchant($this->data['id'],$params);				
 						
@@ -3478,7 +3478,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 	
 	public function showCCDetails()
 	{
-		$data=FunctionsV3::getMerchantCCdetails($this->data['id']);
+		$data=FunctionsV4::getMerchantCCdetails($this->data['id']);
 		require_once('cc_details.php');		
 		die();
 	}
@@ -3496,7 +3496,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 	public function getAdminNewOrder()
 	{
 		$list='';
-		if ( $res=FunctionsV3::getNewOrders('admin')){
+		if ( $res=FunctionsV4::getNewOrders('admin')){
 			$this->code=1;
 	    	$this->msg=count($res);	 
 	    	$order_list='';
@@ -3520,7 +3520,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 	    	
 	    	$params=array(
 	    	    'status'=>$this->data['status'],
-	    	    'date_modified'=>FunctionsV3::dateNow(),
+	    	    'date_modified'=>FunctionsV4::dateNow(),
 	    	    'admin_viewed'=>1
 	    	);	    	
 	    	if ($DbExt->updateData('{{order}}',$params,'order_id',$order_id)){
@@ -3533,12 +3533,12 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 				  'order_id'=>$order_id,
 				  'status'=>$this->data['status'],
 				  'remarks'=>isset($this->data['remarks'])?$this->data['remarks']:'',
-				  'date_created'=>FunctionsV3::dateNow(),
+				  'date_created'=>FunctionsV4::dateNow(),
 				  'ip_address'=>$_SERVER['REMOTE_ADDR']
 				);	    				
 				$DbExt->insertData("{{order_history}}",$params_history);
 				
-				/*if (FunctionsV3::hasModuleAddon("mobileapp")){					
+				/*if (FunctionsV4::hasModuleAddon("mobileapp")){					
 			    	Yii::app()->setImport(array(			
 					  'application.modules.mobileapp.components.*',
 				    ));
@@ -3546,14 +3546,14 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 				}*/
 				
 				/*SEND NOTIFICATIONS TO CUSTOMER*/	    				
-				FunctionsV3::notifyCustomerOrderStatusChange(
+				FunctionsV4::notifyCustomerOrderStatusChange(
 				  $order_id,
 				  $this->data['status'],
 				  isset($this->data['remarks'])?$this->data['remarks']:''
 				);
 		    	
 				/*DRIVER APP ADD TASK*/
-				if (FunctionsV3::hasModuleAddon("driver")){			    	
+				if (FunctionsV4::hasModuleAddon("driver")){			    	
 			    	Yii::app()->setImport(array(			
 					  'application.modules.driver.components.*',
 				    ));
@@ -3647,7 +3647,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 		$mtid=$_SESSION['kr_merchant_id'];
 			    
 	    if ( $this->data['delivery_type']=="delivery"){
-	    	if (FunctionsV3::isSearchByLocation()){	    		
+	    	if (FunctionsV4::isSearchByLocation()){	    		
 	    		$params_check=array(
 	    		   'state_id'=>$this->data['state_id'],
 	    		   'city_id'=>$this->data['city_id'],
@@ -3658,7 +3658,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 	    		   'location_type'=>getOptionA('admin_zipcode_searchtype')
 	    		);	   
 	    		//dump($params_check);
-	    		if ( $fee=FunctionsV3::validateCanDeliverByLocation($mtid,$params_check)){
+	    		if ( $fee=FunctionsV4::validateCanDeliverByLocation($mtid,$params_check)){
 	    			$_SESSION['shipping_fee']=$fee['fee'];		
 	    			Cookie::setCookie('kr_location_search',json_encode($params_check));  	    			
 	    		} else {
@@ -3667,9 +3667,9 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 	    		} 
 	    		  	
 	    	} else {
-		    	if (!FunctionsV3::reCheckDelivery($mtid,$this->data)){
+		    	if (!FunctionsV4::reCheckDelivery($mtid,$this->data)){
 		    		$mt_delivery_miles=getOption($mtid,'merchant_delivery_miles'); 
-		    		$distance_type=FunctionsV3::getMerchantDistanceType($mtid); 
+		    		$distance_type=FunctionsV4::getMerchantDistanceType($mtid); 
 		    		$unit=$distance_type=="M"?t("miles"):t("kilometers");
 		    		$this->msg=t("Sorry but this merchant delivers only with in ").$mt_delivery_miles." $unit";
 		    		return ;
@@ -3690,8 +3690,8 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 	    
 	    switch ($this->data['payment_opt']) {
 	    	case "pyp":
-	    		//if ( FunctionsV3::isMerchantCommission($mtid)){
-	    		if (FunctionsV3::isMerchantPaymentToUseAdmin($mtid)){
+	    		//if ( FunctionsV4::isMerchantCommission($mtid)){
+	    		if (FunctionsV4::isMerchantPaymentToUseAdmin($mtid)){
 	    			$card_fee = getOptionA('admin_paypal_fee');
 	    		} else $card_fee = getOption($mtid,'merchant_paypal_fee');
 	    		if ($card_fee>0){
@@ -3919,15 +3919,15 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 			   $edit_actions.='<a href="javascript:;" class="row_del" rev="'.$val['invoice_number'].'">'.t("Delete").'</a>';
 			   $edit_actions.='</div>';
 			   
-			   $date_created=FunctionsV3::prettyDate($val['date_created']);
-			   $date_created.=" ".FunctionsV3::prettyTime($val['date_created']);
+			   $date_created=FunctionsV4::prettyDate($val['date_created']);
+			   $date_created.=" ".FunctionsV4::prettyTime($val['date_created']);
 			   $feed_data['aaData'][]=array(			
 			     $val['invoice_number'],
 			     stripslashes($val['merchant_id']).$edit_actions,
 			     stripslashes($val['merchant_name']),			     
-			     FunctionsV3::prettyInvoiceTerms($val['invoice_terms']),			     
-			     FunctionsV3::prettyDate($val['date_from'])." - ".FunctionsV3::prettyDate($val['date_to']),
-			     FunctionsV3::prettyPrice($val['invoice_total']),
+			     FunctionsV4::prettyInvoiceTerms($val['invoice_terms']),			     
+			     FunctionsV4::prettyDate($val['date_from'])." - ".FunctionsV4::prettyDate($val['date_to']),
+			     FunctionsV4::prettyPrice($val['invoice_total']),
 			     $date_created."<span class=\"tag $val[status]\">".t($val['status'])."</span>",
 			     "<span class=\"tag $val[payment_status]\">".t($val['payment_status'])."</span>",
 			     $action
@@ -4009,15 +4009,15 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 				
 				$action.="<a data-id=\"".$val['order_id']."\" class=\"view-order-history\" href=\"javascript:\">".Yii::t("default","History")."</a>";		   
 			   
-			   $item=FunctionsV3::translateFoodItemByOrderId($val['order_id']);
+			   $item=FunctionsV4::translateFoodItemByOrderId($val['order_id']);
 			   
 			   $new='';
                 if ($val['admin_viewed']<=0){
     				$new=" <div class=\"uk-badge\">".Yii::t("default","NEW")."</div>";
     			}	    			    			
 	    			
-			   $date_created=FunctionsV3::prettyDate($val['date_created']);
-			   $date_created.=" ".FunctionsV3::prettyTime($val['date_created']);
+			   $date_created=FunctionsV4::prettyDate($val['date_created']);
+			   $date_created.=" ".FunctionsV4::prettyTime($val['date_created']);
 			   $feed_data['aaData'][]=array(			
 			     $val['order_id'],
 			     stripslashes($val['restaurant_name']).$new,
@@ -4025,9 +4025,9 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 			     $item,
 			     t($val['trans_type']),
 			     t($val['payment_type']),
-			     FunctionsV3::prettyPrice($val['sub_total']),
-			     FunctionsV3::prettyPrice($val['taxable_total']),
-			     FunctionsV3::prettyPrice($val['total_w_tax']),
+			     FunctionsV4::prettyPrice($val['sub_total']),
+			     FunctionsV4::prettyPrice($val['taxable_total']),
+			     FunctionsV4::prettyPrice($val['total_w_tax']),
 			     "<span class=\"tag ".$val['status']."\">".t($val['status'])."</span>"."<div>$action</div>",
 			     t($val['request_from']),
 			     $date_created
@@ -4064,7 +4064,7 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 			SELECT SQL_CALC_FOUND_ROWS 
 			a.*
 			FROM $sTable a			
-			WHERE merchant_id  =".FunctionsV3::q($this->data['merchant_id'])."
+			WHERE merchant_id  =".FunctionsV4::q($this->data['merchant_id'])."
 			$sWhere
 			$sOrder
 			$sLimit
@@ -4101,14 +4101,14 @@ $this->msg=t("We have sent bank information instruction to your email")." :$merc
 			   	  $new='<span class="tag new">'.t("NEW").'</span>';
 			   }			
 			   
-			   $date_created=FunctionsV3::prettyDate($val['date_created']);
-			   $date_created.=" ".FunctionsV3::prettyTime($val['date_created']);
+			   $date_created=FunctionsV4::prettyDate($val['date_created']);
+			   $date_created.=" ".FunctionsV4::prettyTime($val['date_created']);
 			   $feed_data['aaData'][]=array(			
 			     $val['invoice_number'],			     
 			     stripslashes($val['merchant_name'])."<br/>".$new,			     
-			     FunctionsV3::prettyInvoiceTerms($val['invoice_terms']),			     
-			     FunctionsV3::prettyDate($val['date_from'])." - ".FunctionsV3::prettyDate($val['date_to']),
-			     FunctionsV3::prettyPrice($val['invoice_total']),
+			     FunctionsV4::prettyInvoiceTerms($val['invoice_terms']),			     
+			     FunctionsV4::prettyDate($val['date_from'])." - ".FunctionsV4::prettyDate($val['date_to']),
+			     FunctionsV4::prettyPrice($val['invoice_total']),
 			     $date_created."<br/><span class=\"tag $val[payment_status]\">".t($val['payment_status'])."</span>",
 			     $action
 			   );

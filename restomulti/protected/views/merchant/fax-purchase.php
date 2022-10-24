@@ -42,7 +42,7 @@ $FunctionsK=new FunctionsK();
 <?php //echo $FunctionsK->adminPaymentList();?>
 <?php 
 $this->renderPartial('/front/payment-list',array(	   
-   'payment_list'=>FunctionsV3::getAdminPaymentList()
+   'payment_list'=>FunctionsV4::getAdminPaymentList()
  ));
 ?>
 </div>

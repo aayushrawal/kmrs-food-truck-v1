@@ -464,7 +464,7 @@ class FunctionsK extends DbExt
     	$links="<a href=\"$link\" target=\"_blank\" >".Yii::t("default","Click on this link")."</a>";
     	
     	//if ( Yii::app()->functions->isMerchantCommission($merchant_id)){
-    	if (FunctionsV3::isMerchantPaymentToUseAdmin($merchant_id)){
+    	if (FunctionsV4::isMerchantPaymentToUseAdmin($merchant_id)){
     		$sender=getOptionA('admin_deposit_sender');
     		$subject=getOptionA('admin_deposit_subject');
     		$instructions=getOptionA('admin_deposit_instructions');
@@ -503,13 +503,13 @@ class FunctionsK extends DbExt
     		  'email_address'=>addslashes($data['email']),
     		  'social_strategy'=>'google',
     		  'password'=>md5(addslashes($data['id'])),
-    		  'date_created'=>FunctionsV3::dateNow(),
+    		  'date_created'=>FunctionsV4::dateNow(),
     		  'ip_address'=>$_SERVER['REMOTE_ADDR']    		
     		);    	    		
     		if ( $this->insertData("{{client}}",$params)){    			
 	    	    $client_id=Yii::app()->db->getLastInsertID();
 	    	    /*POINTS PROGRAM*/
-	    	    if (FunctionsV3::hasModuleAddon("pointsprogram")){
+	    	    if (FunctionsV4::hasModuleAddon("pointsprogram")){
 	    	       PointsProgram::signupReward($client_id);	    			
 	    	    }
     			return $params;

@@ -22,7 +22,7 @@ if ( empty($val['latitude'])){
        <div class="ribbon"><span><?php echo t("Sponsored")?></span></div>
     <?php endif;?>
     
-    <?php if ($offer=FunctionsV3::getOffersByMerchant($merchant_id)):?>
+    <?php if ($offer=FunctionsV4::getOffersByMerchant($merchant_id)):?>
        <div class="ribbon-offer"><span><?php echo $offer;?></span></div>
     <?php endif;?>
    
@@ -33,12 +33,12 @@ if ( empty($val['latitude'])){
              <div class="col-md-3 borderx ">
 		       <!--<a href="<?php echo Yii::app()->createUrl('store/menu/merchant/'.$val['restaurant_slug'])?>">-->
 		       <a href="<?php echo Yii::app()->createUrl("/menu-". trim($val['restaurant_slug']))?>">
-		        <img class="logo-small"src="<?php echo FunctionsV3::getMerchantLogo($merchant_id);?>">
+		        <img class="logo-small"src="<?php echo FunctionsV4::getMerchantLogo($merchant_id);?>">
 		       </a>
-		       <div class="top10"><?php echo FunctionsV3::displayServicesList($val['service'])?></div>		               
+		       <div class="top10"><?php echo FunctionsV4::displayServicesList($val['service'])?></div>		               
 		       
 		       <div class="top10">
-		         <?php FunctionsV3::displayCashAvailable($merchant_id,true,$val['service'])?>
+		         <?php FunctionsV4::displayCashAvailable($merchant_id,true,$val['service'])?>
 		       </div>
 		       
 		     </div> <!--col-->
@@ -52,7 +52,7 @@ if ( empty($val['latitude'])){
 		            <p><?php echo $ratings['votes']." ".t("Reviews")?></p>
 		         </div>
 		         <div class="mycol">
-		            <?php echo FunctionsV3::merchantOpenTag($merchant_id)?>                
+		            <?php echo FunctionsV4::merchantOpenTag($merchant_id)?>                
 		         </div>		         		         		         
 		      </div> <!--mytable-->
 	       
@@ -60,13 +60,13 @@ if ( empty($val['latitude'])){
 	          <p class="merchant-address concat-text"><?php echo $val['merchant_address']?></p>   
 	          
 	          <p class="cuisine bold">
-              <?php echo FunctionsV3::displayCuisine($val['cuisine']);?>
+              <?php echo FunctionsV4::displayCuisine($val['cuisine']);?>
               </p>                
 		     
-              <p><?php echo t("Minimum Order").": ".FunctionsV3::prettyPrice($val['minimum_order'])?></p>
+              <p><?php echo t("Minimum Order").": ".FunctionsV4::prettyPrice($val['minimum_order'])?></p>
               
               <?php if($val['service']!=3):?>
-              <p><?php echo t("Delivery Est")?>: <?php echo FunctionsV3::getDeliveryEstimation($merchant_id)?></p>
+              <p><?php echo t("Delivery Est")?>: <?php echo FunctionsV4::getDeliveryEstimation($merchant_id)?></p>
               <?php endif;?>
               
               <p>
@@ -80,7 +80,7 @@ if ( empty($val['latitude'])){
 		       </p>
 		       		       
 		       <?php if($val['service']!=3):?>
-		        <p class="top15"><?php echo FunctionsV3::getFreeDeliveryTag($merchant_id)?></p>
+		        <p class="top15"><?php echo FunctionsV4::getFreeDeliveryTag($merchant_id)?></p>
 		       <?php endif;?>
 		        
 		        <a href="<?php echo Yii::app()->createUrl("/menu-". trim($val['restaurant_slug']))?>" 
@@ -124,7 +124,7 @@ if (isset($cuisine_page)){
  $attributes['wrapper']      =   array('id'=>'pagination','class'=>'pagination');			 
  $options                    =   array();
  $options['attributes']      =   $attributes;
- $options['items_per_page']  =   FunctionsV3::getPerPage();
+ $options['items_per_page']  =   FunctionsV4::getPerPage();
  $options['maxpages']        =   1;
  $options['jumpers']=false;
  $options['link_url']=$page_link.'&page=##ID##';			

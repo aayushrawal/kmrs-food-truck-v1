@@ -2,8 +2,8 @@
 $total_w_tax=0; $total_commission=0;
 $style='style="border-bottom:1px solid #000;"';
 
-$date_from=FunctionsV3::prettyDate($invoice_info['date_from']);
-$date_to=FunctionsV3::prettyDate($invoice_info['date_to']);
+$date_from=FunctionsV4::prettyDate($invoice_info['date_from']);
+$date_to=FunctionsV4::prettyDate($invoice_info['date_to']);
 ?>
 
 <p>
@@ -13,7 +13,7 @@ $date_to=FunctionsV3::prettyDate($invoice_info['date_to']);
 </p>
 
 <p>
-<?php echo t("Invoice Date")?>: <?php echo FunctionsV3::prettyDate($invoice_info['date_created'])?><br/>
+<?php echo t("Invoice Date")?>: <?php echo FunctionsV4::prettyDate($invoice_info['date_created'])?><br/>
 <?php echo t("Period").": ".$terms[$invoice_info['invoice_terms']]?> <br/>
 <?php echo t("Invoice number").": ".$invoice_info['invoice_number']?> 
 </p>
@@ -49,8 +49,8 @@ $total_commission+=$val['total_commission'];
 ?>
   <tr>
     <td width="70" <?php echo $style;?>>  <span style="padding-left:20px;"><?php echo $val['order_id']?></span> </td>
-    <td width="150" <?php echo $style;?>><?php echo FunctionsV3::prettyDate($val['date_created'])." ".FunctionsV3::prettyTime($val['date_created'])?></td>
-    <td width="90" align="left" <?php echo $style;?>><?php echo FunctionsV3::prettyPrice($val['total_w_tax'])?></td>
+    <td width="150" <?php echo $style;?>><?php echo FunctionsV4::prettyDate($val['date_created'])." ".FunctionsV4::prettyTime($val['date_created'])?></td>
+    <td width="90" align="left" <?php echo $style;?>><?php echo FunctionsV4::prettyPrice($val['total_w_tax'])?></td>
     <td width="90" align="left" <?php echo $style;?>>         
       <?php 
       if ($val['commision_type']=="percentage"){
@@ -60,7 +60,7 @@ $total_commission+=$val['total_commission'];
       }
       ?>
     </td>
-    <td width="90" align="left" <?php echo $style;?>><?php echo FunctionsV3::prettyPrice($val['total_commission'])?></td>    
+    <td width="90" align="left" <?php echo $style;?>><?php echo FunctionsV4::prettyPrice($val['total_commission'])?></td>    
   </tr>
 <?php endforeach;?>
 <tr>
@@ -68,16 +68,16 @@ $total_commission+=$val['total_commission'];
     <b><?php echo t("Total")?></b>
   </td>
   <td width="150"  height="15px;" <?php echo $style;?>>&nbsp;</td>
-  <td width="90" height="15px;" align="left" <?php echo $style;?> ><b><?php echo FunctionsV3::prettyPrice($total_w_tax)?></b></td>
+  <td width="90" height="15px;" align="left" <?php echo $style;?> ><b><?php echo FunctionsV4::prettyPrice($total_w_tax)?></b></td>
   <td width="90" height="15px;" align="left" <?php echo $style;?>></td>
-  <td width="90" height="15px;" align="left" <?php echo $style;?>><b><?php echo FunctionsV3::prettyPrice($total_commission)?></b></td>
+  <td width="90" height="15px;" align="left" <?php echo $style;?>><b><?php echo FunctionsV4::prettyPrice($total_commission)?></b></td>
 </tr>
 </tbody>
 </table>
 
 <p>
 <?php echo Yii::t("default","The amount should be deposited before [date] into our account",array(
-  '[date]'=>FunctionsV3::prettyDate($bank_deposited_timeframe_date)
+  '[date]'=>FunctionsV4::prettyDate($bank_deposited_timeframe_date)
 ))?>.<br/>
 <?php echo t("Payment information")?>:<br/>
 <?php if (empty($bank_custom_tpl)):?>

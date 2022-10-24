@@ -1,4 +1,4 @@
-<?php FunctionsV3::sectionHeader('Payment Information')?>
+<?php FunctionsV4::sectionHeader('Payment Information')?>
 
 <?php if (is_array($payment_list) && count($payment_list)>=1):?>
 <?php foreach ($payment_list as $key => $val):?>
@@ -31,14 +31,14 @@
          		
          	case "pyp":         		
          	    $fee=0;
-	         	if (FunctionsV3::isMerchantPaymentToUseAdmin($merchant_id)){	         		
+	         	if (FunctionsV4::isMerchantPaymentToUseAdmin($merchant_id)){	         		
 	         		$fee=getOptionA('admin_paypal_fee');
 	         	} else {	         		
 	         		$fee=getOption($merchant_id,'merchant_paypal_fee');
 	         	}	         	
 	         	if($fee>0){
 	         		echo $val= Yii::t("default","Paypal (card fee [fee])",array(
-	         		  '[fee]'=>FunctionsV3::prettyPrice($fee)
+	         		  '[fee]'=>FunctionsV4::prettyPrice($fee)
 	         		));
 	         	} else echo $val;
          	    break;

@@ -62,7 +62,7 @@ if (isset($_POST)){
 					  'payment_type'=>Moneris::getPaymentCode(),
 					  'package_price'=>$amount_to_pay,
 					  'sms_limit'=>isset($data['sms_limit'])?$data['sms_limit']:'',
-					  'date_created'=>FunctionsV3::dateNow(),
+					  'date_created'=>FunctionsV4::dateNow(),
 					  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 					  'payment_gateway_response'=>$full_response,
 					  'status'=>"paid",

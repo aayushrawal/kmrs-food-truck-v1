@@ -72,7 +72,7 @@ class ScriptManager
 		
 		$cs->registerScript(
 		  'map_marker',
-		  "var map_marker ='".FunctionsV3::getMapMarker()."' ",
+		  "var map_marker ='".FunctionsV4::getMapMarker()."' ",
 		  CClientScript::POS_HEAD
 		);		
 		

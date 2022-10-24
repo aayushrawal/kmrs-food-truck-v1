@@ -4,7 +4,7 @@
 <form id="newforms" class="uk-form uk-form-horizontal" method="POST" onsubmit="return false;">
 <?php 
 echo CHtml::hiddenField('action','notiSettings');
-FunctionsV3::addCsrfToken(false);
+FunctionsV4::addCsrfToken(false);
 ?>
 
 <div class="uk-form-row">

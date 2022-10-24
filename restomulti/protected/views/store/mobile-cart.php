@@ -5,7 +5,7 @@ $this->renderPartial('/front/mobile_header',array(
     'title'=>t("Cart")
 ));
 
-$min_fees=FunctionsV3::getMinOrderByTableRates($merchant_id,
+$min_fees=FunctionsV4::getMinOrderByTableRates($merchant_id,
    $distance,
    $distance_type,
    $data['minimum_order']
@@ -16,7 +16,7 @@ echo CHtml::hiddenField('currentController','store');
 
 $now=date('Y-m-d');
 $now_time='';
-$checkout=FunctionsV3::isMerchantcanCheckout($merchant_id); 
+$checkout=FunctionsV4::isMerchantcanCheckout($merchant_id); 
 
 
 echo CHtml::hiddenField('is_merchant_open',isset($checkout['code'])?$checkout['code']:'' );
@@ -86,7 +86,7 @@ if (is_numeric($merchant_delivery_distance)){
 echo CHtml::hiddenField('is_ok_delivered',$is_ok_delivered);
 echo CHtml::hiddenField('merchant_delivery_miles',$merchant_delivery_distance);
 echo CHtml::hiddenField('unit_distance',$distance_type);
-echo CHtml::hiddenField('from_address', FunctionsV3::getSessionAddress() );
+echo CHtml::hiddenField('from_address', FunctionsV4::getSessionAddress() );
 
 echo CHtml::hiddenField('merchant_close_store',getOption($merchant_id,'merchant_close_store'));
 
@@ -105,7 +105,7 @@ echo CHtml::hiddenField('current_page','menu');
 
 /*add meta tag for image*/
 Yii::app()->clientScript->registerMetaTag(
-Yii::app()->getBaseUrl(true).FunctionsV3::getMerchantLogo($merchant_id)
+Yii::app()->getBaseUrl(true).FunctionsV4::getMerchantLogo($merchant_id)
 ,'og:image');
 
 $remove_delivery_info=false;
@@ -141,7 +141,7 @@ if($data['service']==3 || $data['service']==6 || $data['service']==7 ){
            <div class="delivery_asap_wrap">                       
              <?php                           
              echo CHtml::dropDownList('delivery_time',$now_time,
-             (array)FunctionsV3::timeList()
+             (array)FunctionsV4::timeList()
              ,array(
               'class'=>"grey-fields"
              ))

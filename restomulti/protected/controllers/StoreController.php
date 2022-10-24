@@ -76,7 +76,7 @@ class StoreController extends CController
 		 	Yii::app()->timeZone=$website_timezone;
 		 }		 		 
 		 
-		 FunctionsV3::handleLanguage();
+		 FunctionsV4::handleLanguage();
 		 $cs = Yii::app()->getClientScript();
 		 $lang=Yii::app()->language;		 
 		 $cs->registerScript(
@@ -135,9 +135,9 @@ class StoreController extends CController
 		   'disabled_featured_merchant'=>getOptionA('disabled_featured_merchant'),
 		   'disabled_subscription'=>getOptionA('disabled_subscription'),
 		   'theme_show_app'=>getOptionA('theme_show_app'),
-		   'theme_app_android'=>FunctionsV3::prettyUrl(getOptionA('theme_app_android')),
-		   'theme_app_ios'=>FunctionsV3::prettyUrl(getOptionA('theme_app_ios')),
-		   'theme_app_windows'=>FunctionsV3::prettyUrl(getOptionA('theme_app_windows')),
+		   'theme_app_android'=>FunctionsV4::prettyUrl(getOptionA('theme_app_android')),
+		   'theme_app_ios'=>FunctionsV4::prettyUrl(getOptionA('theme_app_ios')),
+		   'theme_app_windows'=>FunctionsV4::prettyUrl(getOptionA('theme_app_windows')),
 		));
 	}
 				  
@@ -174,11 +174,11 @@ class StoreController extends CController
 		 
 		$_GET['filter_cuisine']=$_GET['filter_cuisine'].",$cuisine_id";
 		 			 
-	    $res=FunctionsV3::searchByMerchant(
+	    $res=FunctionsV4::searchByMerchant(
 		   'kr_search_category',
 		   isset($_GET['st'])?$_GET['st']:'',
 		   isset($_GET['page'])?$_GET['page']:0,
-		   FunctionsV3::getPerPage(),
+		   FunctionsV4::getPerPage(),
 		   $_GET			  
 		);
 		
@@ -222,7 +222,7 @@ class StoreController extends CController
 			die();
 		}
 		
-		$act_menu=FunctionsV3::getTopMenuActivated();
+		$act_menu=FunctionsV4::getTopMenuActivated();
 		if (!in_array('signup',(array)$act_menu)){
 			$this->render('404-page',array('header'=>true));
 			return ;
@@ -254,7 +254,7 @@ class StoreController extends CController
 	public function actionMerchantSignup()
 	{		
 		
-		$act_menu=FunctionsV3::getTopMenuActivated();
+		$act_menu=FunctionsV4::getTopMenuActivated();
 		if (!in_array('resto_signup',(array)$act_menu)){
 			$this->render('404-page',array('header'=>true));
 			return ;
@@ -352,9 +352,9 @@ class StoreController extends CController
 						 						 						
 				     	 /*check if payment was offline*/
 				     	 $is_offline_paid=false;
-			      	 	 if ( $package_info=FunctionsV3::getMerchantPaymentMembership($merchant['merchant_id'],
+			      	 	 if ( $package_info=FunctionsV4::getMerchantPaymentMembership($merchant['merchant_id'],
 			      	 	 $merchant['package_id'])){						      	 	 	  	 	
-			      	 		$offline_payment=FunctionsV3::getOfflinePaymentList();			      	 		
+			      	 		$offline_payment=FunctionsV4::getOfflinePaymentList();			      	 		
 			      	 		if ( array_key_exists($package_info['payment_type'],(array)$offline_payment)){
 			      	 			$is_offline_paid=true;
 			      	 		}
@@ -415,7 +415,7 @@ class StoreController extends CController
 	public function actionContact()
 	{
 		
-		$act_menu=FunctionsV3::getTopMenuActivated();
+		$act_menu=FunctionsV4::getTopMenuActivated();
 		if (!in_array('contact',(array)$act_menu)){
 			$this->render('404-page',array('header'=>true));
 			return ;
@@ -538,10 +538,10 @@ class StoreController extends CController
 		switch ($_SESSION['search_type']) {
 			case "kr_search_address":
 				if (isset($_GET['s'])){
-					$res=FunctionsV3::searchByAddress(
+					$res=FunctionsV4::searchByAddress(
 					  isset($_GET['s'])?$_GET['s']:'' ,
 					  isset($_GET['page'])?$_GET['page']:0,
-					  FunctionsV3::getPerPage(),
+					  FunctionsV4::getPerPage(),
 					  $_GET			  
 					);
 				}		
@@ -551,11 +551,11 @@ class StoreController extends CController
 				break;
 						
 			case "kr_search_restaurantname":				
-				 $res=FunctionsV3::searchByMerchant(
+				 $res=FunctionsV4::searchByMerchant(
 				   $_SESSION['search_type'],
 				   isset($_GET['st'])?$_GET['st']:'',
 				   isset($_GET['page'])?$_GET['page']:0,
-				   FunctionsV3::getPerPage(),
+				   FunctionsV4::getPerPage(),
 				   $_GET			  
 				 );					
 				 $current_page_url=Yii::app()->createUrl('store/searcharea/',array(
@@ -565,11 +565,11 @@ class StoreController extends CController
 				 break;
 				 
 			case "kr_search_streetname":	 
-			      $res=FunctionsV3::searchByMerchant(
+			      $res=FunctionsV4::searchByMerchant(
 				   $_SESSION['search_type'],
 				   isset($_GET['st'])?$_GET['st']:'',
 				   isset($_GET['page'])?$_GET['page']:0,
-				   FunctionsV3::getPerPage(),
+				   FunctionsV4::getPerPage(),
 				   $_GET			  
 				 );			
 
@@ -593,11 +593,11 @@ class StoreController extends CController
 				 
 				 $_GET['filter_cuisine']=$_GET['filter_cuisine'].",$cuisine_id";
 				 				
-			     $res=FunctionsV3::searchByMerchant(
+			     $res=FunctionsV4::searchByMerchant(
 				   $_SESSION['search_type'],
 				   isset($_GET['st'])?$_GET['st']:'',
 				   isset($_GET['page'])?$_GET['page']:0,
-				   FunctionsV3::getPerPage(),
+				   FunctionsV4::getPerPage(),
 				   $_GET			  
 				 );			
 
@@ -609,11 +609,11 @@ class StoreController extends CController
 				
 			case "kr_search_foodname":
 				
-				$res=FunctionsV3::searchByMerchant(
+				$res=FunctionsV4::searchByMerchant(
 				   $_SESSION['search_type'],
 				   isset($_GET['st'])?$_GET['st']:'',
 				   isset($_GET['page'])?$_GET['page']:0,
-				   FunctionsV3::getPerPage(),
+				   FunctionsV4::getPerPage(),
 				   $_GET			  
 				 );			
 				 $current_page_url=Yii::app()->createUrl('store/searcharea/',array(
@@ -623,11 +623,11 @@ class StoreController extends CController
 			     break;
 				
 			case "kr_postcode":     
-			    $res=FunctionsV3::searchByMerchant(
+			    $res=FunctionsV4::searchByMerchant(
 				   $_SESSION['search_type'],
 				   isset($_GET['st'])?$_GET['st']:'',
 				   isset($_GET['page'])?$_GET['page']:0,
-				   FunctionsV3::getPerPage(),
+				   FunctionsV4::getPerPage(),
 				   $_GET			  
 				 );			
 				 $current_page_url=Yii::app()->createUrl('store/searcharea/',array(
@@ -636,11 +636,11 @@ class StoreController extends CController
 			    break;
 			    
 			case "kr_search_location":    
-			    $res=FunctionsV3::searchByMerchant(
+			    $res=FunctionsV4::searchByMerchant(
 				   $_SESSION['search_type'],
 				   '',
 				   isset($_GET['page'])?$_GET['page']:0,
-				   FunctionsV3::getPerPage(),
+				   FunctionsV4::getPerPage(),
 				   $_GET			  
 				 );			
 				 $current_page_url=Yii::app()->createUrl('store/searcharea/',array(
@@ -739,7 +739,7 @@ class StoreController extends CController
 			
 		} else $data['merchant']=$page_slug;		
 		
-		$res=FunctionsV3::getMerchantBySlug($data['merchant']);
+		$res=FunctionsV4::getMerchantBySlug($data['merchant']);
 		
 		if (is_array($res) && count($res)>=1){
 			if ( $current_merchant !=$res['merchant_id']){							 
@@ -784,15 +784,15 @@ class StoreController extends CController
 		    	$distance_type_orig='';
 		    			    			    	
 		    	/*double check if session has value else use cookie*/		    	
-		    	FunctionsV3::cookieLocation();
+		    	FunctionsV4::cookieLocation();
 		    	
 		    	
 		    	/*GET SEARCH LOCATION DATA*/	
-		    	$location_data=FunctionsV3::getSearchByLocationData();
+		    	$location_data=FunctionsV4::getSearchByLocationData();
 		    	$search_by_location=false;
-		    	if (FunctionsV3::isSearchByLocation()){
+		    	if (FunctionsV4::isSearchByLocation()){
 		    		$search_by_location=TRUE;
-		    	    $delivery_fee=FunctionsV3::getLocationDeliveryFee(
+		    	    $delivery_fee=FunctionsV4::getLocationDeliveryFee(
 		    	      $merchant_id,
 		    	      $res['delivery_charges'],
 		    	      $location_data
@@ -801,10 +801,10 @@ class StoreController extends CController
 			    	if (isset($_SESSION['client_location'])){
 			    		 
 			    		/*get the distance from client address to merchant Address*/             
-		                 $distance_type=FunctionsV3::getMerchantDistanceType($merchant_id); 
+		                 $distance_type=FunctionsV4::getMerchantDistanceType($merchant_id); 
 		                 $distance_type_orig=$distance_type;
 		                 
-			             $distance=FunctionsV3::getDistanceBetweenPlot(
+			             $distance=FunctionsV4::getDistanceBetweenPlot(
 			                $_SESSION['client_location']['lat'],
 			                $_SESSION['client_location']['long'],
 			                $res['latitude'],$res['lontitude'],$distance_type
@@ -814,15 +814,15 @@ class StoreController extends CController
 			             $distance_type=$distance_type=="M"?t("miles"):t("kilometers");
 			             $distance_type_orig = $distance_type;
 			             
-			              if(!empty(FunctionsV3::$distance_type_result)){
-			             	$distance_type_raw=FunctionsV3::$distance_type_result;
-			             	$distance_type=t(FunctionsV3::$distance_type_result);
+			              if(!empty(FunctionsV4::$distance_type_result)){
+			             	$distance_type_raw=FunctionsV4::$distance_type_result;
+			             	$distance_type=t(FunctionsV4::$distance_type_result);
 			             }
 			             
 			             $merchant_delivery_distance=getOption($merchant_id,'merchant_delivery_miles');             
 			             		             
 			             
-			             $delivery_fee=FunctionsV3::getMerchantDeliveryFee(
+			             $delivery_fee=FunctionsV4::getMerchantDeliveryFee(
 			                          $merchant_id,
 			                          $res['delivery_charges'],
 			                          $distance,
@@ -847,11 +847,11 @@ class StoreController extends CController
 		    	
 		    	/*CHECK IF MERCHANT HAS PROMO*/
 		    	$promo['enabled']=1;
-		    	if($offer=FunctionsV3::getOffersByMerchant($merchant_id,2)){		    	   
+		    	if($offer=FunctionsV4::getOffersByMerchant($merchant_id,2)){		    	   
 		    	   $promo['offer']=$offer;
 		    	   $promo['enabled']=2;
 		    	}		    			
-		    	if ( $voucher=FunctionsV3::merchantActiveVoucher($merchant_id)){		    
+		    	if ( $voucher=FunctionsV4::merchantActiveVoucher($merchant_id)){		    
 		    		$promo['voucher']=$voucher;
 		    		$promo['enabled']=2;
 		    	}
@@ -992,7 +992,7 @@ class StoreController extends CController
 		unset($_SESSION['confirm_order_data']);
 		
 		/*POINTS PROGRAM*/
-		if (FunctionsV3::hasModuleAddon("pointsprogram")){
+		if (FunctionsV4::hasModuleAddon("pointsprogram")){
 		   PointsProgram::includeFrontEndFiles();	   
 		} 
 		
@@ -1016,7 +1016,7 @@ class StoreController extends CController
 		$this->render('payment-option',array(
 		  'website_enabled_map_address'=>getOptionA('website_enabled_map_address'),
 		  'address_book'=>Yii::app()->functions->showAddressBook(),
-		  'search_by_location'=>FunctionsV3::isSearchByLocation(),		  
+		  'search_by_location'=>FunctionsV4::isSearchByLocation(),		  
 		));
 	}
 	
@@ -1080,7 +1080,7 @@ class StoreController extends CController
 		     'tabs'=>isset($_GET['tab'])?$_GET['tab']:'',
 		     'disabled_cc'=>getOptionA('disabled_cc_management'),
 		     'info'=>Yii::app()->functions->getClientInfo( Yii::app()->functions->getClientId()),
-		     'avatar'=>FunctionsV3::getAvatar( Yii::app()->functions->getClientId() )
+		     'avatar'=>FunctionsV4::getAvatar( Yii::app()->functions->getClientId() )
 		   ));
 		} else $this->render('404-page',array(
 		   'header'=>true
@@ -1194,7 +1194,7 @@ class StoreController extends CController
 	{
 		unset($_SESSION['confirm_order_data']);
 		
-		$act_menu=FunctionsV3::getTopMenuActivated();
+		$act_menu=FunctionsV4::getTopMenuActivated();
 		if (!in_array('browse',(array)$act_menu)){
 			$this->render('404-page',array('header'=>true));
 			return ;
@@ -1446,7 +1446,7 @@ class StoreController extends CController
 					          'order_id'=>$order_id,
 					          'payment_type'=>"bcy",
 					          'raw_response'=>json_encode($data),
-					          'date_created'=>FunctionsV3::dateNow(),
+					          'date_created'=>FunctionsV4::dateNow(),
 					          'ip_address'=>$_SERVER['REMOTE_ADDR'],
 					          'payment_reference'=>$data['PAYID']
 					        );		 
@@ -1486,7 +1486,7 @@ class StoreController extends CController
 						          'price'=>$token_details['package_price'],
 						          'payment_type'=>Yii::app()->functions->paymentCode('barclay'),
 						          'membership_expired'=>$membership_info['membership_expired'],
-						          'date_created'=>FunctionsV3::dateNow(),
+						          'date_created'=>FunctionsV4::dateNow(),
 						          'ip_address'=>$_SERVER['REMOTE_ADDR'],
 						          'PAYPALFULLRESPONSE'=>json_encode($data),
 						          'TRANSACTIONID'=>$data['PAYID'],
@@ -1500,7 +1500,7 @@ class StoreController extends CController
 						           'price'=>$token_details['package_price'],
 						           'payment_type'=>Yii::app()->functions->paymentCode('barclay'),
 						           'membership_expired'=>$token_details['membership_expired'],
-						           'date_created'=>FunctionsV3::dateNow(),
+						           'date_created'=>FunctionsV4::dateNow(),
 						           'ip_address'=>$_SERVER['REMOTE_ADDR'],
 						           'PAYPALFULLRESPONSE'=>json_encode($data),
 						           'TRANSACTIONID'=>$data['PAYID'],
@@ -1516,7 +1516,7 @@ class StoreController extends CController
 			                 $db_ext->updateData("{{merchant}}",
 											  array(
 											    'payment_steps'=>3,
-											    'membership_purchase_date'=>FunctionsV3::dateNow()
+											    'membership_purchase_date'=>FunctionsV4::dateNow()
 											  ),'merchant_id',$token_details['merchant_id']);
 					
 					         
@@ -1628,7 +1628,7 @@ class StoreController extends CController
 					     if ( $trans_info['transaction_type']=="order"){
 					     	  $params_update=array(
 					     	    'status'=>"pending",
-					     	    'date_modified'=>FunctionsV3::dateNow()
+					     	    'date_modified'=>FunctionsV4::dateNow()
 					     	  );
 					     	  $db_ext->updateData("{{order}}",$params_update,'order_id',$data['token']);
 					     	  header('Location: '.websiteUrl()."/store/receipt/id/".$data['token']);
@@ -1637,7 +1637,7 @@ class StoreController extends CController
 								$db_ext->updateData("{{merchant}}",
 								  array(
 								    'payment_steps'=>3,
-								    'membership_purchase_date'=>FunctionsV3::dateNow()
+								    'membership_purchase_date'=>FunctionsV4::dateNow()
 								  ),'merchant_id',$token_details['merchant_id']);
 								
 								header('Location: '.websiteUrl()."/store/merchantsignup/Do/thankyou2/token/".$data['token']); 
@@ -1670,7 +1670,7 @@ class StoreController extends CController
 	public function actionGuestCheckout()
 	{
 		/*POINTS PROGRAM*/
-		if (FunctionsV3::hasModuleAddon("pointsprogram")){
+		if (FunctionsV4::hasModuleAddon("pointsprogram")){
 		   PointsProgram::includeFrontEndFiles();	
 		}    
 		
@@ -1681,14 +1681,14 @@ class StoreController extends CController
 		     'address_book'=>Yii::app()->functions->showAddressBook(),
 		     'step'=>4,
 		     'guestcheckout'=>true,
-		     'search_by_location'=>FunctionsV3::isSearchByLocation(),
+		     'search_by_location'=>FunctionsV4::isSearchByLocation(),
 		));
 	}
 	
 	public function actionMerchantSignupSelection()
 	{
 		
-		$act_menu=FunctionsV3::getTopMenuActivated();
+		$act_menu=FunctionsV4::getTopMenuActivated();
 		if (!in_array('resto_signup',(array)$act_menu)){
 			$this->render('404-page',array('header'=>true));
 			return ;
@@ -1707,7 +1707,7 @@ class StoreController extends CController
 	
 	public function actionMerchantSignupinfo()
 	{
-		$commission_type=FunctionsV3::MembershipType();
+		$commission_type=FunctionsV4::MembershipType();
 		unset($commission_type[1]);		
 		$this->render('merchant-signup-info',array(
 		  'terms_merchant'=>getOptionA('website_terms_merchant'),
@@ -1952,7 +1952,7 @@ class StoreController extends CController
 							from
 							{{client}}
 							where
-							client_id =".FunctionsV3::q($res['client_id'])."
+							client_id =".FunctionsV4::q($res['client_id'])."
 							limit 0,1
 							";
 							if ($res3=$db_ext->rst($stmt3)){
@@ -1993,8 +1993,8 @@ class StoreController extends CController
 				  'contact_phone'=>$customer_number,
 				  'sms_message'=>$sms_customer,
 				  'status'=>$send_resp['msg'],
-				  'date_created'=>FunctionsV3::dateNow(),
-				  'date_executed'=>FunctionsV3::dateNow(),
+				  'date_created'=>FunctionsV4::dateNow(),
+				  'date_executed'=>FunctionsV4::dateNow(),
 				  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 				  'gateway'=>$send_resp['sms_provider']
 				);			
@@ -2010,8 +2010,8 @@ class StoreController extends CController
 				  'contact_phone'=>$sender,
 				  'sms_message'=>$sms_to_sender,
 				  'status'=>$send_resp['msg'],
-				  'date_created'=>FunctionsV3::dateNow(),
-				  'date_executed'=>FunctionsV3::dateNow(),
+				  'date_created'=>FunctionsV4::dateNow(),
+				  'date_executed'=>FunctionsV4::dateNow(),
 				  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 				  'gateway'=>$send_resp['sms_provider']
 				);			
@@ -2126,7 +2126,7 @@ class StoreController extends CController
 			SELECT * FROM
 			{{sms_broadcast_details}}
 			WHERE
-			gateway_response=".FunctionsV3::q($data['requestId'])."
+			gateway_response=".FunctionsV4::q($data['requestId'])."
 			LIMIT 0,1
 			";
 			if($res=$db->rst($stmt)){
@@ -2135,7 +2135,7 @@ class StoreController extends CController
 				foreach ($data['numbers'] as $val) {					
 					$params=array(
 					  'status'=>$val['desc'],
-					  'date_executed'=>FunctionsV3::dateNow(),
+					  'date_executed'=>FunctionsV4::dateNow(),
 					  'ip_address'=>$_SERVER['REMOTE_ADDR']
 					);					
 					$db->updateData("{{sms_broadcast_details}}",$params,'id',$id);
@@ -2166,7 +2166,7 @@ class StoreController extends CController
 			  'data'=>$data,
 			  'merchant_info'=>Yii::app()->functions->getMerchant($data['merchant_id']),
 			  's'=>$_SESSION,
-			  'paymentlist'=>FunctionsV3::PaymentOptionList(),
+			  'paymentlist'=>FunctionsV4::PaymentOptionList(),
 			  'guestcheckout'=>isset($data['is_guest_checkout'])?true:false
 			));
 		} else $this->render('error',array(
@@ -2192,7 +2192,7 @@ class StoreController extends CController
 			   'amount_to_pay'=>$amount_to_pay,
 			   'amount'=>str_replace(",",'',$amount_to_pay)*100,
 			   'payment_description'=>$payment_description,
-			   'credentials'=>FunctionsV3::razorPaymentCredentials($data['merchant_id'])
+			   'credentials'=>FunctionsV4::razorPaymentCredentials($data['merchant_id'])
 			));
 		
 		} else {
@@ -2217,7 +2217,7 @@ class StoreController extends CController
 			          'payment_type'=>"rzr",
 			          'payment_reference'=>$data['razorpay_payment_id'],
 			          'raw_response'=>$data['razorpay_payment_id'],
-			          'date_created'=>FunctionsV3::dateNow(),
+			          'date_created'=>FunctionsV4::dateNow(),
 			          'ip_address'=>$_SERVER['REMOTE_ADDR']
 			        );
 			        $db_ext->insertData("{{payment_order}}",$params_logs);
@@ -2228,12 +2228,12 @@ class StoreController extends CController
 			        $db_ext->updateData("{{order}}",$params_update,'order_id',$_GET['xid']);
 			        
 			        /*POINTS PROGRAM*/ 
-			        if (FunctionsV3::hasModuleAddon("pointsprogram")){
+			        if (FunctionsV4::hasModuleAddon("pointsprogram")){
 			           PointsProgram::updatePoints($_GET['xid']);
 			        }
 			        
 			        /*Driver app*/
-					if (FunctionsV3::hasModuleAddon("driver")){
+					if (FunctionsV4::hasModuleAddon("driver")){
 					   Yii::app()->setImport(array(			
 						  'application.modules.driver.components.*',
 					   ));
@@ -2269,7 +2269,7 @@ class StoreController extends CController
 			          'price'=>$res['package_price'],
 			          'payment_type'=>'rzr',
 			          'membership_expired'=>$res['membership_expired'],
-			          'date_created'=>FunctionsV3::dateNow(),
+			          'date_created'=>FunctionsV4::dateNow(),
 			          'ip_address'=>$_SERVER['REMOTE_ADDR'],
 			          'PAYPALFULLRESPONSE'=>$data['razorpay_payment_id'],
 			          'status'=>"paid"
@@ -2292,14 +2292,14 @@ class StoreController extends CController
 					$db_ext->updateData("{{merchant}}",
 					   array(
 					     'payment_steps'=>3,
-					     'membership_purchase_date'=>FunctionsV3::dateNow()
+					     'membership_purchase_date'=>FunctionsV4::dateNow()
 					),'merchant_id',$res['merchant_id']);	
 					 
 					if (isset($_GET['renew'])){            	
             	        header('Location: '. Yii::app()->createUrl('/store/renewsuccesful'));
 		            } else {		            	
 		            	/*SEND EMAIL*/
-		            	FunctionsV3::sendMerchantActivation($res, $res['activation_key']);
+		            	FunctionsV4::sendMerchantActivation($res, $res['activation_key']);
 		            	
 		            	header('Location: '. Yii::app()->createUrl("store/merchantsignup",array(
 		                  'Do'=>"step4",
@@ -2339,7 +2339,7 @@ class StoreController extends CController
 				if ( $res[0]['activation_token']==$data['token']){
 					$params=array(
 					 'status'=>"accepted",
-					 'date_modified'=>FunctionsV3::dateNow(),
+					 'date_modified'=>FunctionsV4::dateNow(),
 					 'ip_address'=>$_SERVER['REMOTE_ADDR'],
 					 'viewed'=>2,
 					 'admin_viewed'=>1
@@ -2351,7 +2351,7 @@ class StoreController extends CController
 						$msg=t("Order Status change to received, Thank you!");
 												
 						/** Mobile save logs for push notification */
-						/*if (FunctionsV3::hasModuleAddon("mobileapp")){							
+						/*if (FunctionsV4::hasModuleAddon("mobileapp")){							
 							$new_data['order_id']=$data['id'];
 							$new_data['status']='accepted';
 							
@@ -2363,12 +2363,12 @@ class StoreController extends CController
 						
                         /*SEND NOTIFICATIONS TO CUSTOMER*/	    		
                         $order_id=$data['id'];		
-	    				FunctionsV3::notifyCustomerOrderStatusChange(
+	    				FunctionsV4::notifyCustomerOrderStatusChange(
 	    				  $order_id,
 	    				  'accepted'	    				  
 	    				);
 				    	
-	    				if (FunctionsV3::hasModuleAddon("driver")){
+	    				if (FunctionsV4::hasModuleAddon("driver")){
 					    	/*Driver app*/
 					    	Yii::app()->setImport(array(			
 							  'application.modules.driver.components.*',
@@ -2381,14 +2381,14 @@ class StoreController extends CController
 	    				  'order_id'=>$data['id'],
 	    				  'status'=>'accepted',
 	    				  'remarks'=>'',
-	    				  'date_created'=>FunctionsV3::dateNow(),
+	    				  'date_created'=>FunctionsV4::dateNow(),
 	    				  'ip_address'=>$_SERVER['REMOTE_ADDR']
 	    				);	    				
 	    				$db_ext->insertData("{{order_history}}",$params_history);						
 						
 	    				
 	    			   /*Driver app*/
-					    if (FunctionsV3::hasModuleAddon("driver")){
+					    if (FunctionsV4::hasModuleAddon("driver")){
 						    Yii::app()->setImport(array(			
 							  'application.modules.driver.components.*',
 						    ));
@@ -2426,7 +2426,7 @@ class StoreController extends CController
 				if ( $res[0]['activation_token']==$data['token']){
 					$params=array(
 					 'status'=>"decline",
-					 'date_modified'=>FunctionsV3::dateNow(),
+					 'date_modified'=>FunctionsV4::dateNow(),
 					 'ip_address'=>$_SERVER['REMOTE_ADDR'],
 					 'viewed'=>2,
 					 'admin_viewed'=>1
@@ -2438,7 +2438,7 @@ class StoreController extends CController
 						$msg=t("Order Status change to decline");
 						
 						/** Mobile save logs for push notification */
-						/*if (FunctionsV3::hasModuleAddon("mobileapp")){							
+						/*if (FunctionsV4::hasModuleAddon("mobileapp")){							
 							$new_data['order_id']=$data['id'];
 							$new_data['status']='accepted';
 							
@@ -2450,7 +2450,7 @@ class StoreController extends CController
 				    							
                         /*SEND NOTIFICATIONS TO CUSTOMER*/	    				
                         $order_id = $data['id'];
-	    				FunctionsV3::notifyCustomerOrderStatusChange(
+	    				FunctionsV4::notifyCustomerOrderStatusChange(
 	    				  $order_id,
 	    				  'decline'
 	    				);
@@ -2460,13 +2460,13 @@ class StoreController extends CController
 	    				  'order_id'=>$data['id'],
 	    				  'status'=>'decline',
 	    				  'remarks'=>'',
-	    				  'date_created'=>FunctionsV3::dateNow(),
+	    				  'date_created'=>FunctionsV4::dateNow(),
 	    				  'ip_address'=>$_SERVER['REMOTE_ADDR']
 	    				);	    				
 	    				$db_ext->insertData("{{order_history}}",$params_history);						
 							    				
 	    			   /*Driver app*/
-					    if (FunctionsV3::hasModuleAddon("driver")){
+					    if (FunctionsV4::hasModuleAddon("driver")){
 						    Yii::app()->setImport(array(			
 							  'application.modules.driver.components.*',
 						    ));
@@ -2486,7 +2486,7 @@ class StoreController extends CController
 		$this->layout='mobile_tpl';
 		
 		$merchant_id=$_SESSION['kr_merchant_id'];
-		if ( $data=FunctionsV3::getMerchantInfo($merchant_id)){
+		if ( $data=FunctionsV4::getMerchantInfo($merchant_id)){
 			
 			
 			    $distance_type='';
@@ -2495,15 +2495,15 @@ class StoreController extends CController
 		    	$delivery_fee=0;
 		    			    			    	
 		    	/*double check if session has value else use cookie*/		    	
-		    	FunctionsV3::cookieLocation();
+		    	FunctionsV4::cookieLocation();
 					    		    	
 		    	if (isset($_SESSION['client_location'])){
 		    		
 		    		/*get the distance from client address to merchant Address*/             
-	                 $distance_type=FunctionsV3::getMerchantDistanceType($merchant_id); 
+	                 $distance_type=FunctionsV4::getMerchantDistanceType($merchant_id); 
 	                 $distance_type_orig=$distance_type;
 	                 
-		             $distance=FunctionsV3::getDistanceBetweenPlot(
+		             $distance=FunctionsV4::getDistanceBetweenPlot(
 		                $_SESSION['client_location']['lat'],
 		                $_SESSION['client_location']['long'],
 		                $data['latitude'],$data['lontitude'],$distance_type
@@ -2513,14 +2513,14 @@ class StoreController extends CController
 		             $distance_type=$distance_type=="M"?t("miles"):t("kilometers");
 		             $distance_type_orig = $distance_type;
 		             
-		              if(!empty(FunctionsV3::$distance_type_result)){
-		             	$distance_type_raw=FunctionsV3::$distance_type_result;
-		             	$distance_type=t(FunctionsV3::$distance_type_result);
+		              if(!empty(FunctionsV4::$distance_type_result)){
+		             	$distance_type_raw=FunctionsV4::$distance_type_result;
+		             	$distance_type=t(FunctionsV4::$distance_type_result);
 		             }
 		             
 		             $merchant_delivery_distance=getOption($merchant_id,'merchant_delivery_miles');             
 		             		             
-		             $delivery_fee=FunctionsV3::getMerchantDeliveryFee(
+		             $delivery_fee=FunctionsV4::getMerchantDeliveryFee(
 		                          $merchant_id,
 		                          $data['delivery_charges'],
 		                          $distance,
@@ -2543,11 +2543,11 @@ class StoreController extends CController
 		    	
 		    	/*CHECK IF MERCHANT HAS PROMO*/
 		    	$promo['enabled']=1;
-		    	if($offer=FunctionsV3::getOffersByMerchant($merchant_id,2)){		    	   
+		    	if($offer=FunctionsV4::getOffersByMerchant($merchant_id,2)){		    	   
 		    	   $promo['offer']=$offer;
 		    	   $promo['enabled']=2;
 		    	}		    			
-		    	if ( $voucher=FunctionsV3::merchantActiveVoucher($merchant_id)){		    
+		    	if ( $voucher=FunctionsV4::merchantActiveVoucher($merchant_id)){		    
 		    		$promo['voucher']=$voucher;
 		    		$promo['enabled']=2;
 		    	}
@@ -2589,7 +2589,7 @@ class StoreController extends CController
 		{{item}}
 		WHERE
 		item_name LIKE '%$str%'	
-		AND merchant_id=".FunctionsV3::q($_POST['merchant_id'])."
+		AND merchant_id=".FunctionsV4::q($_POST['merchant_id'])."
 		Group by item_name	
 		ORDER BY item_name ASC
 		LIMIT 0,16
@@ -2634,7 +2634,7 @@ class StoreController extends CController
 			          'price'=>$res['package_price'],
 			          'payment_type'=>'vog',
 			          'membership_expired'=>$res['membership_expired'],
-			          'date_created'=>FunctionsV3::dateNow(),
+			          'date_created'=>FunctionsV4::dateNow(),
 			          'ip_address'=>$_SERVER['REMOTE_ADDR'],
 			          'TRANSACTIONID'=>$vog_res['transaction_id'],
 			          'PAYPALFULLRESPONSE'=>json_encode($vog_res),	
@@ -2683,14 +2683,14 @@ class StoreController extends CController
 					$db_ext->updateData("{{merchant}}",
 					   array(
 					     'payment_steps'=>3,
-					     'membership_purchase_date'=>FunctionsV3::dateNow()
+					     'membership_purchase_date'=>FunctionsV4::dateNow()
 					),'merchant_id',$res['merchant_id']);	
 					 
 					if (isset($_GET['renew'])){            	
             	        header('Location: '. Yii::app()->createUrl('/store/renewsuccesful'));
 		            } else {		            	
 		            	/*SEND EMAIL*/
-		            	FunctionsV3::sendMerchantActivation($res, $res['activation_key']);
+		            	FunctionsV4::sendMerchantActivation($res, $res['activation_key']);
 		            	
 		            	header('Location: '. Yii::app()->createUrl("store/merchantsignup",array(
 		                  'Do'=>"step4",
@@ -2731,7 +2731,7 @@ class StoreController extends CController
 			          'price'=>$res['package_price'],
 			          'payment_type'=>'vog',
 			          'membership_expired'=>$res['membership_expired'],
-			          'date_created'=>FunctionsV3::dateNow(),
+			          'date_created'=>FunctionsV4::dateNow(),
 			          'ip_address'=>$_SERVER['REMOTE_ADDR'],
 			          'TRANSACTIONID'=>$vog_res['transaction_id'],
 			          'PAYPALFULLRESPONSE'=>json_encode($vog_res),	
@@ -2774,7 +2774,7 @@ class StoreController extends CController
 			   'amount_to_pay'=>$amount_to_pay,
 			   'amount'=>str_replace(",",'',$amount_to_pay)*100,
 			   'payment_description'=>$payment_description,
-			   'credentials'=>FunctionsV3::GetVogueCredentials($data['merchant_id'])
+			   'credentials'=>FunctionsV4::GetVogueCredentials($data['merchant_id'])
 			));
 		
 		} else {
@@ -2792,7 +2792,7 @@ class StoreController extends CController
 			$order_id=isset($_GET['id'])?$_GET['id']:'';			
 			if ($order_info=Yii::app()->functions->getOrderInfo($order_id)){
 				$merchant_id=$order_info['merchant_id'];				
-				if($credentials=FunctionsV3::GetVogueCredentials($merchant_id)){					
+				if($credentials=FunctionsV4::GetVogueCredentials($merchant_id)){					
 					$is_demo=false;				    
 				    if($credentials['merchant_id']=="demo"){
 				    	$is_demo=true;
@@ -2804,7 +2804,7 @@ class StoreController extends CController
 				          'payment_type'=>"vog",
 				          'payment_reference'=>$transaction_id,
 				          'raw_response'=>json_encode($vog_res),
-				          'date_created'=>FunctionsV3::dateNow(),
+				          'date_created'=>FunctionsV4::dateNow(),
 				          'ip_address'=>$_SERVER['REMOTE_ADDR']
 				        );					
 				        if (!Yii::app()->functions->epayBgValidatePaymentOrder($order_id,$transaction_id)){
@@ -2814,7 +2814,7 @@ class StoreController extends CController
                         if(isset($vog_res['ERROR'])){
 				        	$params_update=array(
 		                      'status'=>$vog_res['ERROR'],
-		                      'date_modified'=>FunctionsV3::dateNow(),
+		                      'date_modified'=>FunctionsV4::dateNow(),
 		                      'ip_address'=>$_SERVER['REMOTE_ADDR']
 		                    );	
 		                    $DbExt->updateData("{{order}}",$params_update,'order_id',$order_id);
@@ -2828,7 +2828,7 @@ class StoreController extends CController
 			    			case "cancelled":
 			    				$params_update=array(
 			                      'status'=>$vog_res['status'],
-			                      'date_modified'=>FunctionsV3::dateNow(),
+			                      'date_modified'=>FunctionsV4::dateNow(),
 			                      'ip_address'=>$_SERVER['REMOTE_ADDR']
 			                    );	
 			                    $DbExt->updateData("{{order}}",$params_update,'order_id',$order_id);
@@ -2837,18 +2837,18 @@ class StoreController extends CController
 			    			case "approved":	
 			    			   $params_update=array(
 			                      'status'=>'paid',
-			                      'date_modified'=>FunctionsV3::dateNow(),
+			                      'date_modified'=>FunctionsV4::dateNow(),
 			                      'ip_address'=>$_SERVER['REMOTE_ADDR']
 			                   );	
 			                   $DbExt->updateData("{{order}}",$params_update,'order_id',$order_id);
 			                   
 			                   /*POINTS PROGRAM*/ 
-						        if (FunctionsV3::hasModuleAddon("pointsprogram")){
+						        if (FunctionsV4::hasModuleAddon("pointsprogram")){
 						           PointsProgram::updatePoints($_GET['xid']);
 						        }
 						        
 						        /*Driver app*/
-								if (FunctionsV3::hasModuleAddon("driver")){
+								if (FunctionsV4::hasModuleAddon("driver")){
 								   Yii::app()->setImport(array(			
 									  'application.modules.driver.components.*',
 								   ));
@@ -2860,7 +2860,7 @@ class StoreController extends CController
 			    			default:
 			    			   $params_update=array(
 			                      'status'=>$vog_res['status'],
-			                      'date_modified'=>FunctionsV3::dateNow(),
+			                      'date_modified'=>FunctionsV4::dateNow(),
 			                      'ip_address'=>$_SERVER['REMOTE_ADDR']
 			                   );	
 			                   $DbExt->updateData("{{order}}",$params_update,'order_id',$order_id);
@@ -2873,7 +2873,7 @@ class StoreController extends CController
 			    		// failed get transaction
 			    		$params_update=array(
 	                      'status'=>'failed',
-	                      'date_modified'=>FunctionsV3::dateNow(),
+	                      'date_modified'=>FunctionsV4::dateNow(),
 	                      'ip_address'=>$_SERVER['REMOTE_ADDR']
 	                   );	
 	                   $DbExt->updateData("{{order}}",$params_update,'order_id',$order_id);
@@ -2895,7 +2895,7 @@ class StoreController extends CController
 			SELECT merchant_id 
 			FROM {{order}}
 			WHERE
-			order_id=".FunctionsV3::q($order_id)."
+			order_id=".FunctionsV4::q($order_id)."
 			LIMIT 0,1
 			";
 			if ($order_info=Yii::app()->functions->getOrderInfo($order_id)){			    
@@ -2908,7 +2908,7 @@ class StoreController extends CController
 				    Yii::app()->end();
 				} else {
 					// GET TRANSACTIN ID INFORMATION
-					if($credentials=FunctionsV3::GetVogueCredentials($merchant_id)){											
+					if($credentials=FunctionsV4::GetVogueCredentials($merchant_id)){											
 						$is_demo=false;				    
 					    if($credentials['merchant_id']=="demo"){
 					    	$is_demo=true;
@@ -2921,7 +2921,7 @@ class StoreController extends CController
 					          'payment_type'=>"vog",
 					          'payment_reference'=>$transaction_id,
 					          'raw_response'=>json_encode($vog_res),
-					          'date_created'=>FunctionsV3::dateNow(),
+					          'date_created'=>FunctionsV4::dateNow(),
 					          'ip_address'=>$_SERVER['REMOTE_ADDR']
 					        );								        
 					        if (!Yii::app()->functions->epayBgValidatePaymentOrder($order_id,$transaction_id)){
@@ -2932,7 +2932,7 @@ class StoreController extends CController
 	                        if(isset($vog_res['ERROR'])){
 					        	$params_update=array(
 			                      'status'=>$vog_res['ERROR'],
-			                      'date_modified'=>FunctionsV3::dateNow(),
+			                      'date_modified'=>FunctionsV4::dateNow(),
 			                      'ip_address'=>$_SERVER['REMOTE_ADDR']
 			                    );	
 			                    $DbExt->updateData("{{order}}",$params_update,'order_id',$order_id);
@@ -2952,7 +2952,7 @@ class StoreController extends CController
 				    			case "cancelled":
 				    				$params_update=array(
 				                      'status'=>$vog_res['status'],
-				                      'date_modified'=>FunctionsV3::dateNow(),
+				                      'date_modified'=>FunctionsV4::dateNow(),
 				                      'ip_address'=>$_SERVER['REMOTE_ADDR']
 				                    );	
 				                    $DbExt->updateData("{{order}}",$params_update,'order_id',$order_id);
@@ -2968,18 +2968,18 @@ class StoreController extends CController
 				    			case "approved":	
 				    			   $params_update=array(
 				                      'status'=>'paid',
-				                      'date_modified'=>FunctionsV3::dateNow(),
+				                      'date_modified'=>FunctionsV4::dateNow(),
 				                      'ip_address'=>$_SERVER['REMOTE_ADDR']
 				                   );	
 				                   $DbExt->updateData("{{order}}",$params_update,'order_id',$order_id);
 				                   
 				                   /*POINTS PROGRAM*/ 
-							        if (FunctionsV3::hasModuleAddon("pointsprogram")){
+							        if (FunctionsV4::hasModuleAddon("pointsprogram")){
 							           PointsProgram::updatePoints($_GET['xid']);
 							        }
 							        
 							        /*Driver app*/
-									if (FunctionsV3::hasModuleAddon("driver")){
+									if (FunctionsV4::hasModuleAddon("driver")){
 									   Yii::app()->setImport(array(			
 										  'application.modules.driver.components.*',
 									   ));
@@ -2995,7 +2995,7 @@ class StoreController extends CController
 				    			default:
 				    			   $params_update=array(
 				                      'status'=>'undefined payment status',
-				                      'date_modified'=>FunctionsV3::dateNow(),
+				                      'date_modified'=>FunctionsV4::dateNow(),
 				                      'ip_address'=>$_SERVER['REMOTE_ADDR']
 				                   );	
 				                   $DbExt->updateData("{{order}}",$params_update,'order_id',$order_id);

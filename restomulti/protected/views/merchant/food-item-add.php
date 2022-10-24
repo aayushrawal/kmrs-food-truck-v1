@@ -550,7 +550,7 @@ echo CHtml::hiddenField('merchant_tax',$merchant_tax);
 	
 	
 	<!--POINTS PROGRAM-->
-	<?php if (FunctionsV3::hasModuleAddon("pointsprogram")):?>
+	<?php if (FunctionsV4::hasModuleAddon("pointsprogram")):?>
 	<div class="uk-form-row">
 	  <label class="uk-form-label uk-h3"><?php echo t("Points earned")?></label>  
 	<div class="clear"></div>		

@@ -43,7 +43,7 @@ if ( $data=Yii::app()->functions->getOrder($order_id)){
 	
 	/*COMMISSION*/
 	//if ( Yii::app()->functions->isMerchantCommission($merchant_id)){	
-	if (FunctionsV3::isMerchantPaymentToUseAdmin($merchant_id)){
+	if (FunctionsV4::isMerchantPaymentToUseAdmin($merchant_id)){
 		$mode=Yii::app()->functions->getOptionAdmin('admin_mode_epaybg');			
 		if ($mode=="sandbox"){
 			$params['mode']='sandbox';

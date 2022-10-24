@@ -47,7 +47,7 @@ $merchant_info=(array)Yii::app()->functions->getMerchantInfo();
 
 <form class="uk-form uk-form-horizontal forms" id="forms">
 <?php echo CHtml::hiddenField('action','merchantSettings')?>
-<?php FunctionsV3::addCsrfToken(false);?>
+<?php FunctionsV4::addCsrfToken(false);?>
 
 <div class="uk-form-row"> 
  <label class="uk-form-label"><?php echo Yii::t('default',"Merchant Logo")?></label>

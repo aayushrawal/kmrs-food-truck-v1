@@ -20,7 +20,7 @@
       <td><?php echo t($val['payment_status'])?></td>
       <td><?php echo $val['remarks']?></td>
       <td><?php 
-      echo FunctionsV3::prettyDate($val['date_created'])." ".FunctionsV3::prettyTime($val['date_created']);
+      echo FunctionsV4::prettyDate($val['date_created'])." ".FunctionsV4::prettyTime($val['date_created']);
       ?></td>
     </tr>
     <?php endforeach;?>

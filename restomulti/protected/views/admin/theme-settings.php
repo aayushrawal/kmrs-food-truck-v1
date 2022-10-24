@@ -1,7 +1,7 @@
 <form class="uk-form uk-form-horizontal admin-settings-page forms" id="forms">
 <?php 
 echo CHtml::hiddenField('action','themeSettings');
-FunctionsV3::addCsrfToken(false);
+FunctionsV4::addCsrfToken(false);
 ?>
 
 <h2><?php echo t("Website Compression")?></h2>
@@ -193,7 +193,7 @@ echo CHtml::checkBox('theme_search_foodname',getOptionA('theme_search_foodname')
 <div class="uk-form-row">
   <label class="uk-form-label"><?php echo t("Top menu")?></label>  
 <?php 
-echo CHtml::dropDownList('theme_top_menu[]',(array)FunctionsV3::getTopMenuActivated(),array(
+echo CHtml::dropDownList('theme_top_menu[]',(array)FunctionsV4::getTopMenuActivated(),array(
   'browse'=>t("Browse Restaurant"),
   'resto_signup'=>t("Restaurant Signup"),
   'contact'=>t("Contact"),

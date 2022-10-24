@@ -61,7 +61,7 @@ if ($data['two_flavors']==2){
   <!--ITEM NAME & DESCRIPTION-->
   <div class="row">
     <div class="col-md-3 ">              
-       <img src="<?php echo FunctionsV3::getFoodDefaultImage($data['photo']);?>" alt="<?php echo $data['item_name']?>" title="<?php echo $data['item_name']?>" class="logo-small">
+       <img src="<?php echo FunctionsV4::getFoodDefaultImage($data['photo']);?>" alt="<?php echo $data['item_name']?>" title="<?php echo $data['item_name']?>" class="logo-small">
     </div> <!--col-->
     <div class="col-md-9 ">
        <p class="bold"><?php echo qTranslate($data['item_name'],'item_name',$data)?></p>
@@ -128,10 +128,10 @@ if ($data['two_flavors']==2){
              
              <?php if (isset($price['price'])):?>  
                 <?php if (is_numeric($data['discount'])):?>
-                    <span class="line-tru"><?php echo FunctionsV3::prettyPrice($price['price'])?></span>
-                    <span class="text-danger"><?php echo FunctionsV3::prettyPrice($price['price']-$data['discount'])?></span>
+                    <span class="line-tru"><?php echo FunctionsV4::prettyPrice($price['price'])?></span>
+                    <span class="text-danger"><?php echo FunctionsV4::prettyPrice($price['price']-$data['discount'])?></span>
                 <?php else :?>
-                    <?php echo FunctionsV3::prettyPrice($price['price'])?>
+                    <?php echo FunctionsV4::prettyPrice($price['price'])?>
                  <?php endif;?>
              <?php endif;?>
              

@@ -13,7 +13,7 @@ if (isset($is_merchant)){
 	
 	/*COMMISSION*/
 	//if ( Yii::app()->functions->isMerchantCommission($merchant_id)){
-	if (FunctionsV3::isMerchantPaymentToUseAdmin($merchant_id)){
+	if (FunctionsV4::isMerchantPaymentToUseAdmin($merchant_id)){
 		$merchant_key=Yii::app()->functions->getOptionAdmin('admin_payu_key');
 	    $merchant_salt=Yii::app()->functions->getOptionAdmin('admin_payu_salt');
 	    $paymode=Yii::app()->functions->getOptionAdmin('admin_payu_mode');

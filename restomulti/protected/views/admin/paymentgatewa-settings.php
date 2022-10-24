@@ -3,7 +3,7 @@
 
 <?php 
 $paymentgateway=Yii::app()->functions->getMerchantListOfPaymentGateway();
-$list=FunctionsV3::PaymentOptionList();
+$list=FunctionsV4::PaymentOptionList();
 ?>
 
 <h4><?php echo t("list of enabled payment gateway on merchant")?></h4>

@@ -66,7 +66,7 @@ class CronController extends CController
 					$cron->customMobile($val);
 				}
 				$db_ext->updateData("{{sms_broadcast}}",
-				  array('status'=>"process",'date_modified'=>FunctionsV3::dateNow()),
+				  array('status'=>"process",'date_modified'=>FunctionsV4::dateNow()),
 				  'broadcast_id',$val['broadcast_id']);
 			}
 		} else {
@@ -155,7 +155,7 @@ class CronController extends CController
 					/*dump($api_raw_response);
 					dump($status_msg);*/
 					$params_update=array(
-					  'date_process'=>FunctionsV3::dateNow(),
+					  'date_process'=>FunctionsV4::dateNow(),
 					  'api_raw_response'=>$api_raw_response,
 					  'status'=>$status_msg
 					);
@@ -240,7 +240,7 @@ class CronController extends CController
 				$params_update=array(
 				 'status'=>"process",
 				 'api_raw_response'=>$msg,
-				 'date_process'=>FunctionsV3::dateNow(),
+				 'date_process'=>FunctionsV4::dateNow(),
 				 'jobid'=>$jobid
 				);
 				$db_ext->updateData("{{fax_broadcast}}",$params_update,'id',$record_id);
@@ -260,7 +260,7 @@ class CronController extends CController
 			$params=array(
 			 'status'=>$data['shortstatus'],
 			 'api_raw_response'=>$data['longstatus'],
-			 'date_postback'=>FunctionsV3::dateNow()
+			 'date_postback'=>FunctionsV4::dateNow()
 			);
 			dump($params);
 			$db_ext=new DbExt;
@@ -364,7 +364,7 @@ class CronController extends CController
 		SELECT * FROM
 		{{merchant}}
 		WHERE
-		membership_expired<".FunctionsV3::q($date)."
+		membership_expired<".FunctionsV4::q($date)."
 		AND status in ('active')
 		AND is_commission ='1'
 		";		
@@ -386,16 +386,16 @@ class CronController extends CController
 		    	   'sitename'=>getOptionA('website_title'),
 		    	   'siteurl'=>websiteUrl(),	 		    	   
 		    	);
-		    	$tpl=FunctionsV3::replaceTemplateTags($tpl,$pattern,$val); 
-		    	$subject=FunctionsV3::replaceTemplateTags($subject,$pattern,$val); 
-		    	$tpl_sms=FunctionsV3::replaceTemplateTags($tpl_sms,$pattern,$val); 		    	
+		    	$tpl=FunctionsV4::replaceTemplateTags($tpl,$pattern,$val); 
+		    	$subject=FunctionsV4::replaceTemplateTags($subject,$pattern,$val); 
+		    	$tpl_sms=FunctionsV4::replaceTemplateTags($tpl_sms,$pattern,$val); 		    	
 				
 				$params=array(
 	    		  'email_address'=>$merchant_email,
 	    		  'sender'=>$sender,
 	    		  'subject'=>$subject,
 	    		  'content'=>$tpl,
-	    		  'date_created'=>FunctionsV3::dateNow(),
+	    		  'date_created'=>FunctionsV4::dateNow(),
 	    		  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 	    		  'module_type'=>'core'
 	    		);	    		
@@ -404,7 +404,7 @@ class CronController extends CController
 	    		$params=array(
 	    		  'contact_phone'=>$val['contact_phone'],
 	    		  'sms_message'=>$tpl_sms,
-	    		  'date_created'=>FunctionsV3::dateNow(),
+	    		  'date_created'=>FunctionsV4::dateNow(),
 	    		  'ip_address'=>$_SERVER['REMOTE_ADDR']    		 
 	    		);	    		
 	    		$DbExt->insertData("{{sms_broadcast_details}}",$params); 				
@@ -413,8 +413,8 @@ class CronController extends CController
 			if(isset($_GET['debug'])){ echo "no records"; }
 		}
 		unset($DbExt);
-		FunctionsV3::runCronEmail();
-		FunctionsV3::runCronSMS();
+		FunctionsV4::runCronEmail();
+		FunctionsV4::runCronSMS();
 	}
 	
 	public function actionIdleOrder()
@@ -453,7 +453,7 @@ class CronController extends CController
 			   $critical=false;	
 			   $time_1=date('Y-m-d g:i:s a');			
 		       $time_2=date("Y-m-d g:i:s a",strtotime($val['date_created']));						
-			   $time_diff=FunctionsV3::dateDifference($time_2,$time_1);	
+			   $time_diff=FunctionsV4::dateDifference($time_2,$time_1);	
 			   		   
 			   if (is_array($time_diff) && count($time_diff)>=1){			   	   
 			   	   if ($time_diff['minutes']>$idle_minutes){
@@ -497,8 +497,8 @@ class CronController extends CController
 	    	   'siteurl'=>websiteUrl(),	 		    	   
 	    	   'idle_time'=>'idle_time'
 	    	  );
-	    	$tpl=FunctionsV3::replaceTemplateTags($tpl,$pattern,$data);
-	    	$subject=FunctionsV3::replaceTemplateTags($subject,$pattern,$data);
+	    	$tpl=FunctionsV4::replaceTemplateTags($tpl,$pattern,$data);
+	    	$subject=FunctionsV4::replaceTemplateTags($subject,$pattern,$data);
 									
 			$DbExt=new DbExt();
 			  $params=array(
@@ -506,12 +506,12 @@ class CronController extends CController
 			   'sender'=>$sender,
 			   'subject'=>$subject,
 			   'content'=>$tpl,
-			   'date_created'=>FunctionsV3::dateNow(),
+			   'date_created'=>FunctionsV4::dateNow(),
 			   'ip_address'=>$_SERVER['REMOTE_ADDR'],
 			   'module_type'=>'core'
 			  );	    			  
 			  $DbExt->insertData("{{email_logs}}",$params);    	  
-			  FunctionsV3::runCronEmail();
+			  FunctionsV4::runCronEmail();
 			
 		}
 	}

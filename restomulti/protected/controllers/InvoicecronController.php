@@ -28,7 +28,7 @@ class InvoicecronController extends CController
 		$and=''; $date_covered_start=''; $date_covered_end='';
 		
 		$and_status='';
-		$commission_status=FunctionsV3::getCommissionStatusBased();
+		$commission_status=FunctionsV4::getCommissionStatusBased();
 		if($commission_status){
 			$and_status = " AND status in ($commission_status) ";
 		}		
@@ -74,7 +74,7 @@ class InvoicecronController extends CController
 		WHERE
 		merchant_type='3'
 		AND
-		invoice_terms=".FunctionsV3::q($terms)."	
+		invoice_terms=".FunctionsV4::q($terms)."	
 		AND status = 'active'
 		AND
 		merchant_id NOT IN (
@@ -82,9 +82,9 @@ class InvoicecronController extends CController
 		   from
 		   {{invoice}}
 		   where
-		   date_from = ".FunctionsV3::q($date_covered_start)."
+		   date_from = ".FunctionsV4::q($date_covered_start)."
 		   and
-		   date_to = ".FunctionsV3::q($date_covered_end)."
+		   date_to = ".FunctionsV4::q($date_covered_end)."
 		)		
 		LIMIT 0,5
 		";
@@ -97,7 +97,7 @@ class InvoicecronController extends CController
 				FROM
 				{{order}}
 				WHERE
-				merchant_id=".FunctionsV3::q($val['merchant_id'])."
+				merchant_id=".FunctionsV4::q($val['merchant_id'])."
 				$and
 				$and_status
 				";
@@ -113,7 +113,7 @@ class InvoicecronController extends CController
 					  'invoice_total'=>$res2['total_commission']>0?$res2['total_commission']:0,
 					  'date_from'=>$date_covered_start,
 					  'date_to'=>$date_covered_end,
-					  'date_created'=>FunctionsV3::dateNow(),
+					  'date_created'=>FunctionsV4::dateNow(),
 					  'ip_address'=>$_SERVER['REMOTE_ADDR']
 					);
 					if (isset($_GET['debug'])){ dump($params);}
@@ -128,7 +128,7 @@ class InvoicecronController extends CController
 	public function actionGeneratePdf()
 	{					
 		define ('K_TCPDF_EXTERNAL_CONFIG', true);
-		$upload_path=FunctionsV3::uploadPath();		
+		$upload_path=FunctionsV4::uploadPath();		
         $assets_path=Yii::getPathOfAlias('webroot')."/assets/images";
 
         if (!file_exists($upload_path."/invoice")){
@@ -145,7 +145,7 @@ class InvoicecronController extends CController
 				   	
 		$DbExt=new DbExt;
 		$html=''; 
-		$terms=FunctionsV3::InvoiceTerms();
+		$terms=FunctionsV4::InvoiceTerms();
 		$site_title=getOptionA("website_title");
 		
 		$bank_account_name=getOptionA('admin_bank_account_name');
@@ -157,7 +157,7 @@ class InvoicecronController extends CController
 		}
 		
 		$and_status='';
-		$commission_status=FunctionsV3::getCommissionStatusBased();
+		$commission_status=FunctionsV4::getCommissionStatusBased();
 		if($commission_status){
 			$and_status = " AND status in ($commission_status) ";
 		}		
@@ -189,7 +189,7 @@ class InvoicecronController extends CController
 								
 				$merchant_id=$val['merchant_id'];
 				$invoice_number=$val['invoice_number'];
-				$invoice_token=FunctionsV3::generateInvoiceToken();
+				$invoice_token=FunctionsV4::generateInvoiceToken();
 				$pdf_filename="$invoice_number-$invoice_token";
 				
 				$bank_deposited_timeframe_date = date("Y-m-d" , strtotime($val['date_created'] ." +$bank_deposited_timeframe days") );				
@@ -197,7 +197,7 @@ class InvoicecronController extends CController
 				SELECT * FROM
 				{{order}}
 				WHERE
-				merchant_id=".FunctionsV3::q($val['merchant_id'])."
+				merchant_id=".FunctionsV4::q($val['merchant_id'])."
 				AND
 				date_created BETWEEN '".$val['date_from']." 00:00:00' AND '".$val['date_to']." 23:59:00'
 				$and_status
@@ -227,7 +227,7 @@ class InvoicecronController extends CController
 					$pdf_filename=$pdf_filename.".pdf";
 					
 					/*SEND NOTIFICATION TO MERCHANT*/
-					FunctionsV3::sendInvoiceNotification($merchant_id,$val,$pdf_filename);
+					FunctionsV4::sendInvoiceNotification($merchant_id,$val,$pdf_filename);
 					
 				}
 				
@@ -235,7 +235,7 @@ class InvoicecronController extends CController
 				  'status'=>$process_msg,
 				  'invoice_token'=>$invoice_token,
 				  'pdf_filename'=>$pdf_filename,
-				  'date_process'=>FunctionsV3::dateNow(),
+				  'date_process'=>FunctionsV4::dateNow(),
 				  'ip_address'=>$_SERVER['REMOTE_ADDR']
 				);
 				if (isset($_GET['debug'])){ dump($params); }
@@ -254,7 +254,7 @@ class InvoicecronController extends CController
 	    require_once('tcpdf.php');
 	    
 	    $site_title=getOptionA("website_title");
-	    $upload_path=FunctionsV3::uploadPath();		
+	    $upload_path=FunctionsV4::uploadPath();		
 	    $assets_path=Yii::getPathOfAlias('webroot')."/assets/images";
 	    $logo="default-image-merchant.png";
 	    
@@ -271,7 +271,7 @@ class InvoicecronController extends CController
 	    } else define ('K_PATH_IMAGES', $assets_path ."/");*/
 	    
 	    $site_addres=getOptionA("website_address");
-	    if ($country_details=FunctionsV3::getCountryByShortCode(getOptionA('admin_country_set'))){
+	    if ($country_details=FunctionsV4::getCountryByShortCode(getOptionA('admin_country_set'))){
 	    	$site_addres.=" ".$country_details['country_name'];
 	    } else $site_addres.=" ".getOptionA('admin_country_set');	    
 	    

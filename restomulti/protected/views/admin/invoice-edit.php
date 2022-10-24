@@ -12,7 +12,7 @@
   <label class="uk-form-label"><?php echo t("Status")?></label>
   <?php 
   echo CHtml::dropDownList('payment_status',$data['payment_status'],
-  FunctionsV3::invoicePaymentStatusList()
+  FunctionsV4::invoicePaymentStatusList()
   ,array(
     'class'=>"uk-form-width-medium"
   ));

@@ -105,7 +105,7 @@ if (!class_exists('AjaxAdmin'))
 				$session_token=Yii::app()->functions->generateRandomKey().md5($_SERVER['REMOTE_ADDR']);				
 				$params=array(
 				  'session_token'=>$session_token,
-				  'last_login'=>FunctionsV3::dateNow()
+				  'last_login'=>FunctionsV4::dateNow()
 				);
 				$this->updateData("{{admin_user}}",$params,'admin_id',$res[0]['admin_id']);
 								
@@ -193,7 +193,7 @@ if (!class_exists('AjaxAdmin'))
 			 }		
 
 			if (!empty($this->data['restaurant_slug'])){
-				$params['restaurant_slug']=FunctionsV3::verifyMerchantSlug(
+				$params['restaurant_slug']=FunctionsV4::verifyMerchantSlug(
 				  Yii::app()->functions->seo_friendly_url($this->data['restaurant_slug']),
 				  $this->data['id']
 				);
@@ -213,7 +213,7 @@ if (!class_exists('AjaxAdmin'))
 			$params['cuisine']=json_encode($this->data['cuisine']);
 			$params['service']=$this->data['service'];
 			$params['status']=$this->data['status'];
-		    $params['date_created']=FunctionsV3::dateNow();
+		    $params['date_created']=FunctionsV4::dateNow();
 		    $params['ip_address']=$_SERVER['REMOTE_ADDR'];
 		    $params['membership_expired']=isset($this->data['membership_expired'])?$this->data['membership_expired']:'';
 		    $params['is_featured']=isset($this->data['is_featured'])?$this->data['is_featured']:1;
@@ -289,12 +289,12 @@ if (!class_exists('AjaxAdmin'))
 			    	,$mtid);
 			    	
 			    	//AUTO ADD SIZE
-			    	FunctionsV3::autoAddSize($mtid);
+			    	FunctionsV4::autoAddSize($mtid);
 		    	}
 		    } else {		    	
 		    	unset($params['date_created']);
-				$params['date_modified']=FunctionsV3::dateNow();		
-				$params['restaurant_slug']=FunctionsV3::verifyMerchantSlug($params['restaurant_slug'],$this->data['id']);
+				$params['date_modified']=FunctionsV4::dateNow();		
+				$params['restaurant_slug']=FunctionsV4::verifyMerchantSlug($params['restaurant_slug'],$this->data['id']);
 						
 				$res = $this->updateData('{{merchant}}' , $params ,'merchant_id',$this->data['id']);
 				if ($res){
@@ -327,7 +327,7 @@ if (!class_exists('AjaxAdmin'))
 			    	,$mtid);
 			    	
 			    				    	
-			    	$payment_list=FunctionsV3::PaymentOptionList();
+			    	$payment_list=FunctionsV4::PaymentOptionList();
 			    	foreach ($payment_list as $payment_key=>$payment_val) {
 			    		$payment_keys="merchant_switch_master_$payment_key";
 			    		Yii::app()->functions->updateOption($payment_keys,
@@ -336,7 +336,7 @@ if (!class_exists('AjaxAdmin'))
 			    	}
 			    	
 			    	/*NOTIFY MERCHANT CHANGE STATUS*/
-			    	FunctionsV3::MerchantchangeStatus($this->data['id'] , $this->data );
+			    	FunctionsV4::MerchantchangeStatus($this->data['id'] , $this->data );
 	                	    	        
 				} else $this->msg=Yii::t("default","ERROR: cannot update");
 		    }	
@@ -411,7 +411,7 @@ if (!class_exists('AjaxAdmin'))
 			}			
 												
 			if ($this->data['tbl']=="merchantSponsoredList"){
-				$params=array('is_sponsored'=>1,'date_modified'=>FunctionsV3::dateNow());
+				$params=array('is_sponsored'=>1,'date_modified'=>FunctionsV4::dateNow());
 				if ($this->updateData("{{merchant}}",$params,'merchant_id',$this->data['row_id'])){
 					$this->code=1;
 					$this->msg=Yii::t("default","Successfully remove.");
@@ -449,7 +449,7 @@ if (!class_exists('AjaxAdmin'))
 			
 			/*DELETE IMAGE IF TABLE IS subcategory_item*/
 			if($this->data['tbl']=="subcategory_item"){
-				if ($temp_res=FunctionsV3::getAddonItem($this->data['row_id'])){					
+				if ($temp_res=FunctionsV4::getAddonItem($this->data['row_id'])){					
 					$filename_to_delete[]=$temp_res['photo'];
 				}	
 			}	
@@ -497,7 +497,7 @@ if (!class_exists('AjaxAdmin'))
                  	}
                  	
                  	$DbExt=new DbExt;
-                 	$DbExt->qry("DELETE FROM {{size}} WHERE merchant_id=".FunctionsV3::q($this->data['row_id'])." ");
+                 	$DbExt->qry("DELETE FROM {{size}} WHERE merchant_id=".FunctionsV4::q($this->data['row_id'])." ");
                  	unset($DbExt);
                  	                 	
                  }			
@@ -510,7 +510,7 @@ if (!class_exists('AjaxAdmin'))
 				 /*DELETE IMAGE*/
 				 if(is_array($filename_to_delete) && count($filename_to_delete)>=1){
 				 	foreach ($filename_to_delete as $filename) {
-				 		FunctionsV3::deleteUploadedFile($filename);
+				 		FunctionsV4::deleteUploadedFile($filename);
 				 	}				    
 				 }
 			                 			 
@@ -549,7 +549,7 @@ if (!class_exists('AjaxAdmin'))
                      $session_token=Yii::app()->functions->generateRandomKey().md5($_SERVER['REMOTE_ADDR']);				
 					 $params=array(
 					  'session_token'=>$session_token,
-					  'last_login'=>FunctionsV3::dateNow()
+					  'last_login'=>FunctionsV4::dateNow()
 					 );
 					 $this->updateData("{{merchant}}",$params,'merchant_id',$res[0]['merchant_id']);
 					 
@@ -613,7 +613,7 @@ if (!class_exists('AjaxAdmin'))
 					 $_SESSION['kr_merchant_user_type']='merchant_user';
 		    		
 		    		$params=array(
-		    		  'last_login'=>FunctionsV3::dateNow(),
+		    		  'last_login'=>FunctionsV4::dateNow(),
 		    	 	  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 		    		  'session_token'=>$session_token
 		    		);
@@ -736,7 +736,7 @@ if (!class_exists('AjaxAdmin'))
 			  'category_description'=>addslashes($this->data['category_description']),
 			  'photo'=>isset($this->data['photo'])?addslashes($this->data['photo']):'',
 			  'status'=>addslashes($this->data['status']),
-			  'date_created'=>FunctionsV3::dateNow(),
+			  'date_created'=>FunctionsV4::dateNow(),
 			  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 			  'merchant_id'=>Yii::app()->functions->getMerchantID(),
 			  //'spicydish'=>isset($this->data['spicydish'])?$this->data['spicydish']:1,
@@ -772,7 +772,7 @@ if (!class_exists('AjaxAdmin'))
 				}	
 							
 				unset($params['date_created']);
-				$params['date_modified']=FunctionsV3::dateNow();				
+				$params['date_modified']=FunctionsV4::dateNow();				
 				$res = $command->update('{{category}}' , $params , 
 				'cat_id=:cat_id' , array(':cat_id'=> addslashes($this->data['id']) ));
 				if ($res){
@@ -781,7 +781,7 @@ if (!class_exists('AjaxAdmin'))
 	                
 	                /*DELETE IMAGE*/
 	                if(!empty($filename_to_delete)){
-	                	FunctionsV3::deleteUploadedFile($filename_to_delete);
+	                	FunctionsV4::deleteUploadedFile($filename_to_delete);
 	                }				
 	                
 				} else $this->msg=Yii::t("default","ERROR: cannot update");
@@ -836,7 +836,7 @@ if (!class_exists('AjaxAdmin'))
 			  'subcategory_name'=>addslashes($this->data['subcategory_name']),
 			  'subcategory_description'=>addslashes($this->data['subcategory_description']),
 			  //'discount'=>addslashes($this->data['discount']),
-			  'date_created'=>FunctionsV3::dateNow(),
+			  'date_created'=>FunctionsV4::dateNow(),
 			  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 			  'merchant_id'=>Yii::app()->functions->getMerchantID(),
 			  'status'=>$this->data['status']
@@ -856,7 +856,7 @@ if (!class_exists('AjaxAdmin'))
 			$command = Yii::app()->db->createCommand();
 			if (isset($this->data['id']) && is_numeric($this->data['id'])){				
 				unset($params['date_created']);
-				$params['date_modified']=FunctionsV3::dateNow();				
+				$params['date_modified']=FunctionsV4::dateNow();				
 				$res = $command->update('{{subcategory}}' , $params , 
 				'subcat_id=:subcat_id' , array(':subcat_id'=>addslashes($this->data['id'])));
 				if ($res){
@@ -878,7 +878,7 @@ if (!class_exists('AjaxAdmin'))
 	    		    	
             $mtid=Yii::app()->functions->getMerchantID();
 	    	/*$apply_tax=getOption($mtid,'merchant_apply_tax');
-	    	$tax=FunctionsV3::getMerchantTax($mtid);*/
+	    	$tax=FunctionsV4::getMerchantTax($mtid);*/
 	    	
 	    	yii::app()->functions->data='list';
 			$cat_list=yii::app()->functions->getSubcategory();						
@@ -952,7 +952,7 @@ if (!class_exists('AjaxAdmin'))
 			  'price'=>isset($this->data['price'])?trim($this->data['price']):0,
 			  'photo'=>isset($this->data['photo'])?addslashes(trim($this->data['photo'])):"",
 			  'status'=>addslashes($this->data['status']),
-			  'date_created'=>FunctionsV3::dateNow(),
+			  'date_created'=>FunctionsV4::dateNow(),
 			  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 			  'merchant_id'=>Yii::app()->functions->getMerchantID()
 			);		
@@ -974,7 +974,7 @@ if (!class_exists('AjaxAdmin'))
 			if (isset($this->data['id']) && is_numeric($this->data['id'])){		
 				
 				$filename_to_delete='';
-				if ($temp_res=FunctionsV3::getAddonItem($this->data['id'])){
+				if ($temp_res=FunctionsV4::getAddonItem($this->data['id'])){
 					if(!isset($this->data['photo'])){
 						$this->data['photo']='';
 					}		
@@ -984,7 +984,7 @@ if (!class_exists('AjaxAdmin'))
 				}
 						
 				unset($params['date_created']);
-				$params['date_modified']=FunctionsV3::dateNow();				
+				$params['date_modified']=FunctionsV4::dateNow();				
 				$res = $command->update('{{subcategory_item}}' , $params , 
 				'sub_item_id=:sub_item_id' , array(':sub_item_id'=>addslashes($this->data['id'])));
 				if ($res){
@@ -993,7 +993,7 @@ if (!class_exists('AjaxAdmin'))
 	                $item_id=$this->data['id'];
 	                
 	                if(!empty($filename_to_delete)){
-	                	FunctionsV3::deleteUploadedFile($filename_to_delete);
+	                	FunctionsV4::deleteUploadedFile($filename_to_delete);
 	                }				
 	                
 				} else $this->msg=Yii::t("default","ERROR: cannot update");
@@ -1047,7 +1047,7 @@ if (!class_exists('AjaxAdmin'))
 		    $params=array(
 			  'size_name'=>$this->data['size_name'],
 			  'status'=>addslashes($this->data['status']),
-			  'date_created'=>FunctionsV3::dateNow(),
+			  'date_created'=>FunctionsV4::dateNow(),
 			  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 			  'merchant_id'=>Yii::app()->functions->getMerchantID()
 			);							
@@ -1062,7 +1062,7 @@ if (!class_exists('AjaxAdmin'))
 			$command = Yii::app()->db->createCommand();
 			if (isset($this->data['id']) && is_numeric($this->data['id'])){				
 				unset($params['date_created']);
-				$params['date_modified']=FunctionsV3::dateNow();				
+				$params['date_modified']=FunctionsV4::dateNow();				
 				$res = $command->update('{{size}}' , $params , 
 				'size_id=:size_id' , array(':size_id'=>addslashes($this->data['id'])));
 				if ($res){
@@ -1117,7 +1117,7 @@ if (!class_exists('AjaxAdmin'))
 		    $params=array(
 			  'cooking_name'=>$this->data['cooking_name'],
 			  'status'=>addslashes($this->data['status']),
-			  'date_created'=>FunctionsV3::dateNow(),
+			  'date_created'=>FunctionsV4::dateNow(),
 			  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 			  'merchant_id'=>Yii::app()->functions->getMerchantID()
 			);					
@@ -1132,7 +1132,7 @@ if (!class_exists('AjaxAdmin'))
 			$command = Yii::app()->db->createCommand();
 			if (isset($this->data['id']) && is_numeric($this->data['id'])){				
 				unset($params['date_created']);
-				$params['date_modified']=FunctionsV3::dateNow();				
+				$params['date_modified']=FunctionsV4::dateNow();				
 				$res = $command->update('{{cooking_ref}}' , $params , 
 				'cook_id=:cook_id' , array(':cook_id'=>addslashes($this->data['id'])));
 				if ($res){
@@ -1169,7 +1169,7 @@ if (!class_exists('AjaxAdmin'))
 	    	}	  
 	    	  	    		    		    	
 	    	$params=array(			  
-			  'date_created'=>FunctionsV3::dateNow(),
+			  'date_created'=>FunctionsV4::dateNow(),
 			  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 			  'merchant_id'=>Yii::app()->functions->getMerchantID(),
 			  'item_name'=>isset($this->data['item_name'])?$this->data['item_name']:"",
@@ -1207,7 +1207,7 @@ if (!class_exists('AjaxAdmin'))
 			}	    
 			
 			/*POINTS PROGRAM*/
-			if (FunctionsV3::hasModuleAddon("pointsprogram")){
+			if (FunctionsV4::hasModuleAddon("pointsprogram")){
 				if (isset($this->data['points_earned'])){
 				   $params['points_earned']=$this->data['points_earned']>0?$this->data['points_earned']:'0';
 				   $params['points_disabled']=isset($this->data['points_disabled'])?$this->data['points_disabled']:1;
@@ -1245,7 +1245,7 @@ if (!class_exists('AjaxAdmin'))
 				die();*/
 						
 				unset($params['date_created']);
-				$params['date_modified']=FunctionsV3::dateNow();				
+				$params['date_modified']=FunctionsV4::dateNow();				
 				$res = $command->update('{{item}}' , $params , 
 				'item_id=:item_id' , array(':item_id'=>addslashes($this->data['id'])));
 				if ($res){
@@ -1254,7 +1254,7 @@ if (!class_exists('AjaxAdmin'))
 	                
 	                if(is_array($file_to_delete) && count($file_to_delete)>=1){
 	                   foreach ($file_to_delete as $file_name) {
-	                   		FunctionsV3::deleteUploadedFile($file_name);
+	                   		FunctionsV4::deleteUploadedFile($file_name);
 	                   	}	
 	                }
 	                
@@ -1277,7 +1277,7 @@ if (!class_exists('AjaxAdmin'))
 	    	
 	    	$mtid=Yii::app()->functions->getMerchantID();
 	    	/*$merchant_apply_tax=getOption($mtid,'merchant_apply_tax');
-	    	$tax=FunctionsV3::getMerchantTax($mtid);*/
+	    	$tax=FunctionsV4::getMerchantTax($mtid);*/
 	    	
 	        $slug=$this->data['slug'];
 			$stmt="
@@ -1397,7 +1397,7 @@ if (!class_exists('AjaxAdmin'))
 			$params['post_code']=isset($this->data['post_code'])?$this->data['post_code']:'';
 			$params['cuisine']=isset($this->data['cuisine'])?json_encode($this->data['cuisine']):'';
 			$params['service']=isset($this->data['service'])?$this->data['service']:'';			
-		    $params['date_created']=FunctionsV3::dateNow();
+		    $params['date_created']=FunctionsV4::dateNow();
 		    $params['ip_address']=$_SERVER['REMOTE_ADDR'];
 		    
 		    $params['state']=isset($this->data['state'])?$this->data['state']:'';
@@ -1408,7 +1408,7 @@ if (!class_exists('AjaxAdmin'))
 		    
 		    $merchant_id=Yii::app()->functions->getMerchantID();
 		    
-		    $params['restaurant_slug']=FunctionsV3::verifyMerchantSlug(
+		    $params['restaurant_slug']=FunctionsV4::verifyMerchantSlug(
 		      Yii::app()->functions->seo_friendly_url($this->data['restaurant_slug']),$merchant_id
 		    );
 		   
@@ -1425,7 +1425,7 @@ if (!class_exists('AjaxAdmin'))
 	    	,$merchant_id);
 		    		    
 		    unset($params['date_created']);
-			$params['date_modified']=FunctionsV3::dateNow();				
+			$params['date_modified']=FunctionsV4::dateNow();				
 													
 			$res = $this->updateData('{{merchant}}' , $params ,'merchant_id',Yii::app()->functions->getMerchantID());
 			if ($res){
@@ -2331,7 +2331,7 @@ $resto_info.="<p><span class=\"uk-text-bold\">".Yii::t("default","Delivery Est")
 	    	/*ITEM TAXABLE CART*/	    	 
 	    	if(!empty($mtid)){
 		    	$apply_tax=getOption($mtid,'merchant_apply_tax');
-		    	$tax=FunctionsV3::getMerchantTax($mtid);
+		    	$tax=FunctionsV4::getMerchantTax($mtid);
 		    	if ( $apply_tax==1 && $tax>0){		    		
 		    		/*$new_data=ItemTaxable::compute( $this->details['raw'] , $tax, $mtid);
 		    		$this->details['raw']=$new_data;	*/
@@ -2489,7 +2489,7 @@ $resto_info.="<p><span class=\"uk-text-bold\">".Yii::t("default","Delivery Est")
 	    		  'last_name'=>$p->purify($this->data['last_name']),
 	    		  'email_address'=>$p->purify($this->data['email_address']),
 	    		  'password'=>md5($this->data['password']),
-	    		  'date_created'=>FunctionsV3::dateNow(),
+	    		  'date_created'=>FunctionsV4::dateNow(),
 	    		  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 	    		  'contact_phone'=>$p->purify($this->data['contact_phone'])
 	    		);
@@ -2498,7 +2498,7 @@ $resto_info.="<p><span class=\"uk-text-bold\">".Yii::t("default","Delivery Est")
                 $verification=Yii::app()->functions->getOptionAdmin("website_enabled_mobile_verification");	    
 		    	if ( $verification=="yes"){
 		    		$code=Yii::app()->functions->generateRandomKey(5);		    		
-		    		FunctionsV3::sendCustomerSMSVerification($this->data['contact_phone'],$code);
+		    		FunctionsV4::sendCustomerSMSVerification($this->data['contact_phone'],$code);
 		    		$params['mobile_verification_code']=$code;
 		    		$params['status']='pending';
 		    	}	    	  
@@ -2509,7 +2509,7 @@ $resto_info.="<p><span class=\"uk-text-bold\">".Yii::t("default","Delivery Est")
 		    	if ($email_verification==2){
 		    		$params['email_verification_code']=$email_code;
 		    		$params['status']='pending';
-		    		FunctionsV3::sendEmailVerificationCode($params['email_address'],$email_code,$params);
+		    		FunctionsV4::sendEmailVerificationCode($params['email_address'],$email_code,$params);
 		    	}
 	    	
 		    	/** update 2.3*/
@@ -2531,12 +2531,12 @@ $resto_info.="<p><span class=\"uk-text-bold\">".Yii::t("default","Delivery Est")
 	    				$this->msg=t("We have sent verification code to your email address");
 	    			} else {
 	    			   /*sent welcome email*/		    			   
-	    			   FunctionsV3::sendCustomerWelcomeEmail($params);
+	    			   FunctionsV4::sendCustomerWelcomeEmail($params);
 	    			   Yii::app()->functions->clientAutoLogin($this->data['email_address'],$this->data['password']);
 	    			}	    			
 	    				    			
 	    			/*POINTS PROGRAM*/	    			
-	    			if (FunctionsV3::hasModuleAddon("pointsprogram")){
+	    			if (FunctionsV4::hasModuleAddon("pointsprogram")){
 	    			   PointsProgram::signupReward($this->details);
 	    			}
 	    			
@@ -2597,7 +2597,7 @@ $resto_info.="<p><span class=\"uk-text-bold\">".Yii::t("default","Delivery Est")
 		    	unset($params['action']);
 		    	unset($params['currentController']);
 		    	$params['client_id']=$cid;
-		    	$params['date_created']=FunctionsV3::dateNow();
+		    	$params['date_created']=FunctionsV4::dateNow();
 		    	$params['ip_address']=$_SERVER['REMOTE_ADDR'];			    	
 		    	if ( $this->insertData("{{client_cc}}",$params)){
 		    		$this->code=1;
@@ -2705,7 +2705,7 @@ $resto_info.="<p><span class=\"uk-text-bold\">".Yii::t("default","Delivery Est")
 	    		$this->msg=Yii::t("default","Login Okay");
 	    	} else {
 	    		/*check if user has pending application like mobile verification and email*/
-	    		if ( $res=FunctionsV3::login($this->data['username'],$this->data['password'])){
+	    		if ( $res=FunctionsV4::login($this->data['username'],$this->data['password'])){
 	    			if (strlen($res['mobile_verification_code'])>=2 && $res['status']=='pending'){
 	    				$this->msg=t("Found existing registration");
 	    				$this->code=3;
@@ -2721,7 +2721,7 @@ $resto_info.="<p><span class=\"uk-text-bold\">".Yii::t("default","Delivery Est")
 	    		        $DbExt=new DbExt;
 	    		        unset($res[0]['password']);
 			    		$client_id=$res['client_id'];
-			    		$update=array('last_login'=>FunctionsV3::dateNow(),'ip_address'=>$_SERVER['REMOTE_ADDR']);
+			    		$update=array('last_login'=>FunctionsV4::dateNow(),'ip_address'=>$_SERVER['REMOTE_ADDR']);
 			    		$DbExt->updateData("{{client}}",$update,'client_id',$client_id);
 			    		$_SESSION['kr_client']=$res;
 			    		unset($DbExt);
@@ -2792,10 +2792,10 @@ $resto_info.="<p><span class=\"uk-text-bold\">".Yii::t("default","Delivery Est")
 		    	}*/		    	
 		    	
 		    	/*Version 3 change getting of delivery fee*/
-		    	if (!FunctionsV3::isSearchByLocation()){
-			    	if (!FunctionsV3::reCheckDelivery($mtid,$this->data)){
+		    	if (!FunctionsV4::isSearchByLocation()){
+			    	if (!FunctionsV4::reCheckDelivery($mtid,$this->data)){
 			    		$mt_delivery_miles=getOption($mtid,'merchant_delivery_miles'); 
-			    		$distance_type=FunctionsV3::getMerchantDistanceType($mtid); 
+			    		$distance_type=FunctionsV4::getMerchantDistanceType($mtid); 
 			    		$unit=$distance_type=="M"?t("miles"):t("kilometers");
 			    		$this->msg=t("Sorry but this merchant delivers only with in ").$mt_delivery_miles." $unit";
 			    		return ;
@@ -2850,7 +2850,7 @@ $resto_info.="<p><span class=\"uk-text-bold\">".Yii::t("default","Delivery Est")
 	    		  'zipcode'=>$this->data['zipcode'],
 	    		  'contact_phone'=>$this->data['contact_phone'],
 	    		  'location_name'=>$this->data['location_name'],
-	    		  'date_created'=>FunctionsV3::dateNow(),
+	    		  'date_created'=>FunctionsV4::dateNow(),
 	    		  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 	    		  'contact_phone'=>$this->data['contact_phone'],
 	    		  'is_guest'=>1
@@ -2886,7 +2886,7 @@ $resto_info.="<p><span class=\"uk-text-bold\">".Yii::t("default","Delivery Est")
 	    		{
 	    			case "pyp":
 	    				//if ( Yii::app()->functions->isMerchantCommission($this->data['merchant_id'])){
-	    				if (FunctionsV3::isMerchantPaymentToUseAdmin($this->data['merchant_id'])){
+	    				if (FunctionsV4::isMerchantPaymentToUseAdmin($this->data['merchant_id'])){
 	    					$card_fee=Yii::app()->functions->getOptionAdmin('admin_paypal_fee');
 	    				} else {
 	    					$card_fee=Yii::app()->functions->getOption('merchant_paypal_fee',
@@ -2910,7 +2910,7 @@ $resto_info.="<p><span class=\"uk-text-bold\">".Yii::t("default","Delivery Est")
 	    			$apply_tax=0;		    	
 			    	if(!empty($mtid)){
 				    	$apply_tax=getOption($mtid,'merchant_apply_tax');
-				    	$tax_set=FunctionsV3::getMerchantTax($mtid);
+				    	$tax_set=FunctionsV4::getMerchantTax($mtid);
 				    	if ( $apply_tax==1 && $tax_set>0){		    		
 				    		Yii::app()->functions->details['raw']=$_SESSION['cart_item_tax'];
 				    	}	    
@@ -2935,7 +2935,7 @@ $resto_info.="<p><span class=\"uk-text-bold\">".Yii::t("default","Delivery Est")
 	    				  'delivery_date'=>isset($_SESSION['kr_delivery_options']['delivery_date'])?$_SESSION['kr_delivery_options']['delivery_date']:'',
 	    				  'delivery_time'=>isset($_SESSION['kr_delivery_options']['delivery_time'])?$_SESSION['kr_delivery_options']['delivery_time']:'',
 	    				  'delivery_asap'=>isset($_SESSION['kr_delivery_options']['delivery_asap'])?$_SESSION['kr_delivery_options']['delivery_asap']:'',
-	    				  'date_created'=>FunctionsV3::dateNow(),
+	    				  'date_created'=>FunctionsV4::dateNow(),
 	    				  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 	    				  'delivery_instruction'=>isset($this->data['delivery_instruction'])?$this->data['delivery_instruction']:'',
 	    				  'cc_id'=>isset($this->data['cc_id'])?$this->data['cc_id']:'',
@@ -3055,7 +3055,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 		    		        		/*$geo_res=geoCoding($this->data['map_address_lat'],
 		    		        		$this->data['map_address_lng']);*/
 		    		        		
-		    		        		$geo_res=FunctionsV3::latToAdress($this->data['map_address_lat'],
+		    		        		$geo_res=FunctionsV4::latToAdress($this->data['map_address_lat'],
 		    		        		$this->data['map_address_lng']);
 		    		        	    if ($geo_res){		    		        			
 		    		        			$this->data['street']=isset($geo_res['address'])?$geo_res['address']." ":'';
@@ -3083,14 +3083,14 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	    		        }	    		        
 
 	    		        /*POINTS PROGRAM*/   	    		        
-	    		        if (FunctionsV3::hasModuleAddon("pointsprogram")){
+	    		        if (FunctionsV4::hasModuleAddon("pointsprogram")){
 		    		        if (isset($_SESSION['pts_redeem_amt'])){
 		    		        	$params['points_discount']=$_SESSION['pts_redeem_amt'];
 		    		        }
 	    		        }
 	    		        
 	    		        	    		        
-	    		        $params['order_id_token']=FunctionsV3::generateOrderToken();
+	    		        $params['order_id_token']=FunctionsV4::generateOrderToken();
 	    		        $params['dinein_number_of_guest']=isset($this->data['dinein_number_of_guest'])?$this->data['dinein_number_of_guest']:'';
 	    		        $params['dinein_special_instruction']=isset($this->data['dinein_special_instruction'])?$this->data['dinein_special_instruction']:'';
 	    		        
@@ -3119,7 +3119,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 		    				
 		    				/*POINTS PROGRAM*/    			    				
 		    				if(!isset($this->data['is_guest_checkout'])){
-			    				if (FunctionsV3::hasModuleAddon("pointsprogram")){
+			    				if (FunctionsV4::hasModuleAddon("pointsprogram")){
 				    		        PointsProgram::saveEarnPoints(
 				    		           isset($_SESSION['pts_earn'])?$_SESSION['pts_earn']:'',
 				    		           Yii::app()->functions->getClientId(),
@@ -3152,7 +3152,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 			    				  'zipcode'=>isset($this->data['zipcode'])?$this->data['zipcode']:'',
 			    				  'location_name'=>isset($this->data['location_name'])?$this->data['location_name']:'',
 			    				  'country'=>Yii::app()->functions->adminCountry(),
-			    				  'date_created'=>FunctionsV3::dateNow(),
+			    				  'date_created'=>FunctionsV4::dateNow(),
 			    				  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 			    				  'contact_phone'=>$this->data['contact_phone']		    				  
 			    				);		
@@ -3203,7 +3203,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 				            	  'state'=>$this->data['state'],
 				            	  'zipcode'=>$this->data['zipcode'],
 				            	  'location_name'=>$this->data['location_name'],
-				            	  'date_created'=>FunctionsV3::dateNow(),
+				            	  'date_created'=>FunctionsV4::dateNow(),
 				            	  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 				            	  'country_code'=>Yii::app()->functions->adminCountry(true),
 				            	  'as_default'=>2
@@ -3248,7 +3248,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 		    				$this->code=1;
 		    				
 		    				/*Driver app*/
-						    if (FunctionsV3::hasModuleAddon("driver")){
+						    if (FunctionsV4::hasModuleAddon("driver")){
 							   Yii::app()->setImport(array(			
 								  'application.modules.driver.components.*',
 							   ));
@@ -3277,7 +3277,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 		    					case "obd":	    						
 		    							    					
 		    					    /** Send email if payment type is Offline bank deposit*/
-		    					    FunctionsV3::sendBankInstructionPurchase(
+		    					    FunctionsV4::sendBankInstructionPurchase(
 		    					      $mtid,
 		    					      $order_id,
 		    					      isset($params['total_w_tax'])?$params['total_w_tax']:0,
@@ -3326,7 +3326,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	    	      'merchant_id'=>$this->data['merchant_id'],
 	    	      'ratings'=>$this->data['value'],
 	    	      'client_id'=>$client_id,
-	    	      'date_created'=>FunctionsV3::dateNow(),
+	    	      'date_created'=>FunctionsV4::dateNow(),
 	    	      'ip_address'=>$_SERVER['REMOTE_ADDR']
 	    	    );	    	    
 	    	    
@@ -3348,7 +3348,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	    	    	$rating_id=$res['id'];	    	    	
 	    	    	$update=array(
 	    	    	  'ratings'=>$this->data['value'],
-	    	    	   'date_created'=>FunctionsV3::dateNow(),
+	    	    	   'date_created'=>FunctionsV4::dateNow(),
 	    	           'ip_address'=>$_SERVER['REMOTE_ADDR']
 	    	        );
 	    	    	if ( $DbExt->updateData("{{rating}}",$update,'id',$rating_id) ){
@@ -3439,7 +3439,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 		    	  'merchant_id'=>$this->data['merchant-id'],
 		    	  'client_id'=>$client_id,
 		    	  'review'=>$this->data['review_content'],
-		    	  'date_created'=>FunctionsV3::dateNow(),
+		    	  'date_created'=>FunctionsV4::dateNow(),
 		    	  'rating'=>$this->data['initial_review_rating']
 		    	);		    	
 		    	
@@ -3475,7 +3475,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 		    		}
 		    		
 		    		/*POINTS PROGRAM*/		    		
-		    		if (FunctionsV3::hasModuleAddon("pointsprogram")){
+		    		if (FunctionsV4::hasModuleAddon("pointsprogram")){
 		    		   PointsProgram::reviewsReward($client_id);
 		    		}
 		    				    		
@@ -3509,7 +3509,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	    		   <div class="col-md-2 col-xs-2 border center into-row">
 	    		   
 	    		     <!--<i class="ion-android-contact"></i>-->
-	    		     <img src="<?php echo FunctionsV3::getAvatar($val['client_id']);?>" class="img-circle">
+	    		     <img src="<?php echo FunctionsV4::getAvatar($val['client_id']);?>" class="img-circle">
 	    		     
 	    		     <p class="small"><?php echo $val['client_name']?></p>
 	    		   </div> <!--col-->
@@ -3624,7 +3624,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	    		return ;
 	    	}	    		    	
 	    	$params=array('review'=>$this->data['review_content'],
-	    	 'date_created'=>FunctionsV3::dateNow(),
+	    	 'date_created'=>FunctionsV4::dateNow(),
 	    	 'ip_address'=>$_SERVER['REMOTE_ADDR']
 	    	);	    	
 	    	if ( $DbExt->updateData("{{review}}",$params,'id',$this->data['id'])){
@@ -3655,7 +3655,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	    	   	    	   
 	    	   /*get admin paypal connection if merchant is commission*/
 			   //if ( Yii::app()->functions->isMerchantCommission($_SESSION['kr_merchant_id'])){
-			   if (FunctionsV3::isMerchantPaymentToUseAdmin($_SESSION['kr_merchant_id'])){
+			   if (FunctionsV4::isMerchantPaymentToUseAdmin($_SESSION['kr_merchant_id'])){
 			   	   unset($paypal_con);   	   
 			   	   $paypal_con=Yii::app()->functions->getPaypalConnectionAdmin();
 			   }  
@@ -3704,19 +3704,19 @@ $params['cart_tip_value']=$raw['total']['tips'];
 			    	 'CORRELATIONID'=>$res['CORRELATIONID'],
 			    	 'TIMESTAMP'=>$res['TIMESTAMP'],
 			    	 'json_details'=>json_encode($res),
-			    	 'date_created'=>FunctionsV3::dateNow(),
+			    	 'date_created'=>FunctionsV4::dateNow(),
 			    	 'ip_address'=>$_SERVER['REMOTE_ADDR']
 	           	   );
 	           	   $db_ext->insertData("{{paypal_payment}}",$insert);   
 	           	   
 	           	   
 	           	   /*POINTS PROGRAM*/ 
-	           	   if (FunctionsV3::hasModuleAddon("pointsprogram")){
+	           	   if (FunctionsV4::hasModuleAddon("pointsprogram")){
 	           	      PointsProgram::updatePoints($this->data['order_id']);
 	           	   }
 	           	   
 	           	   /*Driver app*/
-				   if (FunctionsV3::hasModuleAddon("driver")){
+				   if (FunctionsV4::hasModuleAddon("driver")){
 					   Yii::app()->setImport(array(			
 						  'application.modules.driver.components.*',
 					   ));
@@ -3781,7 +3781,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 		    	$this->code=1;
 		    	
 		    	/*DELETE IMAGE*/
-		    	FunctionsV3::deleteUploadedFile($filename);
+		    	FunctionsV4::deleteUploadedFile($filename);
 		    	
 		    	$this->msg=t("Merchant logo has been removed");
 	    	} else $this->msg=Yii::t("default","ERROR: Your session has expired.");
@@ -3867,7 +3867,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	    			  $val['item'],
 	    			  t($val['trans_type']),
 	    			  //strtoupper(Yii::t("default",$val['payment_type'])),
-	    			  FunctionsV3::prettyPaymentType('payment_order',$val['payment_type'],$val['order_id'],$val['trans_type']),
+	    			  FunctionsV4::prettyPaymentType('payment_order',$val['payment_type'],$val['order_id'],$val['trans_type']),
 	    			  prettyFormat($val['sub_total'],$merchant_id),
 	    			  prettyFormat($val['taxable_total'],$merchant_id),
 	    			  prettyFormat($val['total_w_tax'],$merchant_id),
@@ -3971,7 +3971,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
     	    die();*/
     	    /** check if merchant has initiate widthrawals*/
     	    //if ( Yii::app()->functions->isMerchantCommission($merchant_id)){    	    	
-    	    if (FunctionsV3::isMerchantPaymentToUseAdmin($merchant_id)){
+    	    if (FunctionsV4::isMerchantPaymentToUseAdmin($merchant_id)){
     	    	if ( FunctionsK::validateChangeOrder($this->data['order_id'])){
     	    		$this->msg=t("Sorry but you cannot change the order status of this order it has reference already on the withdrawals that you made");
     	    		return;
@@ -3983,7 +3983,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	    	if (isset($this->data['order_id'])){
 	    		$order_id=$this->data['order_id'];	    		
 	    		if ( $resp=Yii::app()->functions->verifyOrderIdByOwner($order_id,$merchant_id) ){
-	    			$params=array('status'=>$this->data['status'],'date_modified'=>FunctionsV3::dateNow(),'viewed'=>2);		
+	    			$params=array('status'=>$this->data['status'],'date_modified'=>FunctionsV4::dateNow(),'viewed'=>2);		
 	    			
 	    			/*check if merchant can change the status*/
 	    			$can_edit=Yii::app()->functions->getOptionAdmin('merchant_days_can_edit_status');
@@ -4039,12 +4039,12 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	    				  'order_id'=>$order_id,
 	    				  'status'=>$this->data['status'],
 	    				  'remarks'=>isset($this->data['remarks'])?$this->data['remarks']:'',
-	    				  'date_created'=>FunctionsV3::dateNow(),
+	    				  'date_created'=>FunctionsV4::dateNow(),
 	    				  'ip_address'=>$_SERVER['REMOTE_ADDR']
 	    				);	    				
 	    				$DbExt->insertData("{{order_history}}",$params_history);
 	    				    				
-	    				/*if (FunctionsV3::hasModuleAddon("mobileapp")){		    				
+	    				/*if (FunctionsV4::hasModuleAddon("mobileapp")){		    				
 					    	Yii::app()->setImport(array(			
 							  'application.modules.mobileapp.components.*',
 						    ));
@@ -4052,13 +4052,13 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	    				}*/
 	    				
 	    				/*SEND NOTIFICATIONS TO CUSTOMER*/	    				
-	    				FunctionsV3::notifyCustomerOrderStatusChange(
+	    				FunctionsV4::notifyCustomerOrderStatusChange(
 	    				  $order_id,
 	    				  $this->data['status'],
 	    				  isset($this->data['remarks'])?$this->data['remarks']:''
 	    				);
 				    	
-	    				if (FunctionsV3::hasModuleAddon("driver")){
+	    				if (FunctionsV4::hasModuleAddon("driver")){
 					    	/*Driver app*/
 					    	Yii::app()->setImport(array(			
 							  'application.modules.driver.components.*',
@@ -4267,7 +4267,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	    			    			
 	    			$date=FormatDateTime($val['date_created']);
 	    			
-	    			$item=FunctionsV3::translateFoodItemByOrderId(
+	    			$item=FunctionsV4::translateFoodItemByOrderId(
 	    			  $val['order_id'],
 	    			  'kr_merchant_lang_id'
 	    			);
@@ -4278,7 +4278,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	    			  $val['contact_phone'],
 	    			  $item,
 	    			  t($val['trans_type']),	    			  
-	    			  FunctionsV3::prettyPaymentType('payment_order',$val['payment_type'],$val['order_id'],$val['trans_type']),
+	    			  FunctionsV4::prettyPaymentType('payment_order',$val['payment_type'],$val['order_id'],$val['trans_type']),
 	    			  prettyFormat($val['sub_total'],$merchant_id),
 	    			  prettyFormat($val['taxable_total'],$merchant_id),
 	    			  prettyFormat($val['total_w_tax'],$merchant_id),	    			  
@@ -4867,7 +4867,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	         'promo_price'=>$this->data['promo_price'],
 	         'expiration'=>$this->data['expiration'],
 	         'status'=>$this->data['status'],
-	         'date_created'=>FunctionsV3::dateNow(),
+	         'date_created'=>FunctionsV4::dateNow(),
 	         'ip_address'=>$_SERVER['REMOTE_ADDR'],
 	         'expiration_type'=>$this->data['expiration_type'],
 	         'unlimited_post'=>$this->data['unlimited_post'],
@@ -4890,7 +4890,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 		    	}
 		    } else {		    	
 		    	unset($params['date_created']);
-				$params['date_modified']=FunctionsV3::dateNow();				
+				$params['date_modified']=FunctionsV4::dateNow();				
 				$res = $this->updateData('{{packages}}' , $params ,'package_id',$this->data['id']);
 				if ($res){
 					$this->code=1;
@@ -4998,7 +4998,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	    		$this->data['photo']='';
 	    	}		
 	    	if($this->data['photo']!=$old_website_logo){
-	    		FunctionsV3::deleteUploadedFile($old_website_logo);
+	    		FunctionsV4::deleteUploadedFile($old_website_logo);
 	    	}
 	    	
 	    	/*MOBILE LOGO*/
@@ -5007,7 +5007,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	    		$this->data['mobilelogo']='';
 	    	}		
 	    	if($this->data['mobilelogo']!=$old_mobilelogo){
-	    		FunctionsV3::deleteUploadedFile($old_mobilelogo);
+	    		FunctionsV4::deleteUploadedFile($old_mobilelogo);
 	    	}
 	    	
 			Yii::app()->functions->updateOptionAdmin("website_disbaled_auto_cart",
@@ -5381,7 +5381,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 		      'username'=>$p->purify($this->data['username']),
 		      'password'=>md5($this->data['password']),
 		      'status'=>$status,
-		      'date_created'=>FunctionsV3::dateNow(),
+		      'date_created'=>FunctionsV4::dateNow(),
 		      'ip_address'=>$_SERVER['REMOTE_ADDR'],
 		      'activation_token'=>$token,
 		      'activation_key'=>Yii::app()->functions->generateRandomKey(5),
@@ -5411,18 +5411,18 @@ $params['cart_tip_value']=$raw['total']['tips'];
 			    	$mtid=Yii::app()->db->getLastInsertID();
 
 			    	//AUTO ADD SIZE
-			    	FunctionsV3::autoAddSize($mtid);		    	
+			    	FunctionsV4::autoAddSize($mtid);		    	
 			    	
 			    	$this->code=1;
 			    	$this->msg=Yii::t("default","Successful");
 			    	$this->details=$token;
 			    	
-			    	FunctionsV3::NotiNewMerchantSignup($params,'membership');
+			    	FunctionsV4::NotiNewMerchantSignup($params,'membership');
 			    	
 			    	// send email activation key
 			    	if ($package_price<=0){
-			    	   FunctionsV3::sendWelcomeEmailMerchant($params,true);
-			    	   FunctionsV3::sendMerchantActivation($params,$params['activation_key']);
+			    	   FunctionsV4::sendWelcomeEmailMerchant($params,true);
+			    	   FunctionsV4::sendMerchantActivation($params,$params['activation_key']);
 			    	}
 			    				    	
 			    } else $this->msg=Yii::t("default","Sorry but we cannot add your information. Please try again later");
@@ -5449,12 +5449,12 @@ $params['cart_tip_value']=$raw['total']['tips'];
 			      	 	$this->msg=Yii::t("default","Merchant Successfully activated.");
 			      	 	$this->details=$this->data['token'];
 			      	 	
-			      	 	$params=array('status'=>"active",'date_activated'=>FunctionsV3::dateNow(),'ip_address'=>$_SERVER['REMOTE_ADDR']);
+			      	 	$params=array('status'=>"active",'date_activated'=>FunctionsV4::dateNow(),'ip_address'=>$_SERVER['REMOTE_ADDR']);
 			      	 				      	 	
 			      	 	/*If payment was offline don't set the the status to active*/
-			      	 	if ( $package_info=FunctionsV3::getMerchantPaymentMembership($res[0]['merchant_id'],
+			      	 	if ( $package_info=FunctionsV4::getMerchantPaymentMembership($res[0]['merchant_id'],
 			      	 	$res[0]['package_id'])){			      	 		
-			      	 		$offline_payment=FunctionsV3::getOfflinePaymentList();			      	 		
+			      	 		$offline_payment=FunctionsV4::getOfflinePaymentList();			      	 		
 			      	 		if ( array_key_exists($package_info['payment_type'],(array)$offline_payment)){
 			      	 			unset($params['status']);
 			      	 		}
@@ -5462,7 +5462,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 			      	 				      	 	
 			      	 	$this->updateData("{{merchant}}",$params,'merchant_id',$res[0]['merchant_id']);
 			      	 	
-			      	 	FunctionsV3::sendWelcomeEmailMerchant( FunctionsV3::getMerchantInfo($res[0]['merchant_id']) ,true );
+			      	 	FunctionsV4::sendWelcomeEmailMerchant( FunctionsV4::getMerchantInfo($res[0]['merchant_id']) ,true );
 			      	 	
 			      	 } else $this->msg=Yii::t("default","Invalid Activation code.");		      
 		      	 }
@@ -5480,7 +5480,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 				unset($params['currentController']);
 			}
 		
-			$params['date_created']=FunctionsV3::dateNow();
+			$params['date_created']=FunctionsV4::dateNow();
 			$params['ip_address']=$_SERVER['REMOTE_ADDR'];			
 			if ($this->insertData("{{merchant_cc}}",$params)){
 				$this->code=1;
@@ -5510,7 +5510,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 							  'price'=>$membership_info['package_price'],
 							  'payment_type'=>$this->data['payment_opt'],
 							  'mt_id'=>$this->data['cc_id'],
-							  'date_created'=>FunctionsV3::dateNow(),
+							  'date_created'=>FunctionsV4::dateNow(),
 							  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 							  'membership_expired'=>$membership_info['membership_expired']
 							);							
@@ -5520,7 +5520,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 							  'package_id'=>$this->data['package_id'],
 							  'package_price'=>$membership_info['package_price'],
 							  'membership_expired'=>$membership_info['membership_expired'],
-							  'membership_purchase_date'=>FunctionsV3::dateNow(),
+							  'membership_purchase_date'=>FunctionsV4::dateNow(),
 							  'status'=>'active'
 							);
 							
@@ -5535,12 +5535,12 @@ $params['cart_tip_value']=$raw['total']['tips'];
 							  'price'=>$merchant['package_price'],
 							  'payment_type'=>$this->data['payment_opt'],
 							  'mt_id'=>$this->data['cc_id'],
-							  'date_created'=>FunctionsV3::dateNow(),
+							  'date_created'=>FunctionsV4::dateNow(),
 							  'ip_address'=>$_SERVER['REMOTE_ADDR']
 							);
 														
 							/*SEND ACTIVATION CODE*/					
-							FunctionsV3::sendWelcomeEmailMerchant($merchant,true);
+							FunctionsV4::sendWelcomeEmailMerchant($merchant,true);
 														
 							if ( $package=Yii::app()->functions->getPackagesById($merchant['package_id'])){
 								$expiration=$package['expiration'];
@@ -5555,7 +5555,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 							$this->updateData("{{merchant}}",
 							   array(
 							     'payment_steps'=>3,
-							     'membership_purchase_date'=>FunctionsV3::dateNow()
+							     'membership_purchase_date'=>FunctionsV4::dateNow()
 							   )
 							   ,'merchant_id',$merchant['merchant_id']);
 							   
@@ -5737,11 +5737,11 @@ $params['cart_tip_value']=$raw['total']['tips'];
                            
                 } elseif ($this->data['payment_opt']=="obd"){   // offline bank deposit  
                 	                	 
-                	 if ( FunctionsV3::sendBankInstructions($merchant, $this->data)){
+                	 if ( FunctionsV4::sendBankInstructions($merchant, $this->data)){
                 	 	
                 	 	/*SEND ACTIVATION CODE*/			
-                	 	FunctionsV3::sendWelcomeEmailMerchant($merchant,true);				
-						//FunctionsV3::sendMerchantActivation($merchant,$merchant['activation_key']);
+                	 	FunctionsV4::sendWelcomeEmailMerchant($merchant,true);				
+						//FunctionsV4::sendMerchantActivation($merchant,$merchant['activation_key']);
 							
                 	 	 $this->code=1;                  	 	 
                 	 	 $this->msg=Yii::t("default","Thank You. an email has been sent to your email.");
@@ -6077,7 +6077,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	    			  $val['package_name'],
 	    			  $val['price']>=1?Yii::app()->functions->standardPrettyFormat($val['price']):"",
 	    			  //strtoupper($val['payment_type']),
-	    			  FunctionsV3::prettyPaymentType('package_trans',$val['payment_type'],$val['id']),
+	    			  FunctionsV4::prettyPaymentType('package_trans',$val['payment_type'],$val['id']),
 	    			  "<span class=\"tag ".$val['status']."\">".t($val['status'])."</span>",
 	    			  Yii::app()->functions->FormatDateTime($val['date_created'],true),	    			  
 	    			  $action
@@ -6169,7 +6169,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 			             'merchant_id'=>$merchant['merchant_id'],
 			             'price'=>$res_paypal['AMT'],
 			             'payment_type'=>"pyp",
-			             'date_created'=>FunctionsV3::dateNow(),
+			             'date_created'=>FunctionsV4::dateNow(),
 			             'ip_address'=>$_SERVER['REMOTE_ADDR'],
 			             'TOKEN'=>$res_paypal['TOKEN'],
 			             'TRANSACTIONID'=>$res['TRANSACTIONID'],
@@ -6182,7 +6182,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 						  'package_id'=>$this->data['package_id'],
 						  'package_price'=>$membership_info['package_price'],
 						  'membership_expired'=>$membership_info['membership_expired'],
-						  'membership_purchase_date'=>FunctionsV3::dateNow(),
+						  'membership_purchase_date'=>FunctionsV4::dateNow(),
 						  'status'=>'active'
 					 	 );							 	 
 						 $this->updateData("{{merchant}}",$params_update,'merchant_id',$merchant['merchant_id']);
@@ -6193,7 +6193,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 			             'merchant_id'=>$merchant['merchant_id'],
 			             'price'=>$res_paypal['AMT'],
 			             'payment_type'=>"pyp",
-			             'date_created'=>FunctionsV3::dateNow(),
+			             'date_created'=>FunctionsV4::dateNow(),
 			             'ip_address'=>$_SERVER['REMOTE_ADDR'],
 			             'TOKEN'=>$res_paypal['TOKEN'],
 			             'TRANSACTIONID'=>$res['TRANSACTIONID'],
@@ -6216,11 +6216,11 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	               
 	               $this->updateData("{{merchant}}",
 							   array('payment_steps'=>3,
-							          'membership_purchase_date'=>FunctionsV3::dateNow()
+							          'membership_purchase_date'=>FunctionsV4::dateNow()
 							   ),'merchant_id',$merchant['merchant_id']);
 							   
 	              if (!isset($this->data['renew'])) {
-	              	  FunctionsV3::sendMerchantActivation($merchant, $merchant['activation_key']);
+	              	  FunctionsV4::sendMerchantActivation($merchant, $merchant['activation_key']);
 	              }
 							    
 	            } else $this->msg=$paypal->getError();	
@@ -6277,7 +6277,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	    		      $val['package_name'],
 	    		      Yii::app()->functions->standardPrettyFormat($val['package_price']),
 	    		      //strtoupper($val['payment_type']),
-	    		      FunctionsV3::prettyPaymentType('package_trans',$val['payment_type'],$val['package_trans_id']),
+	    		      FunctionsV4::prettyPaymentType('package_trans',$val['payment_type'],$val['package_trans_id']),
 	    		      "<span class=\"tag ".$val['status']."\">".t($val['status'])."</span>",
 	    		      //Yii::app()->functions->prettyDate($val['date_created'],true),
 	    		      Yii::app()->functions->FormatDateTime($val['date_created'],true),
@@ -6349,7 +6349,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 				$params=array(
 				  'is_sponsored'=>2,
 				  'sponsored_expiration'=>$this->data['expiration'],
-				  'date_modified'=>FunctionsV3::dateNow()
+				  'date_modified'=>FunctionsV4::dateNow()
 				);				
 				if ( $this->updateData("{{merchant}}",$params,'merchant_id',$this->data['merchant_id'])){
 					$this->code=1;
@@ -6447,7 +6447,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 				    	}
 				    } else {		    	
 				    	unset($params['date_created']);
-						$params['date_modified']=FunctionsV3::dateNow();				
+						$params['date_modified']=FunctionsV4::dateNow();				
 						$res = $this->updateData('{{currency}}' , $params ,'currency_code',$this->data['id']);
 						if ($res){
 							$this->code=1;
@@ -6494,7 +6494,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 			if ($Validator->validate()){
 				$params=array(
 				  'cuisine_name'=>$this->data['cuisine_name'],
-				  'date_created'=>FunctionsV3::dateNow(),
+				  'date_created'=>FunctionsV4::dateNow(),
 				  'ip_address'=>$_SERVER['REMOTE_ADDR']
 				);
 				
@@ -6514,7 +6514,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 				    	}
 				    } else {		    	
 				    	unset($params['date_created']);
-						$params['date_modified']=FunctionsV3::dateNow();				
+						$params['date_modified']=FunctionsV4::dateNow();				
 						$res = $this->updateData('{{cuisine}}' , $params ,'cuisine_id',$this->data['id']);
 						if ($res){
 							$this->code=1;
@@ -6530,7 +6530,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 			if (isset($this->data['status'])){
 				$params=array(
 				  'is_ready'=>$this->data['status'],
-				  'date_modified'=>FunctionsV3::dateNow(),
+				  'date_modified'=>FunctionsV4::dateNow(),
 				  'ip_address'=>$_SERVER['REMOTE_ADDR']
 				);			
 
@@ -6620,7 +6620,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 			if ($Validator->validate()){
 				$params=array(
 				  'description'=>trim($this->data['description']),
-				  'date_created'=>FunctionsV3::dateNow(),
+				  'date_created'=>FunctionsV4::dateNow(),
 				  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 				  'merchant_id'=>$mtid
 				);
@@ -6635,7 +6635,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 				    	}
 				    } else {		    	
 				    	unset($params['date_created']);
-						$params['date_modified']=FunctionsV3::dateNow();				
+						$params['date_modified']=FunctionsV4::dateNow();				
 						$res = $this->updateData('{{order_status}}' , $params ,'stats_id',$this->data['id']);
 						if ($res){
 							$this->code=1;
@@ -6679,7 +6679,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 			  'state'=>isset($this->data['state'])?$this->data['state']:'',
 			  'zipcode'=>isset($this->data['zipcode'])?$this->data['zipcode']:'',
 			  'contact_phone'=>isset($this->data['contact_phone'])?$this->data['contact_phone']:'',
-			  'date_modified'=>FunctionsV3::dateNow(),
+			  'date_modified'=>FunctionsV4::dateNow(),
 			  'ip_address'=>$_SERVER['REMOTE_ADDR']
 			);
 			
@@ -6756,7 +6756,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 			  'expiration_yr'=>isset($this->data['expiration_yr'])?$this->data['expiration_yr']:'',
 			  'cvv'=>isset($this->data['cvv'])?$this->data['cvv']:'',
 			  'billing_address'=>isset($this->data['billing_address'])?$this->data['billing_address']:'',
-			  'date_modified'=>FunctionsV3::dateNow(),
+			  'date_modified'=>FunctionsV4::dateNow(),
 			  'ip_address'=>$_SERVER['REMOTE_ADDR']
 			);
 			
@@ -6875,23 +6875,23 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	    		$tpl=getOptionA('contact_us_tpl_content_'.$lang);
 	    		if(!empty($tpl)){
 	    				    				    			
-	    			$tpl=FunctionsV3::smarty('name',
+	    			$tpl=FunctionsV4::smarty('name',
 	    			isset($this->data['name'])?$this->data['name']:'',$tpl);
 	    			
-	    			$tpl=FunctionsV3::smarty('email',
+	    			$tpl=FunctionsV4::smarty('email',
 	    			isset($this->data['email'])?$this->data['email']:'',$tpl);
 	    			
-	    			$tpl=FunctionsV3::smarty('country',
+	    			$tpl=FunctionsV4::smarty('country',
 	    			isset($this->data['country'])?$this->data['country']:'',$tpl);
 	    			
-	    			$tpl=FunctionsV3::smarty('message',
+	    			$tpl=FunctionsV4::smarty('message',
 	    			isset($this->data['message'])?$this->data['message']:'',$tpl);
 	    			
-	    			$tpl=FunctionsV3::smarty('phone',
+	    			$tpl=FunctionsV4::smarty('phone',
 	    			isset($this->data['phone'])?$this->data['phone']:'',$tpl);
 	    			
-	    			$tpl=FunctionsV3::smarty('sitename',getOptionA('website_title'),$tpl);
-	    			$tpl=FunctionsV3::smarty('siteurl',websiteUrl(),$tpl);
+	    			$tpl=FunctionsV4::smarty('sitename',getOptionA('website_title'),$tpl);
+	    			$tpl=FunctionsV4::smarty('siteurl',websiteUrl(),$tpl);
 	    		} 	    	
 	    			
 				if (empty($to)){
@@ -6950,7 +6950,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 				  'rating_start'=>$this->data['rating_start'],
 				  'rating_end'=>$this->data['rating_end'],
 				  'meaning'=>$this->data['meaning'],
-				  'date_created'=>FunctionsV3::dateNow(),
+				  'date_created'=>FunctionsV4::dateNow(),
 				  'ip_address'=>$_SERVER['REMOTE_ADDR']				  
 				);				
 			   if (empty($this->data['id'])){	
@@ -6961,7 +6961,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 				    	}
 				    } else {		    	
 				    	unset($params['date_created']);
-						$params['date_modified']=FunctionsV3::dateNow();				
+						$params['date_modified']=FunctionsV4::dateNow();				
 						$res = $this->updateData('{{rating_meaning}}' , $params ,'id',$this->data['id']);
 						if ($res){
 							$this->code=1;
@@ -6989,14 +6989,14 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	    		  'email_address'=>addslashes($this->data['email']),
 	    		  'social_strategy'=>'fb',
 	    		  'password'=>md5(addslashes($this->data['id'])),
-	    		  'date_created'=>FunctionsV3::dateNow(),
+	    		  'date_created'=>FunctionsV4::dateNow(),
 	    		  'ip_address'=>$_SERVER['REMOTE_ADDR']    		
 	    		);    		    			    		
 	    		if ($social_info=yii::app()->functions->accountExistSocial($this->data['email'])){      	    			
 	    			
 	    			$client_id=$social_info[0]['client_id'];
 	    			if(empty($social_info[0]['avatar'])){
-	    				if($avatar = FunctionsV3::saveFbAvatarPicture($this->data['id'])){
+	    				if($avatar = FunctionsV4::saveFbAvatarPicture($this->data['id'])){
 		    				$db=new DbExt();
 		    				$db->updateData("{{client}}",array('avatar'=>$avatar),'client_id',$client_id);
 	    				}
@@ -7009,7 +7009,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 		            $this->clientLogin();
 	    	    } else {   	    	    	    
 	    	    	
-	    	    	 if($avatar = FunctionsV3::saveFbAvatarPicture($this->data['id'])){
+	    	    	 if($avatar = FunctionsV4::saveFbAvatarPicture($this->data['id'])){
 	    	    	    $params['avatar']=$avatar;
 	    	    	 }
 	    	    	 
@@ -7018,7 +7018,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 						
 						/*POINTS PROGRAM*/		
 						$client_id=Yii::app()->db->getLastInsertID();	  
-						if (FunctionsV3::hasModuleAddon("pointsprogram")){
+						if (FunctionsV4::hasModuleAddon("pointsprogram")){
 	    			       PointsProgram::signupReward($client_id);	
 						}		            
 	    			    				
@@ -7059,29 +7059,29 @@ $params['cart_tip_value']=$raw['total']['tips'];
 							$lang=Yii::app()->language; 
 							$subject=getOptionA("customer_forgot_password_tpl_subject_$lang");
 							if(!empty($subject)){
-								$subject=FunctionsV3::smarty('firstname',
+								$subject=FunctionsV4::smarty('firstname',
 								isset($res['first_name'])?$res['first_name']:'',$subject);
 								
-								$subject=FunctionsV3::smarty('lastname',
+								$subject=FunctionsV4::smarty('lastname',
 								isset($res['last_name'])?$res['last_name']:'',$subject);
 							}
 														
 							$tpl=getOptionA("customer_forgot_password_tpl_content_$lang") ;
 							if (!empty($tpl)){								
-								$tpl=FunctionsV3::smarty('firstname',
+								$tpl=FunctionsV4::smarty('firstname',
 								isset($res['first_name'])?$res['first_name']:'',$tpl);
 								
-								$tpl=FunctionsV3::smarty('lastname',
+								$tpl=FunctionsV4::smarty('lastname',
 								isset($res['last_name'])?$res['last_name']:'',$tpl);
 								
-								$tpl=FunctionsV3::smarty('change_pass_link',
-								FunctionsV3::getHostURL().Yii::app()->createUrl('store/forgotpassword',array(
+								$tpl=FunctionsV4::smarty('change_pass_link',
+								FunctionsV4::getHostURL().Yii::app()->createUrl('store/forgotpassword',array(
 								  'token'=>$token
 								))
 								,$tpl);
 								
-								$tpl=FunctionsV3::smarty('sitename',getOptionA('website_title'),$tpl);
-								$tpl=FunctionsV3::smarty('siteurl',websiteUrl(),$tpl);
+								$tpl=FunctionsV4::smarty('sitename',getOptionA('website_title'),$tpl);
+								$tpl=FunctionsV4::smarty('siteurl',websiteUrl(),$tpl);
 							}
 							if (!empty($subject) && !empty($tpl)){
 								sendEmail($to,'',$subject, $tpl );
@@ -7108,7 +7108,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	    		if ( $res=Yii::app()->functions->getLostPassToken($this->data['token'])){	    			
 	    			$params=array(
 	    			  'password'=>md5($this->data['password']),
-	    			  'date_modified'=>FunctionsV3::dateNow(),
+	    			  'date_modified'=>FunctionsV4::dateNow(),
 	    			  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 	    			  'lost_password_token'=>md5(date('c'))
 	    			);	    		
@@ -7136,7 +7136,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	    	  'first_name'=>$this->data['first_name'],
 	    	  'last_name'=>$this->data['last_name'],
 	    	  'user_lang'=>isset($this->data['user_lang'])?$this->data['user_lang']:'',
-	    	  'date_modified'=>FunctionsV3::dateNow(),
+	    	  'date_modified'=>FunctionsV4::dateNow(),
 	    	  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 	    	  'email_address'=>isset($this->data['email_address'])?$this->data['email_address']:''
 	    	);
@@ -7194,7 +7194,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	    	  'first_name'=> $p->purify($this->data['first_name']),
 	    	  'last_name'=> $p->purify($this->data['last_name']),
 	    	  'username'=> $p->purify($this->data['username']),
-	    	  'date_created'=>FunctionsV3::dateNow(),
+	    	  'date_created'=>FunctionsV4::dateNow(),
 	    	  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 	    	  'email_address'=>isset($this->data['email_address'])?$p->purify($this->data['email_address']):'',
 	    	  'user_access'=>isset($this->data['user_access'])?json_encode($this->data['user_access']):''
@@ -7232,7 +7232,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 			    	}
 			    } else {		    	
 			    	unset($params['date_created']);
-					$params['date_modified']=FunctionsV3::dateNow();				
+					$params['date_modified']=FunctionsV4::dateNow();				
 					$res = $this->updateData('{{admin_user}}' , $params ,'admin_id',$this->data['id']);
 					if ($res){
 						$this->code=1;
@@ -7277,7 +7277,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
             $params=array(
 	    	  'page_name'=>$this->data['page_name'],
 	    	  'content'=>$this->data['content'],	    	  
-	    	  'date_created'=>FunctionsV3::dateNow(),
+	    	  'date_created'=>FunctionsV4::dateNow(),
 	    	  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 	    	  'status'=>$this->data['status'],
 	    	  'icons'=>$this->data['icons'],
@@ -7303,7 +7303,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 			    	}
 			    } else {					    	
 			    	unset($params['date_created']);
-					$params['date_modified']=FunctionsV3::dateNow();				
+					$params['date_modified']=FunctionsV4::dateNow();				
 					$res = $this->updateData('{{custom_page}}' , $params ,'id',$this->data['id']);
 					if ($res){
 						$this->code=1;
@@ -7320,7 +7320,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	    		foreach ($this->data['id'] as $key=>$id) {
 	    			$params=array(
 	    			  'assign_to'=>$this->data['assign_to'][$key],
-	    			  'date_modified'=>FunctionsV3::dateNow(),
+	    			  'date_modified'=>FunctionsV4::dateNow(),
 	    			  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 	    			  'sequence'=>$x
 	    			);	    			
@@ -7350,19 +7350,19 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	    					$tpl = getOptionA("merchant_forgot_password_tpl_content_$lang");	    					
 	    					
 	    					if(!empty($subject)){
-	    					    $tpl=FunctionsV3::smarty('restaurant_name', 
+	    					    $tpl=FunctionsV4::smarty('restaurant_name', 
 	    						isset($data['restaurant_name'])?$data['restaurant_name']:''
 	    						,$tpl);	
 	    					}	    				
 	    					if (!empty($tpl)){
-	    						$tpl=FunctionsV3::smarty('restaurant_name', 
+	    						$tpl=FunctionsV4::smarty('restaurant_name', 
 	    						isset($data['restaurant_name'])?$data['restaurant_name']:''
 	    						,$tpl);
 	    						
-	    						$tpl=FunctionsV3::smarty('code', $params['lost_password_code'],$tpl);
+	    						$tpl=FunctionsV4::smarty('code', $params['lost_password_code'],$tpl);
 	    						
-	    						$tpl=FunctionsV3::smarty('sitename',getOptionA('website_title'),$tpl);
-                                $tpl=FunctionsV3::smarty('siteurl',websiteUrl(),$tpl);
+	    						$tpl=FunctionsV4::smarty('sitename',getOptionA('website_title'),$tpl);
+                                $tpl=FunctionsV4::smarty('siteurl',websiteUrl(),$tpl);
 	    					}	    	
 	    					if (!empty($tpl) && !empty($subject)){
 	    						$to = isset($data['contact_email'])?$data['contact_email']:'';
@@ -7389,7 +7389,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	    			$merchant_id=$res[0]['merchant_id'];
 	    			$params=array( 
 	    			   'password'=>md5($this->data['new_password']),
-	    			   'date_modified'=>FunctionsV3::dateNow(),
+	    			   'date_modified'=>FunctionsV4::dateNow(),
 	    			   'ip_address'=>$_SERVER['REMOTE_ADDR']
 	    			); 
 	    			if ($this->updateData("{{merchant}}",$params,'merchant_id',$merchant_id)){
@@ -7438,7 +7438,7 @@ $params['cart_tip_value']=$raw['total']['tips'];
 	    	if ($res=$this->rst($stmt)){	    		
 	    		// send email activation key		    	
 	    		$res=$res[0];	            
-	            FunctionsV3::sendMerchantActivation($res, $res['activation_key']);
+	            FunctionsV4::sendMerchantActivation($res, $res['activation_key']);
 	            $this->code=1;
 	            $this->msg=Yii::t("default","We have sent the activation code to your email address.");
 	    	} else $this->msg=Yii::t("default","Token is invalid.");
@@ -7496,14 +7496,14 @@ $country=array_key_exists($val['country_code'],(array)$country_list)?$country_li
 				$params=array(
 				  'country_code'=>$this->data['country_code'],
 				  'language_code'=>$this->data['language_code'],
-				  'date_created'=>FunctionsV3::dateNow(),
+				  'date_created'=>FunctionsV4::dateNow(),
 				  'status'=>$this->data['status'],
 				  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 				  'source_text'=>$this->data['language_file']
 				);				
 				if (is_numeric($this->data['id'])){
 					unset($params['date_created']);
-					$params['last_updated']=FunctionsV3::dateNow();					
+					$params['last_updated']=FunctionsV4::dateNow();					
 					if ($this->updateData("{{languages}}",$params,'lang_id',$this->data['id'])){
 						$this->code=1;
 						$this->msg=Yii::t("default","Successfully updared");
@@ -7641,7 +7641,7 @@ $country=array_key_exists($val['country_code'],(array)$country_list)?$country_li
 		    	$filename=getOption($merchant_id,'merchant_photo_bg');
 		    	Yii::app()->functions->updateOption("merchant_photo_bg","",$merchant_id);		    	
 		    	/*DELETE IMAGE*/
-		    	FunctionsV3::deleteUploadedFile($filename);
+		    	FunctionsV4::deleteUploadedFile($filename);
 		    	
 		    	$this->code=1;$this->msg=Yii::t("default","Merchant background has been removed");
 	    	} else $this->msg=Yii::t("default","ERROR: Your session has expired.");			
@@ -7913,7 +7913,7 @@ $country=array_key_exists($val['country_code'],(array)$country_list)?$country_li
 	         'promo_price'=>$this->data['promo_price'],
 	         'sms_limit'=>$this->data['sms_limit'],
 	         'status'=>$this->data['status'],
-	         'date_created'=>FunctionsV3::dateNow(),
+	         'date_created'=>FunctionsV4::dateNow(),
 	         'ip_address'=>$_SERVER['REMOTE_ADDR']
 	       );	       
 	       if (empty($this->data['id'])){	
@@ -7924,7 +7924,7 @@ $country=array_key_exists($val['country_code'],(array)$country_list)?$country_li
 		    	}
 		    } else {		    	
 		    	unset($params['date_created']);
-				$params['date_modified']=FunctionsV3::dateNow();				
+				$params['date_modified']=FunctionsV4::dateNow();				
 				$res = $this->updateData('{{sms_package}}' , $params ,'sms_package_id',$this->data['id']);
 				if ($res){
 					$this->code=1;
@@ -8004,7 +8004,7 @@ $country=array_key_exists($val['country_code'],(array)$country_list)?$country_li
 	    			  'sms_package_id'=>$this->data['sms_package_id'],	    			  
 	    			  'package_price'=>$price,
 	    			  'sms_limit'=>$info['sms_limit'],
-	    			  'date_created'=>FunctionsV3::dateNow(),
+	    			  'date_created'=>FunctionsV4::dateNow(),
 	    			  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 	    			  'status'=>"paid"
 	    			);	    	    				    			
@@ -8049,7 +8049,7 @@ $country=array_key_exists($val['country_code'],(array)$country_list)?$country_li
 	    			  'payment_type'=>$payment_code,
 	    			  'package_price'=>$price,
 	    			  'sms_limit'=>$info['sms_limit'],
-	    			  'date_created'=>FunctionsV3::dateNow(),
+	    			  'date_created'=>FunctionsV4::dateNow(),
 	    			  'ip_address'=>$_SERVER['REMOTE_ADDR']
 	    			);	    	    			
 	    			if ( $this->insertData("{{sms_package_trans}}",$params)){
@@ -8093,7 +8093,7 @@ $country=array_key_exists($val['country_code'],(array)$country_list)?$country_li
 		    			  'payment_type'=>$payment_code,
 		    			  'package_price'=>$res_paypal['AMT'],
 		    			  'sms_limit'=>$info['sms_limit'],
-		    			  'date_created'=>FunctionsV3::dateNow(),
+		    			  'date_created'=>FunctionsV4::dateNow(),
 		    			  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 		    			  'payment_gateway_response'=>json_encode($res),
 		    			  'status'=>"paid"
@@ -8186,7 +8186,7 @@ $country=array_key_exists($val['country_code'],(array)$country_list)?$country_li
 	    	  'send_to'=>$this->data['send_to'],
 	    	  'list_mobile_number'=>$this->data['list_mobile_number'],
 	    	  'sms_alert_message'=>$this->data['sms_alert_message'],
-	    	  'date_created'=>FunctionsV3::dateNow(),
+	    	  'date_created'=>FunctionsV4::dateNow(),
 	    	  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 	    	  'merchant_id'=>Yii::app()->functions->getMerchantID()
 	    	);
@@ -8377,7 +8377,7 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 		      'username'=>$this->data['username'],
 		      //'password'=>md5($this->data['password']),
 		      'user_access'=>json_encode($this->data['access']),
-		      'date_created'=>FunctionsV3::dateNow(),
+		      'date_created'=>FunctionsV4::dateNow(),
 		      'status'=>$this->data['status'],
 		      'ip_address'=>$_SERVER['REMOTE_ADDR'],
 		      'contact_email'=>$this->data['contact_email']
@@ -8414,7 +8414,7 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 		    	} else $this->msg="Sorry your username is already exist. Please choose another username.";
 		    } else {		    	
 		    	unset($params['date_created']);
-				$params['date_modified']=FunctionsV3::dateNow();								
+				$params['date_modified']=FunctionsV4::dateNow();								
 				
 				if (!empty($params['username'])){
 					if ( Yii::app()->functions->validateMerchantUser($params['username'],$merchant_id) ){
@@ -8515,7 +8515,7 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 	    		  'number_of_voucher'=>$this->data['number_of_voucher'],
 	    		  'amount'=>$this->data['amount'],
 	    		  'status'=>$this->data['status'],
-	    		  'date_created'=>FunctionsV3::dateNow(),
+	    		  'date_created'=>FunctionsV4::dateNow(),
 	    		  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 	    		  'voucher_type'=>$this->data['voucher_type'],
 	    		  'merchant_id'=>$merchant_id
@@ -8524,7 +8524,7 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 	    		if ( !empty($this->data['id'])){
 	    			unset($params['number_of_voucher']);
 	    			unset($params['date_created']);
-	    			$params['date_modified']=FunctionsV3::dateNow();	    				    		
+	    			$params['date_modified']=FunctionsV4::dateNow();	    				    		
 	    			$res =$db_ext->updateData("{{voucher}}",$params,'voucher_id',$this->data['id']);
 					if ($res){
 						$this->code=1;
@@ -8561,7 +8561,7 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 			
 			/*POINTS PROGRAM*/			
 			/*check if already applied a point redeem*/
-			if (FunctionsV3::hasModuleAddon("pointsprogram")){
+			if (FunctionsV4::hasModuleAddon("pointsprogram")){
 				if (isset($_SESSION['pts_redeem_amt']) && $_SESSION['pts_redeem_amt']>0.01){
 					$this->msg=t("Sorry but you cannot apply voucher when you have already redeem a points");
 					return ;
@@ -8805,7 +8805,7 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 			   	      $val['sms_package_name'],
 			   	      standardPrettyFormat($val['package_price']),
 			   	      $val['sms_limit'],
-			   	      FunctionsV3::prettyPaymentType('sms_package_trans',$val['payment_type'],$val['id']),
+			   	      FunctionsV4::prettyPaymentType('sms_package_trans',$val['payment_type'],$val['id']),
 			   	      $date."<br/><div class=\"uk-badge $class\">".strtoupper(Yii::t("default",$val['status']))."</div>"
 			   	   );			       
 			   }
@@ -8828,7 +8828,7 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 				  'package_price'=>$package_price,
 				  'sms_limit'=>$this->data['sms_limit'],
 				  'status'=>$this->data['status'],
-				  'date_created'=>FunctionsV3::dateNow(),
+				  'date_created'=>FunctionsV4::dateNow(),
 				  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 				  'payment_type'=>"manual"
 				);				
@@ -9026,7 +9026,7 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 			  'email'=>isset($this->data['email'])?$this->data['email']:'',
 			  'mobile'=>isset($this->data['mobile'])?$this->data['mobile']:'',
 			  'booking_notes'=>isset($this->data['booking_notes'])?$this->data['booking_notes']:'',
-			  'date_created'=>FunctionsV3::dateNow(),
+			  'date_created'=>FunctionsV4::dateNow(),
 			  'ip_address'=>$_SERVER['REMOTE_ADDR']
 			);			
 			
@@ -9049,7 +9049,7 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 			    
 			    /*SEND NOTIFICATIONS*/			    
 			    $new_data['booking_id']=$booking_id;
-			    FunctionsV3::notifyBooking($new_data);
+			    FunctionsV4::notifyBooking($new_data);
 			    			    
 			} else $this->msg=Yii::t("default","Something went wrong during processing your request. Please try again later.");
 		}
@@ -9125,7 +9125,7 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 			  'email'=>isset($this->data['email'])?$this->data['email']:'',
 			  'mobile'=>isset($this->data['mobile'])?$this->data['mobile']:'',
 			  'booking_notes'=>isset($this->data['booking_notes'])?$this->data['booking_notes']:'',
-			  'date_created'=>FunctionsV3::dateNow(),
+			  'date_created'=>FunctionsV4::dateNow(),
 			  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 			  'status'=>isset($this->data['status'])?$this->data['status']:'',
 			  'viewed'=>2
@@ -9134,7 +9134,7 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 			$command = Yii::app()->db->createCommand();
 			if (isset($this->data['id']) && is_numeric($this->data['id'])){				
 				unset($params['date_created']);
-				$params['date_modified']=FunctionsV3::dateNow();				
+				$params['date_modified']=FunctionsV4::dateNow();				
 				$res = $command->update('{{bookingtable}}' , $params , 
 				'booking_id=:booking_id' , array(':booking_id'=> addslashes($this->data['id']) ));
 				if ($res){
@@ -9146,7 +9146,7 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 	                  'booking_id'=>$this->data['id'],
 	                  'status'=>$params['status'],
 	                  'remarks'=>$this->data['message'],
-	                  'date_created'=>FunctionsV3::dateNow()
+	                  'date_created'=>FunctionsV4::dateNow()
 	                );
 	                $DbExt=new DbExt; 
 	                $DbExt->insertData("{{bookingtable_history}}",$params_history);
@@ -9156,7 +9156,7 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 	                $new_data=$params;
 	                $new_data['booking_id']=$this->data['id'];
 	                $new_data['remarks']=$this->data['message'];
-	                FunctionsV3::updateBookingNotify($new_data);
+	                FunctionsV4::updateBookingNotify($new_data);
 	                
 				} else $this->msg=Yii::t("default","ERROR: cannot update");
 			} else {				
@@ -9239,7 +9239,7 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 			  'state'=>$p->purify($this->data['state']),
 			  'zipcode'=>$p->purify($this->data['zipcode']),
 			  'status'=>$this->data['status'],
-			  'date_created'=>FunctionsV3::dateNow(),
+			  'date_created'=>FunctionsV4::dateNow(),
 			  'ip_address'=>$_SERVER['REMOTE_ADDR']			  
 			);	
 			
@@ -9261,7 +9261,7 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 			$command = Yii::app()->db->createCommand();
 			if (isset($this->data['id']) && is_numeric($this->data['id'])){				
 				unset($params['date_created']);
-				$params['date_modified']=FunctionsV3::dateNow();				
+				$params['date_modified']=FunctionsV4::dateNow();				
 				$res = $command->update('{{client}}' , $params , 
 				'client_id=:client_id' , array(':client_id'=>addslashes($this->data['id'])));
 				if ($res){
@@ -9429,7 +9429,7 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 	    			$date=FormatDateTime($val['date_created']);
 	    			$date=Yii::app()->functions->translateDate($date);
 	    			
-	    			$item=FunctionsV3::translateFoodItemByOrderId(
+	    			$item=FunctionsV4::translateFoodItemByOrderId(
 	    			  $val['order_id'],
 	    			  'kr_admin_lang_id'
 	    			);
@@ -9445,7 +9445,7 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 	    			  ucwords(stripslashes($val['client_name'])),
 	    			  stripslashes($item),
 	    			  t($val['trans_type']),
-	    			  FunctionsV3::prettyPaymentType('payment_order',
+	    			  FunctionsV4::prettyPaymentType('payment_order',
 	    			  $val['payment_type'],
 	    			  $val['order_id'],
 	    			  $val['trans_type']
@@ -9499,7 +9499,7 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 	    	
 	    	$where_merchant='';
 	    	if(!empty($merchant_id)){
-	    	   $where_merchant = " AND a.merchant_id=".FunctionsV3::q($merchant_id)." ";
+	    	   $where_merchant = " AND a.merchant_id=".FunctionsV4::q($merchant_id)." ";
 	    	}
 	    	
 	    	$stmt="SELECT a.*,
@@ -9541,7 +9541,7 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 	    			$date=Yii::app()->functions->translateDate($date);*/
 	    			$date=FormatDateTime($val['date_created']);
 	    			
-	    			$item=FunctionsV3::translateFoodItemByOrderId($val['order_id']);
+	    			$item=FunctionsV4::translateFoodItemByOrderId($val['order_id']);
 	    			
 	    			$feed_data['aaData'][]=array(
 	    			  $val['order_id'],
@@ -9550,7 +9550,7 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 	    			  $item,
 	    			  t($val['trans_type']),
 	    			  //t($val['payment_type']),
-	    			  FunctionsV3::prettyPaymentType('payment_order',$val['payment_type'],$val['order_id'],$val['trans_type']),
+	    			  FunctionsV4::prettyPaymentType('payment_order',$val['payment_type'],$val['order_id'],$val['trans_type']),
 	    			  prettyFormat($val['sub_total'],$merchant_id),
 	    			  prettyFormat($val['tax'],$merchant_id),
 	    			  prettyFormat($val['total_w_tax'],$merchant_id),
@@ -9595,7 +9595,7 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 				  'time_of_deposit'=>$this->data['time_of_deposit'],
 				  'amount'=>$this->data['amount'],
 				  'scanphoto'=>isset($this->data['photo'])?$this->data['photo']:'',
-				  'date_created'=>FunctionsV3::dateNow(),
+				  'date_created'=>FunctionsV4::dateNow(),
 				  'ip_address'=>$_SERVER['REMOTE_ADDR']
 				);				
 				if ($DbExt->insertData("{{bank_deposit}}",$params)){
@@ -9738,7 +9738,7 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 					  'time_of_deposit'=>$this->data['time_of_deposit'],
 					  'amount'=>$this->data['amount'],
 					  'scanphoto'=>isset($this->data['photo'])?$this->data['photo']:'',
-					  'date_created'=>FunctionsV3::dateNow(),
+					  'date_created'=>FunctionsV4::dateNow(),
 					  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 					  'transaction_type'=>"sms_purchase"
 					);									
@@ -9849,7 +9849,7 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 			if(is_array($old_data) && count($old_data)>=1){
 				foreach ($old_data as $val) {
 					if(!in_array($val,(array)$this->data['photo'])){				
-		    	        FunctionsV3::deleteUploadedFile($val);
+		    	        FunctionsV4::deleteUploadedFile($val);
 					}				
 				}
 			}			
@@ -9896,19 +9896,19 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 	    					$tpl = getOptionA("admin_forgot_password_tpl_content_$lang");	    					
 	    					
 	    					if(!empty($subject)){
-	    					    $tpl=FunctionsV3::smarty('restaurant_name', 
+	    					    $tpl=FunctionsV4::smarty('restaurant_name', 
 	    						isset($data['restaurant_name'])?$data['restaurant_name']:''
 	    						,$tpl);	
 	    					}	    				
 	    					if (!empty($tpl)){
-	    						$tpl=FunctionsV3::smarty('restaurant_name', 
+	    						$tpl=FunctionsV4::smarty('restaurant_name', 
 	    						isset($data['restaurant_name'])?$data['restaurant_name']:''
 	    						,$tpl);
 	    						
-	    						$tpl=FunctionsV3::smarty('newpassword', $new_pass ,$tpl);
+	    						$tpl=FunctionsV4::smarty('newpassword', $new_pass ,$tpl);
 	    						
-	    						$tpl=FunctionsV3::smarty('sitename',getOptionA('website_title'),$tpl);
-                                $tpl=FunctionsV3::smarty('siteurl',websiteUrl(),$tpl);
+	    						$tpl=FunctionsV4::smarty('sitename',getOptionA('website_title'),$tpl);
+                                $tpl=FunctionsV4::smarty('siteurl',websiteUrl(),$tpl);
 	    					}	    	
 	    					if (!empty($tpl) && !empty($subject)){
 	    						$to = isset($data['email_address'])?$data['email_address']:'';
@@ -9934,12 +9934,12 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 				$params=array(
 				  'payment_name'=>$this->data['card_name'],
 				  'payment_logo'=>$this->data['photo'],
-				  'date_created'=>FunctionsV3::dateNow(),
+				  'date_created'=>FunctionsV4::dateNow(),
 				  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 				  'status'=>$this->data['status']
 				);
 				if (isset($this->data['id']) && is_numeric($this->data['id'])){	
-					$params['date_modified']=FunctionsV3::dateNow();
+					$params['date_modified']=FunctionsV4::dateNow();
 					unset($params['date_created']);
 					if ( $this->updateData("{{payment_provider}}",$params,'id',$this->data['id'])){
 						$this->code=1;
@@ -10049,7 +10049,7 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 			  'offer_price'=>$this->data['offer_price'],
 			  'valid_from'=>$this->data['valid_from'],
 			  'valid_to'=>$this->data['valid_to'],
-			  'date_created'=>FunctionsV3::dateNow(),
+			  'date_created'=>FunctionsV4::dateNow(),
 			  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 			  'merchant_id'=>$merchant_id,
 			  'status'=>$this->data['status']
@@ -10061,7 +10061,7 @@ $last_login=$val['last_login']=="0000-00-00 00:00:00"?"":date('M d,Y G:i:s',strt
 				$this->data['valid_from']." 00:00:00",$this->data['valid_to']." 00:00:00",$this->data['id'])){
 				
 				unset($params['date_created']);
-				$params['date_modified']=FunctionsV3::dateNow();				
+				$params['date_modified']=FunctionsV4::dateNow();				
 				$res = $command->update('{{offers}}' , $params , 
 				'offers_id=:offers_id' , array(':offers_id'=>addslashes($this->data['id'])));
 				if ($res){
@@ -10126,7 +10126,7 @@ if (!Yii::app()->functions->getMerchantOffers($merchant_id,$this->data['valid_fr
 			if ( $validator->validate()){				
 				$params=array(
 				  'email_address'=>$this->data['subscriber_email'],
-				  'date_created'=>FunctionsV3::dateNow(),
+				  'date_created'=>FunctionsV4::dateNow(),
 				  'ip_address'=>$_SERVER['REMOTE_ADDR']
 				);				
 				if ( $this->insertData("{{newsletter}}",$params)){
@@ -10171,7 +10171,7 @@ if (!Yii::app()->functions->getMerchantOffers($merchant_id,$this->data['valid_fr
 			$params=array(
 	    	  'page_name'=>$this->data['page_name'],
 	    	  'content'=>$this->data['content'],	    	  
-	    	  'date_created'=>FunctionsV3::dateNow(),
+	    	  'date_created'=>FunctionsV4::dateNow(),
 	    	  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 	    	  'status'=>$this->data['status'],
 	    	  'is_custom_link'=>2,
@@ -10186,7 +10186,7 @@ if (!Yii::app()->functions->getMerchantOffers($merchant_id,$this->data['valid_fr
 			    	}
 			    } else {					    	
 			    	unset($params['date_created']);
-					$params['date_modified']=FunctionsV3::dateNow();				
+					$params['date_modified']=FunctionsV4::dateNow();				
 					$res = $this->updateData('{{custom_page}}' , $params ,'id',$this->data['id']);
 					if ($res){
 						$this->code=1;

@@ -39,7 +39,7 @@ class AjaxmerchantController extends CController
 		if (!empty($website_timezone)){		 	
 		 	Yii::app()->timeZone=$website_timezone;
 		}		 				 
-		FunctionsV3::handleLanguage();
+		FunctionsV4::handleLanguage();
 		//echo Yii::app()->language;
 	}
 	
@@ -61,21 +61,21 @@ class AjaxmerchantController extends CController
 	{
 		$country_id=getOptionA('location_default_country');		
 		$mtid = Yii::app()->functions->getMerchantID();
-		if ( $res=FunctionsV3::getMerchantInfo($mtid)){
-			if ($resp=FunctionsV3::getDefaultCountrySignup($res['country_code'])){
+		if ( $res=FunctionsV4::getMerchantInfo($mtid)){
+			if ($resp=FunctionsV4::getDefaultCountrySignup($res['country_code'])){
 				$country_id=$resp;
 			}
 		}		
 				
 		if (!empty($country_id)){
 			$citys=''; $areas='';
-			if ($data=FunctionsV3::GetLocationRateByID( isset($this->data['rate_id'])?$this->data['rate_id']:'')){
-				$citys=FunctionsV3::ListCityList($data['state_id']);
-				$areas=FunctionsV3::AreaList($data['city_id']);
+			if ($data=FunctionsV4::GetLocationRateByID( isset($this->data['rate_id'])?$this->data['rate_id']:'')){
+				$citys=FunctionsV4::ListCityList($data['state_id']);
+				$areas=FunctionsV4::AreaList($data['city_id']);
 			}		
 			$this->renderPartial('/merchant/add-new-rates',array(
 			  'default_country_id'=>$country_id,
-			  'states'=>FunctionsV3::ListLocationState($country_id),
+			  'states'=>FunctionsV4::ListLocationState($country_id),
 			  'data'=>$data,
 			  'citys'=>$citys,
 			  'areas'=>$areas
@@ -85,7 +85,7 @@ class AjaxmerchantController extends CController
 	
 	public function actionLoadStateList()
 	{				
-		if($data=FunctionsV3::ListLocationState($this->data['country_id'])){
+		if($data=FunctionsV4::ListLocationState($this->data['country_id'])){
 		   $html='';
 		   foreach ($data as $key=>$val) {		   	  
 		   	  $html.="<option value=\"".$key."\">".$val."</option>";
@@ -99,7 +99,7 @@ class AjaxmerchantController extends CController
 	
 	public function actionLoadCityList()
 	{
-		if ( $data=FunctionsV3::ListCityList($this->data['state_id'])){
+		if ( $data=FunctionsV4::ListCityList($this->data['state_id'])){
 		   $html='';
 		   foreach ($data as $key=>$val) {		   	  
 		   	  $html.="<option value=\"".$key."\">".$val."</option>";
@@ -113,7 +113,7 @@ class AjaxmerchantController extends CController
 	
 	public function actionLoadArea()
 	{		
-		if ( $data=FunctionsV3::AreaList($this->data['city_id'])){
+		if ( $data=FunctionsV4::AreaList($this->data['city_id'])){
 			$html='';
 		    foreach ($data as $key=>$val) {		   	  
 		   	   $html.="<option value=\"".$key."\">".$val."</option>";
@@ -136,7 +136,7 @@ class AjaxmerchantController extends CController
 			  'city_id'=>$this->data['rate_city_id'],
 			  'area_id'=>$this->data['rate_area_id'],
 			  'fee'=>$this->data['fee'],
-			  'date_created'=>FunctionsV3::dateNow(),
+			  'date_created'=>FunctionsV4::dateNow(),
 			  'ip_address'=>$_SERVER['REMOTE_ADDR']
 			);			
 			$DbExt=new DbExt;
@@ -149,15 +149,15 @@ class AjaxmerchantController extends CController
 				SELECT * FROM
 				{{location_rate}}
 				WHERE
-				merchant_id=".FunctionsV3::q($mtid)."
+				merchant_id=".FunctionsV4::q($mtid)."
 				AND
-				country_id=".FunctionsV3::q($this->data['rate_country_id'])."
+				country_id=".FunctionsV4::q($this->data['rate_country_id'])."
 				AND
-				state_id=".FunctionsV3::q($this->data['rate_state_id'])."
+				state_id=".FunctionsV4::q($this->data['rate_state_id'])."
 				AND
-				city_id=".FunctionsV3::q($this->data['rate_city_id'])."
+				city_id=".FunctionsV4::q($this->data['rate_city_id'])."
 				AND
-				area_id=".FunctionsV3::q($this->data['rate_area_id'])."
+				area_id=".FunctionsV4::q($this->data['rate_area_id'])."
 				";
 				
 				if (!$DbExt->rst($stmt_check)){
@@ -174,7 +174,7 @@ class AjaxmerchantController extends CController
 	{
 		$mtid = Yii::app()->functions->getMerchantID();
 		if(!empty($mtid)){
-			if ( $res = FunctionsV3::GetLocationRateByMerchantWithName($mtid)){
+			if ( $res = FunctionsV4::GetLocationRateByMerchantWithName($mtid)){
 				$html='';
 				foreach ($res as $val) {
 					$id=$val['rate_id'];
@@ -191,7 +191,7 @@ class AjaxmerchantController extends CController
 					$html.="<td>".$val['city_name']."</td>";
 					$html.="<td>".$val['area_name']."</td>";
 					$html.="<td>".$val['postal_code']."</td>";
-					$html.="<td>".FunctionsV3::prettyPrice($val['fee'])."</td>";
+					$html.="<td>".FunctionsV4::prettyPrice($val['fee'])."</td>";
 					$html.="</tr>";
 				}
 				$this->code=1; $this->msg="OK";
@@ -207,7 +207,7 @@ class AjaxmerchantController extends CController
 		$stmt="DELETE FROM
 		{{location_rate}}
 		WHERE
-		rate_id=".FunctionsV3::q($this->data['rate_id'])."
+		rate_id=".FunctionsV4::q($this->data['rate_id'])."
 		";
 		$DbExt->qry($stmt);
 		$this->code=1; $this->msg=t("Successful");
@@ -224,7 +224,7 @@ class AjaxmerchantController extends CController
 				   $sequence=$sequence+1;				   
 				   $DbExt->updateData("{{location_rate}}",array(
 				     'sequence'=>$sequence,
-				     'date_modified'=>FunctionsV3::dateNow(),
+				     'date_modified'=>FunctionsV4::dateNow(),
 				     'ip_address'=>$_SERVER['REMOTE_ADDR']
 				   ),'rate_id', $rate_id);
 				}

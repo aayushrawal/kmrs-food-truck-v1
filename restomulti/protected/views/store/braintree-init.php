@@ -25,7 +25,7 @@ if(is_array($_POST) && count($_POST)>=1){
 	   $merchant_type=1;
 	   
 	   //if ( Yii::app()->functions->isMerchantCommission($merchant_id)){
-	   if (FunctionsV3::isMerchantPaymentToUseAdmin($merchant_id)){
+	   if (FunctionsV4::isMerchantPaymentToUseAdmin($merchant_id)){
 		  $merchant_type=2;
 	   }
 	   	  
@@ -45,7 +45,7 @@ if(is_array($_POST) && count($_POST)>=1){
 	          'order_id'=>$_GET['id'],
 	          'payment_type'=>"btr",
 	          'raw_response'=>$transaction_id,
-	          'date_created'=>FunctionsV3::dateNow(),
+	          'date_created'=>FunctionsV4::dateNow(),
 	          'ip_address'=>$_SERVER['REMOTE_ADDR']
 	        );
 	        $db_ext->insertData("{{payment_order}}",$params_logs);
@@ -56,12 +56,12 @@ if(is_array($_POST) && count($_POST)>=1){
 	        $db_ext->updateData("{{order}}",$params_update,'order_id',$_GET['id']);
 	        
 	        /*POINTS PROGRAM*/ 
-	        if (FunctionsV3::hasModuleAddon("pointsprogram")){
+	        if (FunctionsV4::hasModuleAddon("pointsprogram")){
 	           PointsProgram::updatePoints($_GET['id']);
 	        }
 	        
 	        /*Driver app*/
-			if (FunctionsV3::hasModuleAddon("driver")){
+			if (FunctionsV4::hasModuleAddon("driver")){
 			   Yii::app()->setImport(array(			
 				  'application.modules.driver.components.*',
 			   ));
@@ -92,7 +92,7 @@ if(is_array($_POST) && count($_POST)>=1){
 			
 			$merchant_type=1;
 			//if ( Yii::app()->functions->isMerchantCommission($merchant_id)){
-			if (FunctionsV3::isMerchantPaymentToUseAdmin($merchant_id)){
+			if (FunctionsV4::isMerchantPaymentToUseAdmin($merchant_id)){
 				$merchant_type=2;
 			}
 			

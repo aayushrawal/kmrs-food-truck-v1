@@ -19,7 +19,7 @@
   
   <?php echo CHtml::hiddenField('key',$data['key'])?>
   <?php echo CHtml::hiddenField('modal_action','saveTemplate')?>
-  <?php FunctionsV3::addCsrfToken(false);?>
+  <?php FunctionsV4::addCsrfToken(false);?>
   
   
   <table class="full-width">

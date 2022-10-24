@@ -41,7 +41,7 @@
 <?php //echo Yii::app()->functions->adminPaymentList()?>
 <?php 
 	 $this->renderPartial('/front/payment-list',array(	   
-	   'payment_list'=>FunctionsV3::getAdminPaymentList(),
+	   'payment_list'=>FunctionsV4::getAdminPaymentList(),
 	   'merchant_id'=>Yii::app()->functions->getMerchantID()
 	 ));
 	 ?>

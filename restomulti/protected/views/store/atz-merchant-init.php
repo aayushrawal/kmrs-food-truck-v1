@@ -37,7 +37,7 @@ if ( $data=Yii::app()->functions->getOrder($_GET['id'])){
     
     /*COMMISSION*/
 	//if ( Yii::app()->functions->isMerchantCommission($merchant_id)){			
-	if (FunctionsV3::isMerchantPaymentToUseAdmin($merchant_id)){
+	if (FunctionsV4::isMerchantPaymentToUseAdmin($merchant_id)){
 		$mode_autho=Yii::app()->functions->getOptionAdmin('admin_mode_autho');
         $autho_api_id=Yii::app()->functions->getOptionAdmin('admin_autho_api_id');
         $autho_key=Yii::app()->functions->getOptionAdmin('admin_autho_key');        
@@ -87,7 +87,7 @@ if ( $data=Yii::app()->functions->getOrder($_GET['id'])){
 	          'order_id'=>$data_get['id'],
 	          'payment_type'=>Yii::app()->functions->paymentCode('authorize'),
 	          'raw_response'=>json_encode($response),
-	          'date_created'=>FunctionsV3::dateNow(),
+	          'date_created'=>FunctionsV4::dateNow(),
 	          'ip_address'=>$_SERVER['REMOTE_ADDR'],
 	          'payment_reference'=>$resp_transaction
 	        );
@@ -97,12 +97,12 @@ if ( $data=Yii::app()->functions->getOrder($_GET['id'])){
             $db_ext->updateData("{{order}}",$params_update,'order_id',$data_get['id']);
             
             /*POINTS PROGRAM*/ 
-            if (FunctionsV3::hasModuleAddon("pointsprogram")){
+            if (FunctionsV4::hasModuleAddon("pointsprogram")){
 	           PointsProgram::updatePoints($data_get['id']);
             }
             
             /*Driver app*/
-			if (FunctionsV3::hasModuleAddon("driver")){
+			if (FunctionsV4::hasModuleAddon("driver")){
 			   Yii::app()->setImport(array(			
 				  'application.modules.driver.components.*',
 			   ));

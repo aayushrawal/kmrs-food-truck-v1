@@ -90,7 +90,7 @@ switch ($transaction_type) {
 				
 		if (isset($data['map_address_lat'])){
 			if(!empty($data['map_address_lat'])){
-				$lat_res=FunctionsV3::latToAdress($data['map_address_lat'],$data['map_address_lng']);
+				$lat_res=FunctionsV4::latToAdress($data['map_address_lat'],$data['map_address_lng']);
 				if($lat_res){					
 					$address=$lat_res['formatted_address'];
 				}
@@ -106,7 +106,7 @@ switch ($transaction_type) {
 		$label_2='Pickup Time';
 						
 	    $address='';
-	    if ( $merchant_info=FunctionsV3::getMerchantInfo($mtid)){
+	    if ( $merchant_info=FunctionsV4::getMerchantInfo($mtid)){
 	    	$address=$merchant_info['complete_address'];
 	    }
 	    break;
@@ -117,7 +117,7 @@ switch ($transaction_type) {
 	    $label_1='Dine in Date';
 		$label_2='Dine in Time';
 		$address='';
-	    if ( $merchant_info=FunctionsV3::getMerchantInfo($mtid)){
+	    if ( $merchant_info=FunctionsV4::getMerchantInfo($mtid)){
 	    	$address=$merchant_info['complete_address'];
 	    }
 	   break;
@@ -142,7 +142,7 @@ if (!isset($data['is_guest_checkout'])){
           <div class="box-grey rounded">
                      
            <?php if ($data['is_guest_checkout']==2):?>
-           <?php FunctionsV3::sectionHeader("Customer Information")?>
+           <?php FunctionsV4::sectionHeader("Customer Information")?>
            <table class="table-order-details">
             <tr>
               <td class="a"><?php echo t("Name")?></td>
@@ -151,7 +151,7 @@ if (!isset($data['is_guest_checkout'])){
            </table>
            <?php endif;?>          
           
-           <?php FunctionsV3::sectionHeader($header_1)?>
+           <?php FunctionsV4::sectionHeader($header_1)?>
            <table class="table-order-details">
             <tr>
               <td class="a"><?php echo t("Merchant Name")?></td>
@@ -162,7 +162,7 @@ if (!isset($data['is_guest_checkout'])){
             <?php if (!empty($s['kr_delivery_options']['delivery_date'])):?>
             <tr>
               <td class="a"><?php echo t($label_1)?></td>
-              <td class="b">: <?php echo FunctionsV3::prettyDate($s['kr_delivery_options']['delivery_date'])?></td>
+              <td class="b">: <?php echo FunctionsV4::prettyDate($s['kr_delivery_options']['delivery_date'])?></td>
             </tr>
             <?php endif;?>
             <?php endif;?>
@@ -171,7 +171,7 @@ if (!isset($data['is_guest_checkout'])){
             <?php if (!empty($s['kr_delivery_options']['delivery_time'])):?>
             <tr>
               <td class="a"><?php echo t($label_2)?></td>
-              <td class="b">: <?php echo FunctionsV3::prettyTime($s['kr_delivery_options']['delivery_time'])?></td>
+              <td class="b">: <?php echo FunctionsV4::prettyTime($s['kr_delivery_options']['delivery_time'])?></td>
             </tr>
             <?php endif;?>
             <?php endif;?>
@@ -200,10 +200,10 @@ if (!isset($data['is_guest_checkout'])){
             
            </table>
            
-           <?php FunctionsV3::sectionHeader($header_2)?>
+           <?php FunctionsV4::sectionHeader($header_2)?>
            <p class="spacer3"><?php echo $address;?></p>
            
-           <?php FunctionsV3::sectionHeader('Payment Information')?>
+           <?php FunctionsV4::sectionHeader('Payment Information')?>
                       
            <p>
            <?php 
@@ -236,7 +236,7 @@ if (!isset($data['is_guest_checkout'])){
            		 }
            		 if ($data['order_change']>0){
 	           		 echo '<p class="text-muted text-small">'.t("change for").
-	           		 " ". FunctionsV3::prettyPrice($data['order_change']) .'</p>';
+	           		 " ". FunctionsV4::prettyPrice($data['order_change']) .'</p>';
            		 }
            		 break;
            	case "ocr":

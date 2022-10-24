@@ -25,7 +25,7 @@ $this->renderPartial('/front/progress-merchantsignup',array(
        <form class="forms" id="forms" onsubmit="return false;">
 	  <?php echo CHtml::hiddenField('action','merchantSignUp2')?>
 	  <?php echo CHtml::hiddenField('currentController','store')?>	 
-	  <?php FunctionsV3::addCsrfToken();?>
+	  <?php FunctionsV4::addCsrfToken();?>
       
       <div class="row top10">
         <div class="col-md-3 "><?php echo t("Restaurant name")?></div>
@@ -197,7 +197,7 @@ $this->renderPartial('/front/progress-merchantsignup',array(
       </div>
       
       <div class="top15">
-      <?php FunctionsV3::sectionHeader('Commission Type');?>
+      <?php FunctionsV4::sectionHeader('Commission Type');?>
       </div>
       
       <div class="row top10">
@@ -218,7 +218,7 @@ $this->renderPartial('/front/progress-merchantsignup',array(
         <div class="col-md-8">
 		  <?php
 		  echo CHtml::dropDownList('invoice_terms','',
-		  (array)FunctionsV3::InvoiceTerms(),array(
+		  (array)FunctionsV4::InvoiceTerms(),array(
 		    'class'=>'grey-fields full-width',
 		    'data-validation'=>"required"
 		  ))
@@ -227,7 +227,7 @@ $this->renderPartial('/front/progress-merchantsignup',array(
       </div>
       
       <div class="top15">
-      <?php FunctionsV3::sectionHeader('Login Information');?>
+      <?php FunctionsV4::sectionHeader('Login Information');?>
       </div>
       
       <div class="row top10">

@@ -2,11 +2,11 @@
 <div class="box-grey rounded section-order-history" style="margin-top:0;">
 
 <div class="bottom10">
-<?php echo FunctionsV3::sectionHeader('Your Recent Order');?>
+<?php echo FunctionsV4::sectionHeader('Your Recent Order');?>
 </div>
 <?php if (is_array($data) && count($data)>=1):?>
 
-<?php $payment_list=FunctionsV3::PaymentOptionList();?>
+<?php $payment_list=FunctionsV4::PaymentOptionList();?>
 
    <table class="table table-striped">
      <tbody>
@@ -40,7 +40,7 @@
         
         <td> 
         <p><?php echo t("TOTAL")?></p>
-        <p><?php echo FunctionsV3::prettyPrice($val['total_w_tax'])?></p>         
+        <p><?php echo FunctionsV4::prettyPrice($val['total_w_tax'])?></p>         
         </td>
         
         <td>
@@ -49,7 +49,7 @@
 		  /*if (array_key_exists($val['payment_type'],$payment_list)){  
 		     echo $payment_list[$val['payment_type']];
 		  } else echo $val['payment_type'];*/
-		  echo FunctionsV3::prettyPaymentTypeTrans($val['trans_type'],$val['payment_type'])
+		  echo FunctionsV4::prettyPaymentTypeTrans($val['trans_type'],$val['payment_type'])
 		  ?></p>
         </td>
         

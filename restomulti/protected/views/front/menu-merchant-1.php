@@ -47,7 +47,7 @@ dump($merchant_tax);*/
           <!--<p><?php echo stripslashes($val_item['item_description'])?></p>-->
         </div>
         <div class="col-md-3 col-xs-3 food-price-wrap border">
-           <?php echo FunctionsV3::getItemFirstPrice($val_item['prices'],$val_item['discount'],
+           <?php echo FunctionsV4::getItemFirstPrice($val_item['prices'],$val_item['discount'],
            $merchant_apply_tax,$merchant_tax) ?>
         </div>
         <div class="col-md-1 col-xs-1 relative food-price-wrap border">

@@ -65,7 +65,7 @@ if(isset($_GET['failed'])){
   	<div class="row top10">
 	  <div class="col-md-3"><?php echo t("Amount")?></div>
 	  <div class="col-md-8">
-	    <?php echo FunctionsV3::prettyPrice($amount_to_pay)?>
+	    <?php echo FunctionsV4::prettyPrice($amount_to_pay)?>
 	  </div>
 	</div>
 	
@@ -78,24 +78,24 @@ if(isset($_GET['failed'])){
 	  echo CHtml::hiddenField('merchant_ref',$merchant_ref);
 	  echo CHtml::hiddenField('memo',$payment_description);
 	  echo CHtml::hiddenField('total',Yii::app()->functions->unPrettyPrice($amount_to_pay));
-	  echo CHtml::hiddenField('notify_url',FunctionsV3::getHostURL().Yii::app()->createUrl('/store/voguepaynotify',array(
+	  echo CHtml::hiddenField('notify_url',FunctionsV4::getHostURL().Yii::app()->createUrl('/store/voguepaynotify',array(
 	    'token'=>$my_token,
 	  )));
 	  	  
-	  echo CHtml::hiddenField('fail_url',FunctionsV3::getHostURL().Yii::app()->createUrl('/store/merchantsignup',array(
+	  echo CHtml::hiddenField('fail_url',FunctionsV4::getHostURL().Yii::app()->createUrl('/store/merchantsignup',array(
 	    'Do'=>"step3b",
 	    'token'=>$my_token,
 	    'gateway'=>'vog',
 	    'failed'=>1
 	  )));
 	  if (isset($_GET['renew'])) {
-	  	 echo CHtml::hiddenField('success_url',FunctionsV3::getHostURL().Yii::app()->createUrl('/store/voguepaysuccess',array(
+	  	 echo CHtml::hiddenField('success_url',FunctionsV4::getHostURL().Yii::app()->createUrl('/store/voguepaysuccess',array(
 	  	   'renew'=>1,
 	  	   'token'=>$my_token,
 	  	   'package_id'=>$data['package_id']
 	  	 )));
 	  } else {
-	  	  echo CHtml::hiddenField('success_url',FunctionsV3::getHostURL().Yii::app()->createUrl('/store/voguepaysuccess',array(
+	  	  echo CHtml::hiddenField('success_url',FunctionsV4::getHostURL().Yii::app()->createUrl('/store/voguepaysuccess',array(
 	  	    'token'=>$my_token
 	  	  )));
 	  }	   	  

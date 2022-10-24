@@ -78,7 +78,7 @@ if (isset($_POST)){
 			  'payment_type'=>$payment_code,
 			  'package_price'=>$amount_to_pay/100,
 			  'sms_limit'=>isset($res['sms_limit'])?$res['sms_limit']:'',
-			  'date_created'=>FunctionsV3::dateNow(),
+			  'date_created'=>FunctionsV4::dateNow(),
 			  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 			  'payment_gateway_response'=>json_encode($chargeArray),
 			  'status'=>"paid"

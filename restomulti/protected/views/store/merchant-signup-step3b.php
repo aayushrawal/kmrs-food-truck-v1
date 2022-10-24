@@ -87,7 +87,7 @@ if (isset($_POST)){
 	          'price'=>$data['package_price'],
 	          'payment_type'=>$payment_code,
 	          'membership_expired'=>$data['membership_expired'],
-	          'date_created'=>FunctionsV3::dateNow(),
+	          'date_created'=>FunctionsV4::dateNow(),
 	          'ip_address'=>$_SERVER['REMOTE_ADDR'],
 	          'PAYPALFULLRESPONSE'=>json_encode($chargeArray)
 	        );
@@ -111,7 +111,7 @@ if (isset($_POST)){
 	        $db_ext->updateData("{{merchant}}",
 							   array(
 							     'payment_steps'=>3,
-							     'membership_purchase_date'=>FunctionsV3::dateNow()
+							     'membership_purchase_date'=>FunctionsV4::dateNow()
 							   ),'merchant_id',$data['merchant_id']);							   
 	                    
             if (isset($_GET['renew'])){            	
@@ -119,8 +119,8 @@ if (isset($_POST)){
             } else {
             	
             	/*SEND EMAIL*/
-            	FunctionsV3::sendWelcomeEmailMerchant($data);
-            	FunctionsV3::sendMerchantActivation($data, $data['activation_key']);
+            	FunctionsV4::sendWelcomeEmailMerchant($data);
+            	FunctionsV4::sendMerchantActivation($data, $data['activation_key']);
             	
             	header('Location: '. Yii::app()->createUrl("store/merchantsignup",array(
                   'Do'=>"step4",

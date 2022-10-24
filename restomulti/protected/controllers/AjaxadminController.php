@@ -39,7 +39,7 @@ class AjaxadminController extends CController
 		if (!empty($website_timezone)){		 	
 		 	Yii::app()->timeZone=$website_timezone;
 		}		 				 
-		FunctionsV3::handleLanguage();
+		FunctionsV4::handleLanguage();
 		//echo Yii::app()->language;
 	}
 	
@@ -77,7 +77,7 @@ class AjaxadminController extends CController
 		  'key'=>$this->data['key'],
 		  'tag_email'=>$email_tags,
 		  'tag_sms'=>$sms_tags,
-		  'lang_list'=>FunctionsV3::getLanguageList(),
+		  'lang_list'=>FunctionsV4::getLanguageList(),
 		  'lang'=>Yii::app()->language,
 		  'tag_push'=>$tag_push		  
 		));
@@ -148,7 +148,7 @@ class AjaxadminController extends CController
     	}  	
     	    	
 		$data=$this->data;
-		$order_stats = FunctionsV3::orderStatusTPL(2);		
+		$order_stats = FunctionsV4::orderStatusTPL(2);		
 		$predefined=array(
 		  'contact_us'."_email",
 		  'contact_us'."_sms",
@@ -291,7 +291,7 @@ class AjaxadminController extends CController
 	
 	public function actionloadCountryDetails()
 	{		
-		if ( $res=FunctionsV3::locationStateList($this->data['country_id'])){
+		if ( $res=FunctionsV4::locationStateList($this->data['country_id'])){
 			$html=Yii::app()->controller->renderPartial('/admin/manage-country-details',array(
 			  'data'=>$res
 			),true);
@@ -303,11 +303,11 @@ class AjaxadminController extends CController
 	
 	public function actionaddCity()
 	{		
-		if ( $data=FunctionsV3::getStateByID($this->data['state_id'])){
+		if ( $data=FunctionsV4::getStateByID($this->data['state_id'])){
 			$this->render('admin/manage-loc-addcity',array(
 			  'data'=>$data,
 			  'state_id'=>$this->data['state_id'],
-			  'data2'=>FunctionsV3::getCityByID( isset($this->data['id'])?$this->data['id']:'' )
+			  'data2'=>FunctionsV4::getCityByID( isset($this->data['id'])?$this->data['id']:'' )
 			));
 		} 
 	}
@@ -318,7 +318,7 @@ class AjaxadminController extends CController
 		$params=array(
 		  'state_id'=>$this->data['state_id'],
 		  'name'=>$this->data['city_name'],
-		  'date_created'=>FunctionsV3::dateNow(),
+		  'date_created'=>FunctionsV4::dateNow(),
 		  'ip_address'=>$_SERVER['REMOTE_ADDR'],
 		  'postal_code'=>isset($this->data['postal_code'])?$this->data['postal_code']:''
 		);
@@ -326,7 +326,7 @@ class AjaxadminController extends CController
 		
 		if ( isset($this->data['id'])){
 			unset($params['date_created']);
-			$params['date_modified']=FunctionsV3::dateNow();
+			$params['date_modified']=FunctionsV4::dateNow();
 			if ( $DbExt->updateData("{{location_cities}}",$params,'city_id',$this->data['id'])){
 				$this->msg=t("Successful");	
 				$this->code=1;
@@ -346,7 +346,7 @@ class AjaxadminController extends CController
 		$stmt="SELECT * FROM
 		{{location_rate}}
 		WHERE
-		city_id=".FunctionsV3::q($this->data['id'])."
+		city_id=".FunctionsV4::q($this->data['id'])."
 		";		
 		if ( $DbExt->rst($stmt)){
 			$this->msg=t("You cannot delete this record it has reference to other tables");
@@ -355,7 +355,7 @@ class AjaxadminController extends CController
 			$DbExt->qry("DELETE FROM
 			{{location_cities}}
 			WHERE
-			city_id=".FunctionsV3::q($this->data['id'])."
+			city_id=".FunctionsV4::q($this->data['id'])."
 			");
 			$this->msg=t("Successful");	
 			$this->code=1;
@@ -365,10 +365,10 @@ class AjaxadminController extends CController
 	
 	public function actionAddState()
 	{		
-		if ( $data=FunctionsV3::getCountryByID($this->data['country_id'])){
+		if ( $data=FunctionsV4::getCountryByID($this->data['country_id'])){
 			$this->render('admin/manage-loc-addstate',array(
 			  'data'=>$data,		
-			  'data2'=>FunctionsV3::getStateByID( isset($this->data['state_id'])?$this->data['state_id']:'' )
+			  'data2'=>FunctionsV4::getStateByID( isset($this->data['state_id'])?$this->data['state_id']:'' )
 			));
 		} 
 	}
@@ -378,13 +378,13 @@ class AjaxadminController extends CController
 		$params=array(
 		  'country_id'=>$this->data['country_id'],
 		  'name'=>$this->data['name'],
-		  'date_created'=>FunctionsV3::dateNow(),
+		  'date_created'=>FunctionsV4::dateNow(),
 		  'ip_address'=>$_SERVER['REMOTE_ADDR']
 		);
 		$DbExt=new DbExt;		
 		if ( isset($this->data['id'])){
 			unset($params['date_created']);
-			$params['date_modified']=FunctionsV3::dateNow();
+			$params['date_modified']=FunctionsV4::dateNow();
 			if ( $DbExt->updateData("{{location_states}}",$params,'state_id',$this->data['id'])){
 				$this->msg=t("Successful");	
 				$this->code=1;
@@ -405,7 +405,7 @@ class AjaxadminController extends CController
 		$stmt="SELECT * FROM
 		{{location_rate}}
 		WHERE
-		state_id=".FunctionsV3::q($this->data['id'])."
+		state_id=".FunctionsV4::q($this->data['id'])."
 		";		
 		if ( $DbExt->rst($stmt)){
 			$this->msg=t("You cannot delete this record it has reference to other tables");
@@ -414,7 +414,7 @@ class AjaxadminController extends CController
 			$DbExt->qry("DELETE FROM
 			{{location_states}}
 			WHERE
-			state_id=".FunctionsV3::q($this->data['id'])."
+			state_id=".FunctionsV4::q($this->data['id'])."
 			");
 			$this->msg=t("Successful");	
 			$this->code=1;
@@ -424,10 +424,10 @@ class AjaxadminController extends CController
 	
 	public function actionAddArea()
 	{
-		if ( $data=FunctionsV3::getCityByID($this->data['city_id'])){
+		if ( $data=FunctionsV4::getCityByID($this->data['city_id'])){
 			$this->render('admin/manage-loc-addarea',array(
 			  'data'=>$data,		
-			  'data2'=>FunctionsV3::getAreaLocation( isset($this->data['area_id'])?$this->data['area_id']:'' )
+			  'data2'=>FunctionsV4::getAreaLocation( isset($this->data['area_id'])?$this->data['area_id']:'' )
 			));
 		} 
 	}
@@ -437,13 +437,13 @@ class AjaxadminController extends CController
 		$params=array(
 		  'city_id'=>$this->data['city_id'],
 		  'name'=>$this->data['name'],
-		  'date_created'=>FunctionsV3::dateNow(),
+		  'date_created'=>FunctionsV4::dateNow(),
 		  'ip_address'=>$_SERVER['REMOTE_ADDR']
 		);		
 		$DbExt=new DbExt;		
 		if ( isset($this->data['id'])){
 			unset($params['date_created']);
-			$params['date_modified']=FunctionsV3::dateNow();
+			$params['date_modified']=FunctionsV4::dateNow();
 			if ( $DbExt->updateData("{{location_area}}",$params,'area_id',$this->data['id'])){
 				$this->msg=t("Successful");	
 				$this->code=1;
@@ -464,7 +464,7 @@ class AjaxadminController extends CController
 		$stmt="SELECT * FROM
 		{{location_rate}}
 		WHERE
-		area_id=".FunctionsV3::q($this->data['id'])."
+		area_id=".FunctionsV4::q($this->data['id'])."
 		";		
 		if ( $DbExt->rst($stmt)){
 			$this->msg=t("You cannot delete this record it has reference to other tables");
@@ -473,7 +473,7 @@ class AjaxadminController extends CController
 			$DbExt->qry("DELETE FROM
 			{{location_area}}
 			WHERE
-			area_id=".FunctionsV3::q($this->data['id'])."
+			area_id=".FunctionsV4::q($this->data['id'])."
 			");
 			$this->msg=t("Successful");	
 			$this->code=1;
@@ -491,7 +491,7 @@ class AjaxadminController extends CController
 				   $sequence=$sequence+1;				   
 				   $DbExt->updateData("{{location_area}}",array(
 				     'sequence'=>$sequence,
-				     'date_modified'=>FunctionsV3::dateNow(),
+				     'date_modified'=>FunctionsV4::dateNow(),
 				     'ip_address'=>$_SERVER['REMOTE_ADDR']
 				   ),'area_id', $area_id);
 				}
@@ -512,7 +512,7 @@ class AjaxadminController extends CController
 				   $sequence=$sequence+1;				   
 				   $DbExt->updateData("{{location_states}}",array(
 				     'sequence'=>$sequence,
-				     'date_modified'=>FunctionsV3::dateNow(),
+				     'date_modified'=>FunctionsV4::dateNow(),
 				     'ip_address'=>$_SERVER['REMOTE_ADDR']
 				   ),'state_id', $id);
 				}
@@ -526,7 +526,7 @@ class AjaxadminController extends CController
 	public function actionEditInvoice()
 	{
 		$this->data=$_GET;		
-		if ($res=FunctionsV3::getInvoiceByID($this->data['id'])){
+		if ($res=FunctionsV4::getInvoiceByID($this->data['id'])){
 			$this->renderPartial('/admin/invoice-edit',array(
 			  'data'=>$res
 			));
@@ -546,7 +546,7 @@ class AjaxadminController extends CController
 		  'invoice_number'=>$this->data['invoice_number'],
 		  'payment_status'=>$this->data['payment_status'],
 		  'remarks'=>isset($this->data['remarks'])?$this->data['remarks']:'',
-		  'date_created'=>FunctionsV3::dateNow(),
+		  'date_created'=>FunctionsV4::dateNow(),
 		  'ip_address'=>$_SERVER['REMOTE_ADDR']
 		);
 		$DbExt->insertData("{{invoice_history}}",$params);
@@ -557,7 +557,7 @@ class AjaxadminController extends CController
 	public function actionInvoiceHistory()
 	{
 		$this->data=$_GET;		
-		$res=FunctionsV3::getInvoiceHistory($this->data['id']);
+		$res=FunctionsV4::getInvoiceHistory($this->data['id']);
 		$this->renderPartial('/admin/invoice-history',array(
 		   'invoice_number'=>$this->data['id'],
 		   'data'=>$res

@@ -476,7 +476,7 @@ $.validate({
     				  'delivery_date'=>isset($_SESSION['kr_delivery_options']['delivery_date'])?$_SESSION['kr_delivery_options']['delivery_date']:'',
     				  'delivery_time'=>isset($_SESSION['kr_delivery_options']['delivery_time'])?$_SESSION['kr_delivery_options']['delivery_time']:'',
     				  'delivery_asap'=>isset($_SESSION['kr_delivery_options']['delivery_asap'])?$_SESSION['kr_delivery_options']['delivery_asap']:'',
-    				  'date_created'=>FunctionsV3::dateNow(),
+    				  'date_created'=>FunctionsV4::dateNow(),
     				  'ip_address'=>$_SERVER['REMOTE_ADDR'],
     				  'delivery_instruction'=>isset($this->data['delivery_instruction'])?$this->data['delivery_instruction']:'',
     				  'cc_id'=>isset($this->data['cc_id'])?$this->data['cc_id']:''

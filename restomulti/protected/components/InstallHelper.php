@@ -513,7 +513,7 @@ class InstallHelper
 		SELECT option_name 
 		FROM {{option}}
 		WHERE
-		option_name=".FunctionsV3::q($option_name)."
+		option_name=".FunctionsV4::q($option_name)."
 		LIMIT 0,1
 		";
 		if($res=$DbExt->rst($stmt)){			

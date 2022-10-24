@@ -30,7 +30,7 @@ if(isset($_GET['failed'])){
   	<div class="row top10">
 	  <div class="col-md-3"><?php echo t("Amount")?></div>
 	  <div class="col-md-8">
-	    <?php echo FunctionsV3::prettyPrice($amount_to_pay)?>
+	    <?php echo FunctionsV4::prettyPrice($amount_to_pay)?>
 	  </div>
 	</div>
 	
@@ -43,15 +43,15 @@ if(isset($_GET['failed'])){
 	  echo CHtml::hiddenField('merchant_ref',$data['order_id']);
 	  echo CHtml::hiddenField('memo',stripslashes($payment_description));
 	  echo CHtml::hiddenField('total', number_format($amount_to_pay,2,'.','') );
-	  echo CHtml::hiddenField('notify_url',FunctionsV3::getHostURL().Yii::app()->createUrl('/store/vognotify',array(
+	  echo CHtml::hiddenField('notify_url',FunctionsV4::getHostURL().Yii::app()->createUrl('/store/vognotify',array(
 	    'id'=>$data['order_id']
 	  )));
 	  	  
-	  echo CHtml::hiddenField('fail_url',FunctionsV3::getHostURL().Yii::app()->createUrl('/store/voginit',array(
+	  echo CHtml::hiddenField('fail_url',FunctionsV4::getHostURL().Yii::app()->createUrl('/store/voginit',array(
 	    'id'=>$_GET['id'],	    
 	    'failed'=>1
 	  )));
-	  echo CHtml::hiddenField('success_url',FunctionsV3::getHostURL().Yii::app()->createUrl('/store/vogsuccess',array(
+	  echo CHtml::hiddenField('success_url',FunctionsV4::getHostURL().Yii::app()->createUrl('/store/vogsuccess',array(
 	  	    'xid'=>$data['order_id']
 	  	  )));
 	  ?>

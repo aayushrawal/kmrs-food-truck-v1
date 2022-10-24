@@ -32,7 +32,7 @@ if ( $val_item['single_item']==2){
 <div class="col-md-6 border" style="padding-left:10px;padding-right:10px;">
    <div class="box-grey">
      <div class="food-thumbnail" 
-        style="background:url(<?php echo FunctionsV3::getFoodDefaultImage($val_item['photo'],false)?>);">       
+        style="background:url(<?php echo FunctionsV4::getFoodDefaultImage($val_item['photo'],false)?>);">       
      </div>
      <p class="bold top10"><?php echo qTranslate($val_item['item_name'],'item_name',$val_item)?></p>
      <p class="small food-description read-more">
@@ -53,7 +53,7 @@ if ( $val_item['single_item']==2){
      <?php echo $atts;?>
      data-category_id="<?php echo $val['category_id']?>"
       >
-     <?php echo FunctionsV3::getItemFirstPrice($val_item['prices'],$val_item['discount']) ?>
+     <?php echo FunctionsV4::getItemFirstPrice($val_item['prices'],$val_item['discount']) ?>
      </a>
      
      <a href="javascript:;" 
@@ -63,7 +63,7 @@ if ( $val_item['single_item']==2){
      <?php echo $atts;?>
      data-category_id="<?php echo $val['category_id']?>"
       >
-     <?php echo FunctionsV3::getItemFirstPrice($val_item['prices'],$val_item['discount']) ?>
+     <?php echo FunctionsV4::getItemFirstPrice($val_item['prices'],$val_item['discount']) ?>
      </a>
     
      </div>

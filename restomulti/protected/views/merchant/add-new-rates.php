@@ -20,7 +20,7 @@ if (isset($data['rate_id'])){
   echo CHtml::dropDownList('rate_country_id',
   isset($data['country_id'])?$data['country_id']:$default_country_id
   ,
-  (array)FunctionsV3::countryList()
+  (array)FunctionsV4::countryList()
   ,array(
    'class'=>"uk-form-width-large rate_country_id",
    'data-validation'=>"required"

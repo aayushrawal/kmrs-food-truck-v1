@@ -5,8 +5,8 @@
   <div class="col-md-3 col-xs-3 border col-a">
     <?php if ( $theme_hide_logo<>2):?>
     <a href="<?php echo websiteUrl()?>">
-     <img src="<?php echo FunctionsV3::getDesktopLogo();?>" class="logo logo-desktop">
-     <img src="<?php echo FunctionsV3::getMobileLogo();?>" class="logo logo-mobile">
+     <img src="<?php echo FunctionsV4::getDesktopLogo();?>" class="logo logo-desktop">
+     <img src="<?php echo FunctionsV4::getMobileLogo();?>" class="logo logo-mobile">
     </a>
     <?php endif;?>
   </div>
@@ -26,7 +26,7 @@
   
   
   <div class="col-md-9 border col-b">
-    <?php $this->widget('zii.widgets.CMenu', FunctionsV3::getMenu() );?> 
+    <?php $this->widget('zii.widgets.CMenu', FunctionsV4::getMenu() );?> 
     <div class="clear"></div>
   </div>
   
@@ -35,6 +35,6 @@
 </div> <!--END top-menu-->
 
 <div class="menu-top-menu">
-    <?php $this->widget('zii.widgets.CMenu', FunctionsV3::getMenu('mobile-menu') );?> 
+    <?php $this->widget('zii.widgets.CMenu', FunctionsV4::getMenu('mobile-menu') );?> 
     <div class="clear"></div>
 </div> <!--menu-top-menu-->

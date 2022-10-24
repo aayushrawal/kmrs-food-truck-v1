@@ -1,7 +1,7 @@
 <form class="uk-form uk-form-horizontal forms" id="forms">
 <?php echo CHtml::hiddenField('action','adminProfile')?>
 <?php 
-FunctionsV3::addCsrfToken();
+FunctionsV4::addCsrfToken();
 $p = new CHtmlPurifier();
 ?>
 

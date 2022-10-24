@@ -6,10 +6,10 @@
 <?php echo CHtml::hiddenField('currentController','store')?>
 <?php 
 $p = new CHtmlPurifier();
-FunctionsV3::addCsrfToken();
+FunctionsV4::addCsrfToken();
 ?>
 
-<?php //FunctionsV3::sectionHeader('Profile');?>
+<?php //FunctionsV4::sectionHeader('Profile');?>
 
 <div class="row bottom10">
   <div class="col-md-6">

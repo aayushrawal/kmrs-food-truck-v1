@@ -26,7 +26,7 @@ class AjaxController extends CController
 		if (!empty($website_timezone)){		 	
 		 	Yii::app()->timeZone=$website_timezone;
 		}		 				 
-		FunctionsV3::handleLanguage();
+		FunctionsV4::handleLanguage();
 		//echo Yii::app()->language;
 	}
 	
@@ -74,7 +74,7 @@ class AjaxController extends CController
 	    				  'merchant_address'=>$val['merchant_address'],
 	    				  'latitude'=>$val['latitude'],
 	    				  'lontitude'=>$val['lontitude'],
-	    				  'logo'=>FunctionsV3::getMerchantLogo($val['merchant_id']),
+	    				  'logo'=>FunctionsV4::getMerchantLogo($val['merchant_id']),
 	    				  'link'=>Yii::app()->createUrl('/menu-'.$val['restaurant_slug'])
 	    				);
     				}
@@ -99,7 +99,7 @@ class AjaxController extends CController
     				  'merchant_address'=>stripslashes($val['merchant_address']),
     				  'latitude'=>$val['latitude'],
     				  'lontitude'=>$val['lontitude'],
-    				  'logo'=>FunctionsV3::getMerchantLogo($val['merchant_id']),
+    				  'logo'=>FunctionsV4::getMerchantLogo($val['merchant_id']),
     				  'link'=>Yii::app()->createUrl('store/menu-'.$val['restaurant_slug'])
     				);
 				}
@@ -150,21 +150,21 @@ class AjaxController extends CController
 	    	  'expiration_yr'=>$this->data['expiration_yr'],
 	    	  'billing_address'=>$this->data['billing_address'],
 	    	  'cvv'=>$this->data['cvv'],
-	    	  'date_created'=>FunctionsV3::dateNow(),
+	    	  'date_created'=>FunctionsV4::dateNow(),
 	    	  'ip_address'=>$_SERVER['REMOTE_ADDR']
 	    	);
 	    	$DbExt=new DbExt;
 	    	if (isset($this->data['cc_id'])){
 	    		unset($params['date_created']);
-	    		$params['date_modified']=FunctionsV3::dateNow();	    		
+	    		$params['date_modified']=FunctionsV4::dateNow();	    		
 	    		
 	    		$stmt="SELECT * FROM
 	    		{{client_cc}}
 	    		WHERE
-	    		client_id=".FunctionsV3::q($client_id)."
+	    		client_id=".FunctionsV4::q($client_id)."
 	    		AND
-	    		cc_id<>".FunctionsV3::q($this->data['cc_id'])."
-	    		AND credit_card_number=".FunctionsV3::q($this->data['credit_card_number'])."
+	    		cc_id<>".FunctionsV4::q($this->data['cc_id'])."
+	    		AND credit_card_number=".FunctionsV4::q($this->data['credit_card_number'])."
 	    		
 	    		LIMIT 0,1
 	    		";	    		
@@ -218,7 +218,7 @@ class AjaxController extends CController
     			$this->code=1;
     			
     			if($filename_delete){
-    				FunctionsV3::deleteUploadedFile($filename_delete);
+    				FunctionsV4::deleteUploadedFile($filename_delete);
     			}
     			
     		} else $this->msg=t("ERROR: Your session has expired.");
@@ -239,7 +239,7 @@ class AjaxController extends CController
     {
     	$client_id=isset($this->data['client_id'])?$this->data['client_id']:'';
     	if( $res=Yii::app()->functions->getClientInfo( $client_id )){	
-    		FunctionsV3::sendEmailVerificationCode($res['email_address'],$res['email_verification_code'],$res);
+    		FunctionsV4::sendEmailVerificationCode($res['email_address'],$res['email_verification_code'],$res);
     		$this->code=1;
     		$this->msg=t("We have sent verification code to your email address");
     	} else $this->msg=t("Sorry but we cannot find your information.");
@@ -248,7 +248,7 @@ class AjaxController extends CController
     
     public function actionCityList()
     {    	
-    	$data=FunctionsV3::getCityList();    	
+    	$data=FunctionsV4::getCityList();    	
     	header('Content-Type: application/json');
     	echo json_encode($data);
     	Yii::app()->end();
@@ -264,7 +264,7 @@ class AjaxController extends CController
     		$and.=" AND name LIKE '$q%' ";
     	}
     	if (!empty($this->data['city_id'])){
-    		$and.=" AND city_id=".FunctionsV3::q($this->data['city_id'])." ";
+    		$and.=" AND city_id=".FunctionsV4::q($this->data['city_id'])." ";
     	}
     	$stmt="
     	SELECT * FROM
@@ -300,7 +300,7 @@ class AjaxController extends CController
     public function actionCheckLocationData()
     {    	
     	if ( $this->data['delivery_type']=="delivery"){
-    		if ( !FunctionsV3::getSearchByLocationData()){
+    		if ( !FunctionsV4::getSearchByLocationData()){
     			$this->code=1;
     			$this->msg=t("No delivery fee selected");
     		}
@@ -312,13 +312,13 @@ class AjaxController extends CController
     {
     	$this->data=$_GET;    	
     	$this->renderPartial('/front/location-fee',array(
-    	  'data'=>FunctionsV3::GetViewLocationRateByMerchant($this->data['merchant_id'])
+    	  'data'=>FunctionsV4::GetViewLocationRateByMerchant($this->data['merchant_id'])
     	));
     }
     
     public function actionSetLocationFee()
     {    	
-    	if ( $data=FunctionsV3::GetFeeByRateIDView($this->data['rate_id'])){    		    		    		
+    	if ( $data=FunctionsV4::GetFeeByRateIDView($this->data['rate_id'])){    		    		    		
     		//dump($data);
     		$params=array(    		   
     		  'location_action'=>"SetLocationSearch",
@@ -341,7 +341,7 @@ class AjaxController extends CController
     
     public function actionLoadCityList()
 	{
-		if ( $data=FunctionsV3::ListCityList($this->data['state_id'])){
+		if ( $data=FunctionsV4::ListCityList($this->data['state_id'])){
 		   $html='';
 		   foreach ($data as $key=>$val) {		   	  
 		   	  $html.="<option value=\"".$key."\">".$val."</option>";
@@ -355,7 +355,7 @@ class AjaxController extends CController
 	
 	public function actionLoadArea()
 	{		
-		if ( $data=FunctionsV3::AreaList($this->data['city_id'])){
+		if ( $data=FunctionsV4::AreaList($this->data['city_id'])){
 			$html='';
 		    foreach ($data as $key=>$val) {		   	  
 		   	   $html.="<option value=\"".$key."\">".$val."</option>";
@@ -380,7 +380,7 @@ class AjaxController extends CController
         on
         a.city_id=b.city_id	   
         WHERE
-        a.area_id=".FunctionsV3::q($this->data['area_id'])."
+        a.area_id=".FunctionsV4::q($this->data['area_id'])."
 		";
 		if($res=$DbExt->rst($stmt)){
 			$this->code=1;
@@ -393,8 +393,8 @@ class AjaxController extends CController
     public function actionStateList()
     {    	
     	$data='';
-    	$country_id=FunctionsV3::getLocationDefaultCountry();
-    	if ( $res=FunctionsV3::locationStateList($country_id)){
+    	$country_id=FunctionsV4::getLocationDefaultCountry();
+    	if ( $res=FunctionsV4::locationStateList($country_id)){
     		foreach ($res as $val) {
     			$data[]=array(
    	    		  'id'=>$val['state_id'],
@@ -410,8 +410,8 @@ class AjaxController extends CController
     public function actionPostalCodeList()
     {
     	$data=''; $state_ids='';
-    	$country_id=FunctionsV3::getLocationDefaultCountry();
-    	if ( $res=FunctionsV3::locationStateList($country_id)){
+    	$country_id=FunctionsV4::getLocationDefaultCountry();
+    	if ( $res=FunctionsV4::locationStateList($country_id)){
     		foreach ($res as $val) {
     			$state_ids.="'$val[state_id]',";
     		}

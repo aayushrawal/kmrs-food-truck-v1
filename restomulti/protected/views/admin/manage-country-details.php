@@ -31,7 +31,7 @@
      </div>  
      
      <div class="state-list state-list-li">
-        <?php if ( $data_city=FunctionsV3::locationCityList($val['state_id'])): $x=1;?>
+        <?php if ( $data_city=FunctionsV4::locationCityList($val['state_id'])): $x=1;?>
         <?php foreach ($data_city as $city_val): //dump($city_val)?>
           <a href="javascript:;" class="button-pad edit_city"
           data-id="<?php echo $city_val['city_id']?>"
@@ -46,7 +46,7 @@
 	              <?php echo t("District/Area")?>
 	              <span class="uk-text-muted text-small">(<?php echo t("drag the list to sort")?>)</span>
 	           </p>	           	          
-	           <?php if ($data_area=FunctionsV3::locationAreaList($city_val['city_id'])):?>
+	           <?php if ($data_area=FunctionsV4::locationAreaList($city_val['city_id'])):?>
 	           
 	           <ul class="area-list">
 	           <?php foreach ($data_area as $area_val):?>

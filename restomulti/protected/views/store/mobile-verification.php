@@ -28,7 +28,7 @@ if (isset($_GET['checkout'])){
          <?php echo CHtml::hiddenField('redirect', Yii::app()->createUrl('/store/paymentoption') )?>
          <?php endif;?>
                   
-         <?php FunctionsV3::sectionHeader('Please enter you verification code');?>
+         <?php FunctionsV4::sectionHeader('Please enter you verification code');?>
                
          
          <?php 

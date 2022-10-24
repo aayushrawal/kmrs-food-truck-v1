@@ -2,7 +2,7 @@
 <div class="box-grey rounded section-order-history" style="margin-top:0;">
 
 <div class="bottom10">
-<?php echo FunctionsV3::sectionHeader('Your Recent Booking');?>
+<?php echo FunctionsV4::sectionHeader('Your Recent Booking');?>
 </div>
 <?php if (is_array($data) && count($data)>=1):?>
 
@@ -44,7 +44,7 @@
             
       <tr class="order-order-history show-history-<?php echo $val['booking_id']?>"> 
         <td colspan="5">
-         <?php if ( $resh=FunctionsV3::getBookingHistory($val['booking_id'])):?>     
+         <?php if ( $resh=FunctionsV4::getBookingHistory($val['booking_id'])):?>     
          <table class="table table-striped" >
            <thead>
              <tr>

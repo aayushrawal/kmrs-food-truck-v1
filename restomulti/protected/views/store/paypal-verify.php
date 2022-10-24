@@ -12,7 +12,7 @@ $this->renderPartial('/front/order-progress-bar',array(
 $paypal_con=Yii::app()->functions->getPaypalConnection($_SESSION['kr_merchant_id']); 
 
 //if ( Yii::app()->functions->isMerchantCommission($_SESSION['kr_merchant_id'])){
-if (FunctionsV3::isMerchantPaymentToUseAdmin($_SESSION['kr_merchant_id'])){
+if (FunctionsV4::isMerchantPaymentToUseAdmin($_SESSION['kr_merchant_id'])){
 	   unset($paypal_con);   	   
 	   $paypal_con=Yii::app()->functions->getPaypalConnectionAdmin();
 } 

@@ -144,7 +144,7 @@ Yii::app()->functions->getOptionAdmin("admin_currency_position"));
           
      <?php else :?> <!-- DELIVERY-->                          	       	      
           
-		  <?php FunctionsV3::sectionHeader('Delivery information')?>		  
+		  <?php FunctionsV4::sectionHeader('Delivery information')?>		  
 		  <p>
 	        <?php echo clearString(ucwords($merchant_info['restaurant_name']))?> <?php echo Yii::t("default","Restaurant")?> 
 	        <?php echo "<span class='bold'>".Yii::t("default",ucwords($s['kr_delivery_options']['delivery_type'])) . "</span> ";
@@ -159,7 +159,7 @@ Yii::app()->functions->getOptionAdmin("admin_currency_position"));
 	       	      	     
 	       <div class="top10">
 	       
-	        <?php FunctionsV3::sectionHeader('Address')?> 
+	        <?php FunctionsV4::sectionHeader('Address')?> 
 	        	       
 	        <?php if (isset($is_guest_checkout)):?>	         	        
 	         <div class="row top10">
@@ -265,14 +265,14 @@ Yii::app()->functions->getOptionAdmin("admin_currency_position"));
              echo CHtml::hiddenField('state');             
              echo CHtml::hiddenField('area_name');             
              $country_id=getOptionA('location_default_country'); $state_ids='';
-             $location_search_data=FunctionsV3::getSearchByLocationData();
+             $location_search_data=FunctionsV4::getSearchByLocationData();
              //dump($location_search_data);
              ?>
              <div class="row top10">
                 <div class="col-md-10">
                  <?php
                  echo CHtml::dropDownList('state_id','',
-                 (array)FunctionsV3::ListLocationState($country_id)
+                 (array)FunctionsV4::ListLocationState($country_id)
                  ,array(
                    'class'=>'grey-fields full-width',
                    'data-validation'=>"required"
@@ -383,7 +383,7 @@ Yii::app()->functions->getOptionAdmin("admin_currency_position"));
                                       
             
              <?php if (isset($is_guest_checkout)):?>
-             <?php FunctionsV3::sectionHeader('Optional')?>		  
+             <?php FunctionsV4::sectionHeader('Optional')?>		  
              <div class="row top10">
                 <div class="col-md-10">
                  <?php echo CHtml::passwordField('password','',array(
@@ -401,7 +401,7 @@ Yii::app()->functions->getOptionAdmin("admin_currency_position"));
      
      <?php if($transaction_type=="dinein"):?>
      <div class="top30"></div>
-     <?php FunctionsV3::sectionHeader('Table Information')?>
+     <?php FunctionsV4::sectionHeader('Table Information')?>
      
      <div class="row top10">	
         <div class="col-md-10">
@@ -428,7 +428,7 @@ Yii::app()->functions->getOptionAdmin("admin_currency_position"));
      <?php 
 	 $this->renderPartial('/front/payment-list',array(
 	   'merchant_id'=>$merchant_id,
-	   'payment_list'=>FunctionsV3::getMerchantPaymentListNew($merchant_id),
+	   'payment_list'=>FunctionsV4::getMerchantPaymentListNew($merchant_id),
 	   'transaction_type'=>$s['kr_delivery_options']['delivery_type']	   
 	 ));
 	 ?>
@@ -507,7 +507,7 @@ Yii::app()->functions->getOptionAdmin("admin_currency_position"));
             <!--VOUCHER STARTS HERE-->
             
             <?php 
-            if (FunctionsV3::hasModuleAddon("pointsprogram")){
+            if (FunctionsV4::hasModuleAddon("pointsprogram")){
             	/*POINTS PROGRAM*/
                 PointsProgram::redeemForm();
             }

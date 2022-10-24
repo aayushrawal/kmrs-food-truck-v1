@@ -118,7 +118,7 @@ $full_merchant_address=$merchant_info['street']." ".$merchant_info['city']. " ".
 	       <div class="input-block">
 	         <div class="label"><?php echo Yii::t("default","Payment Type")?> :</div>
 	         <!--<div class="value"><?php echo strtoupper(Yii::t("default",$data['payment_type']))?></div>-->
-	         <div class="value"><?php echo FunctionsV3::prettyPaymentType('payment_order',
+	         <div class="value"><?php echo FunctionsV4::prettyPaymentType('payment_order',
 	           $data['payment_type'],$data['order_id'],$data['trans_type']
 	         )?></div>
 	         <div class="clear"></div>

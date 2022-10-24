@@ -8,7 +8,7 @@ if ( $data['promo_price']>0){
 $amount_to_pay=Yii::app()->functions->normalPrettyPrice($amount_to_pay);
 $payment_description.=isset($data['title'])?$data['title']:'';	
 
-$payment_ref="vog-".FunctionsV3::lastID('sms_package_trans');
+$payment_ref="vog-".FunctionsV4::lastID('sms_package_trans');
 
 if(!$credentials){
 	$error=t("Invalid voguepay credentials");
@@ -39,7 +39,7 @@ if(isset($_GET['error'])){
     
     <div class="uk-form-row" style="margin-bottom:20px;">           
       <label class="uk-form-label"><?php echo t("Amount")?>:</label>       
-      <?php echo FunctionsV3::prettyPrice($amount_to_pay)?>
+      <?php echo FunctionsV4::prettyPrice($amount_to_pay)?>
     </div>             
        
 	  <?php	
@@ -47,17 +47,17 @@ if(isset($_GET['error'])){
 	  echo CHtml::hiddenField('merchant_ref',$payment_ref);
 	  echo CHtml::hiddenField('memo',stripslashes($payment_description));
 	  echo CHtml::hiddenField('total', number_format($amount_to_pay,2,'.','') );
-	  echo CHtml::hiddenField('notify_url',FunctionsV3::getHostURL().Yii::app()->createUrl('/merchant/vognotify',array(
+	  echo CHtml::hiddenField('notify_url',FunctionsV4::getHostURL().Yii::app()->createUrl('/merchant/vognotify',array(
 	      'payment_ref'=>$payment_ref,
 	      'package_id'=>$package_id,
 	      'merchant_id'=>$merchant_id
 	  )));	  	  
-	  echo CHtml::hiddenField('fail_url',FunctionsV3::getHostURL().Yii::app()->createUrl('/merchant/voginit',array(
+	  echo CHtml::hiddenField('fail_url',FunctionsV4::getHostURL().Yii::app()->createUrl('/merchant/voginit',array(
 	   'type'=>"purchaseSMScredit",
 	   'package_id'=>$package_id,
 	   'error'=>1
 	  )));
-	  echo CHtml::hiddenField('success_url',FunctionsV3::getHostURL().Yii::app()->createUrl('/merchant/vogsuccess',array(
+	  echo CHtml::hiddenField('success_url',FunctionsV4::getHostURL().Yii::app()->createUrl('/merchant/vogsuccess',array(
 	     'payment_ref'=>$payment_ref,
 	     'package_id'=>$package_id,
 	  )));

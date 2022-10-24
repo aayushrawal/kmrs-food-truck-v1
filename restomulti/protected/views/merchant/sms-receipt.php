@@ -13,7 +13,7 @@
   <div class="uk-form-row">
   <label class="uk-form-label"><?php echo Yii::t("default","Payment Type")?>:</label>  
   <!--<span class="uk-text-muted"><?php echo Yii::app()->functions->paymentCode($res['payment_type'],true)?></span>-->
-  <span class="uk-text-muted"><?php echo FunctionsV3::prettyPaymentType('sms_package_trans',
+  <span class="uk-text-muted"><?php echo FunctionsV4::prettyPaymentType('sms_package_trans',
     $res['payment_type'],
     $res['id']
   )?></span>

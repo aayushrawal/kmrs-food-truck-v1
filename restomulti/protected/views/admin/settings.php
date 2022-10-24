@@ -1,7 +1,7 @@
 <form class="uk-form uk-form-horizontal admin-settings-page forms" id="forms">
 <?php 
 echo CHtml::hiddenField('action','adminSettings');
-FunctionsV3::addCsrfToken(false);
+FunctionsV4::addCsrfToken(false);
 ?>
 
 <h2><?php echo Yii::t("default","Website")?></h2>
@@ -1413,7 +1413,7 @@ Yii::app()->functions->getOptionAdmin("website_time_picker_format")
   <label class="uk-form-label"><?php echo t("Location Country")?></label>
   <?php 
   echo CHtml::dropDownList('location_default_country',getOptionA('location_default_country'),
-  (array)FunctionsV3::countryList(),array(
+  (array)FunctionsV4::countryList(),array(
     'class'=>"uk-form-width-large"   
   ))
   ?>

@@ -108,7 +108,7 @@ $currency=adminCurrencySymbol();
 <div class="uk-form-row">
   <p><?php echo t("Commission Type")?></p>
 <?php 
-$mlist=FunctionsV3::MembershipType();
+$mlist=FunctionsV4::MembershipType();
 unset($mlist[1]);
 echo CHtml::dropDownList('merchant_type','',$mlist,array(
   'class'=>""

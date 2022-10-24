@@ -41,7 +41,7 @@ if (isset($_POST) && $_SERVER['REQUEST_METHOD']=='POST'){
 		    	  'username'=>$data[4],
 		    	  'password'=>md5(isset($data[11])?$data[11]:Yii::app()->functions->generateCode()),
 		    	  'restaurant_slug'=>Yii::app()->functions->createSlug($data[0]),
-		    	  'date_created'=>FunctionsV3::dateNow(),
+		    	  'date_created'=>FunctionsV4::dateNow(),
 		    	  'ip_address'=>$_SERVER['REMOTE_ADDR']
 		    	);		    			    			    	
 		    	echo "<p class=\"indent uk-text-primary\">".t("Saving merchant")."...</p>";

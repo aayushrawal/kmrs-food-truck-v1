@@ -28,7 +28,7 @@ echo CHtml::hiddenField('mobile_country_code',Yii::app()->functions->getAdminCou
 		  <form id="forms" class="forms" method="POST">
          <?php echo CHtml::hiddenField('action','clientLogin')?>
          <?php echo CHtml::hiddenField('currentController','store')?> 
-         <?php FunctionsV3::addCsrfToken(false);?>       
+         <?php FunctionsV4::addCsrfToken(false);?>       
          
           <?php if ($google_login_enabled==2 || $fb_flag==2 ) :?>
               <?php if ( $fb_flag==2):?>
@@ -143,7 +143,7 @@ echo CHtml::hiddenField('mobile_country_code',Yii::app()->functions->getAdminCou
 	     <?php echo CHtml::hiddenField('action','clientRegistrationModal')?>
          <?php echo CHtml::hiddenField('currentController','store')?>
          <?php echo CHtml::hiddenField('single_page',2)?>    
-         <?php FunctionsV3::addCsrfToken(false);?>
+         <?php FunctionsV4::addCsrfToken(false);?>
          <?php 
          $verification=Yii::app()->functions->getOptionAdmin("website_enabled_mobile_verification");	    
 	     if ( $verification=="yes"){

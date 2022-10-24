@@ -43,7 +43,7 @@ $this->renderPartial('/front/progress-merchantsignup',array(
                             <?php 
 							 $this->renderPartial('/front/payment-list',array(
 							   'merchant_id'=>$merchant_id,
-							   'payment_list'=>FunctionsV3::getAdminPaymentList(),						   
+							   'payment_list'=>FunctionsV4::getAdminPaymentList(),						   
 							 ));
 							 ?>  
                          
@@ -54,7 +54,7 @@ $this->renderPartial('/front/progress-merchantsignup',array(
 				         <?php 
 						 $this->renderPartial('/front/payment-list',array(
 						   'merchant_id'=>$merchant_id,
-						   'payment_list'=>FunctionsV3::getAdminPaymentList(),						   
+						   'payment_list'=>FunctionsV4::getAdminPaymentList(),						   
 						 ));
 						 ?>
 				     <?php endif;?>

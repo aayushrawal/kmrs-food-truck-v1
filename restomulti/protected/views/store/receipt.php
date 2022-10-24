@@ -142,14 +142,14 @@ $transaction_type=$data['trans_type'];
 	         <td><?php echo Yii::t("default","Payment Type")?></td>
 	         <!--<td class="text-right"><?php echo strtoupper(t($data['payment_type']))?></td>-->
 	         <td class="text-right">
-	         <?php echo FunctionsV3::prettyPaymentType('payment_order',
+	         <?php echo FunctionsV4::prettyPaymentType('payment_order',
 	         $data['payment_type'],$_GET['id'],$data['trans_type'])?>
 	         </td>
 	       </tr>
 	       <?php 	       
 	       $print[]=array(
 	         'label'=>Yii::t("default","Payment Type"),
-	         'value'=>FunctionsV3::prettyPaymentType('payment_order',$data['payment_type'],$_GET['id'],$data['trans_type'])
+	         'value'=>FunctionsV4::prettyPaymentType('payment_order',$data['payment_type'],$_GET['id'],$data['trans_type'])
 	       );	       
 	       ?>
 	       	       
@@ -517,12 +517,12 @@ dump(Yii::app()->functions->additional_details);*/
 if (!in_array($data['order_id'],(array)$_SESSION['kr_receipt'])){
 	if ($order_ok==true){		
 		/*SEND EMAIL TO CUSTOMER*/
-		FunctionsV3::notifyCustomer($data,Yii::app()->functions->additional_details,$receipt, $to);
-		FunctionsV3::notifyMerchant($data,Yii::app()->functions->additional_details,$receipt);
-		FunctionsV3::notifyAdmin($data,Yii::app()->functions->additional_details,$receipt);
+		FunctionsV4::notifyCustomer($data,Yii::app()->functions->additional_details,$receipt, $to);
+		FunctionsV4::notifyMerchant($data,Yii::app()->functions->additional_details,$receipt);
+		FunctionsV4::notifyAdmin($data,Yii::app()->functions->additional_details,$receipt);
 	
-	   FunctionsV3::fastRequest(FunctionsV3::getHostURL().Yii::app()->createUrl("cron/processemail"));
-	   FunctionsV3::fastRequest(FunctionsV3::getHostURL().Yii::app()->createUrl("cron/processsms"));
+	   FunctionsV4::fastRequest(FunctionsV4::getHostURL().Yii::app()->createUrl("cron/processemail"));
+	   FunctionsV4::fastRequest(FunctionsV4::getHostURL().Yii::app()->createUrl("cron/processsms"));
 	}
 }
 
