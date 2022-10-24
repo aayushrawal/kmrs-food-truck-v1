@@ -2130,7 +2130,7 @@ class FunctionsV3
 	
 	public static function addCsrfToken($refresh=true)
 	{
-		/*$refresh=false;
+		$refresh=false;
 		$protected_path = Yii::getPathOfAlias('webroot')."/protected/runtime";
 		if(!file_exists($protected_path)){
 			mkdir($protected_path,0777);
@@ -2140,7 +2140,7 @@ class FunctionsV3
 		if($refresh){
            $request->getCookies()->remove($request->csrfTokenName);
 		}
-        echo CHtml::hiddenField($request->csrfTokenName, $request->getCsrfToken());*/
+        echo CHtml::hiddenField($request->csrfTokenName, $request->getCsrfToken());
 	}
 	
 	public static function saveFbAvatarPicture($id='')
