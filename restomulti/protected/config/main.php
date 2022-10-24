@@ -48,12 +48,12 @@ return array(
     ),
     'components'=>array(
         'request'=>array(
-            'class' => 'HttpRequest',
+            // 'class' => 'HttpRequestv1',
             'enableCsrfValidation'=>false,
-            'enableCookieValidation'=>true,
-            'noCsrfValidationRoutes'=>array(
-            'inventory/upload'
-             ),
+            // 'enableCookieValidation'=>true,
+            // 'noCsrfValidationRoutes'=>array(
+            //     'inventory/upload'
+            //  ),
         ),
         'session' => array(
             'timeout' => 86400,
