@@ -4711,7 +4711,7 @@ $htm.='<div class="b uk-text-muted">'."$addon_raw_price ".qTranslate($val_subs[2
     public function orderStatusList($aslist=true)
     {
     	$mid=$this->getMerchantID();
-    	$list='';
+    	$list=null;
     	if ($aslist){
     	    $list[]=Yii::t("default","Please select");    	
     	}
